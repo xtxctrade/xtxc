@@ -6,7 +6,7 @@ separate from the live service.
 | Check | Result | Scope |
 |---|---|---|
 | Root core `cargo test --locked` | 35 passed, 0 failed | Native/core only; no SBF, provider or mainnet invocation |
-| Manifest, links and excluded paths | Passed | 181 imported source files; 195 total tracked files; reviewer links resolve |
+| Manifest, links and excluded paths | Passed | 181 imported source files; initial import had 195 tracked files; reviewer links resolve |
 | Gitleaks 8.30.1 | Passed, no leaks found | Complete published Git history; precise public-literal exclusions |
 
 Core toolchain: Rust 1.94.0. Source-only rerun completed on 2026-09-22.

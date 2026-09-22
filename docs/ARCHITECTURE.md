@@ -1,5 +1,9 @@
 # Architecture
 
+The algorithm pipeline is described in [ALGORITHMS.md](ALGORITHMS.md). Read that
+alongside this layer map: StockMesh has both off-chain planning modules and
+on-chain economic enforcement, with different guarantees and resource limits.
+
 ## Identity before routing
 
 The same stock can be represented by different issuer products, chains and
@@ -19,6 +23,33 @@ settlement. An available quote cannot override an admission constraint.
 | Execution host | `engine/stockmesh/host/src` | Provider state, exact preparation, order journal, portfolio acquisition and reconciliation |
 | Settlement program | `engine/stockmesh/programs/stocklana-settle` | Validate identities, minima and actual token changes |
 | Basket vault | `engine/stockmesh/programs/xtxc-basket-vault` | Experimental immutable token-unit claims; independent of trading-pool price |
+
+## Planning and settlement share an economic target
+
+The host admits product identity and coherent market state. OneBook expresses
+compatible claim constraints; the compiler/solver turns eligible liquidity into
+an allocation. Flow Folding can reduce compatible internal flows before external
+execution. These components have distinct objectives, not one universal solver.
+
+The signed envelope fixes identities, accounts, candidates and economic limits.
+On chain, `claim.rs` and `exposure.rs` bind product conversions and verify the
+aggregate share-exposure condition. `meshcell.rs` combines product-aware crossing
+with residual graphs; `funding.rs` composes a common funding graph with that cell.
+`allocation.rs` can refine residual allocation within the declared candidates.
+`graph.rs` verifies each typed CPI's actual asset changes.
+
+## State preparation and reuse
+
+`host/src/stockmesh_api.rs` keeps independently refreshed banks and bounds the
+hot set separately from catalog size. A quote publication binds its snapshot
+revision, slot and content hash; stale or changed publication cannot silently
+become an exact prepared transaction. Portfolio discovery and submission retain
+their explicit provider/authorization boundaries.
+
+`native/src/memo.rs` namespaces quote reuse by committed state and decoding
+context. The on-chain oracle decodes stable tick/bin structures once and rereads
+swap-mutated heads across legs. Only the small reference core is no-heap; native
+models, the host and program adapters use separately bounded storage.
 
 ## Bounded allocation
 

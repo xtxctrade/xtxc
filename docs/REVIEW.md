@@ -9,6 +9,9 @@ read the code or run the default tests.
 
 ## Code-reading route
 
+Start with the [algorithm walkthrough](ALGORITHMS.md): exposure aggregation,
+Marginal Liquidity IR, Residual Tape, native exact refinement and Flow Folding.
+
 | Question | Start here |
 |---|---|
 | What are the bounds and error conditions? | [Core](../engine/stockmesh/lib.rs) |
