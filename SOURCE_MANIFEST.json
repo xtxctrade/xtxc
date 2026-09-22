@@ -1,0 +1,1457 @@
+{
+  "schema": "xtxc.source-review/v1",
+  "prepared": "2026-09-22",
+  "history": "source-only import; web and internal plans excluded, including Git history",
+  "files": [
+    {
+      "component": "stockmesh",
+      "source": "Cargo.toml",
+      "file": "engine/stockmesh/Cargo.toml",
+      "sourceSha256": "b2c6e99bf55c12d793b4f9e4b37d3826f3bd1d14852ef94d2ff48d9dfd20ec4a",
+      "sha256": "b2c6e99bf55c12d793b4f9e4b37d3826f3bd1d14852ef94d2ff48d9dfd20ec4a",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "Cargo.lock",
+      "file": "engine/stockmesh/Cargo.lock",
+      "sourceSha256": "8cb61f1870f570a1e32df7c1d40ba89803320263774a37ac6a1ea59b86ebdbe8",
+      "sha256": "8cb61f1870f570a1e32df7c1d40ba89803320263774a37ac6a1ea59b86ebdbe8",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "lib.rs",
+      "file": "engine/stockmesh/lib.rs",
+      "sourceSha256": "96bbb5339ecfb0e0f55b5f180e34b2fc537413c190a6b68f6410d8aaa6b401bc",
+      "sha256": "96bbb5339ecfb0e0f55b5f180e34b2fc537413c190a6b68f6410d8aaa6b401bc",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "compiler/mod.rs",
+      "file": "engine/stockmesh/compiler/mod.rs",
+      "sourceSha256": "db3c7679ae12f7df62f3f25faf1cc51659c51e1618a567a4aa86dbc051d19217",
+      "sha256": "db3c7679ae12f7df62f3f25faf1cc51659c51e1618a567a4aa86dbc051d19217",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "optimizer/mod.rs",
+      "file": "engine/stockmesh/optimizer/mod.rs",
+      "sourceSha256": "768d30784d5665477cc749f94e217bca086dce602c7796b37655478d02b744a6",
+      "sha256": "768d30784d5665477cc749f94e217bca086dce602c7796b37655478d02b744a6",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "optimizer/oracle.rs",
+      "file": "engine/stockmesh/optimizer/oracle.rs",
+      "sourceSha256": "e1feeabbd41784abbb0e94bfc8827c2079499dce18319d3b44fa1156fc1fb158",
+      "sha256": "e1feeabbd41784abbb0e94bfc8827c2079499dce18319d3b44fa1156fc1fb158",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "optimizer/tape.rs",
+      "file": "engine/stockmesh/optimizer/tape.rs",
+      "sourceSha256": "b63b5391e3bcdba51e208ca479a80fd05516613f641a9eed63e5cf78fb9b7bcf",
+      "sha256": "b63b5391e3bcdba51e208ca479a80fd05516613f641a9eed63e5cf78fb9b7bcf",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "reflow/mod.rs",
+      "file": "engine/stockmesh/reflow/mod.rs",
+      "sourceSha256": "1624c17f0457f00985fe9dcc373127325ccb852bb4f7e2ebdcf8db8a1025f6dc",
+      "sha256": "1624c17f0457f00985fe9dcc373127325ccb852bb4f7e2ebdcf8db8a1025f6dc",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "runtime/admission.rs",
+      "file": "engine/stockmesh/runtime/admission.rs",
+      "sourceSha256": "0ac1504b957deb26b833d1ba3a5cd521b605e7aedac5608143de35798e73416c",
+      "sha256": "0ac1504b957deb26b833d1ba3a5cd521b605e7aedac5608143de35798e73416c",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "runtime/fixture.rs",
+      "file": "engine/stockmesh/runtime/fixture.rs",
+      "sourceSha256": "4839f99367119d4d4551b4822494facc74fd73867bf93b578035ef95a388a588",
+      "sha256": "4839f99367119d4d4551b4822494facc74fd73867bf93b578035ef95a388a588",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "runtime/mod.rs",
+      "file": "engine/stockmesh/runtime/mod.rs",
+      "sourceSha256": "8c248b55b8c06d3beb934c3af7d2ba2b2b5a92e7061a5134e61f75cdf641d5fa",
+      "sha256": "8c248b55b8c06d3beb934c3af7d2ba2b2b5a92e7061a5134e61f75cdf641d5fa",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "clearing/mod.rs",
+      "file": "engine/stockmesh/clearing/mod.rs",
+      "sourceSha256": "01f75c28b63cd9e2d326c4a73a8193d51183d6c700866bdee049d92b137efbb4",
+      "sha256": "01f75c28b63cd9e2d326c4a73a8193d51183d6c700866bdee049d92b137efbb4",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "fair/mod.rs",
+      "file": "engine/stockmesh/fair/mod.rs",
+      "sourceSha256": "b491a90d6511cb2486f935f501ff7d9421d89f5f23f04c91872f5b911385f3d4",
+      "sha256": "b491a90d6511cb2486f935f501ff7d9421d89f5f23f04c91872f5b911385f3d4",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "onebook/mod.rs",
+      "file": "engine/stockmesh/onebook/mod.rs",
+      "sourceSha256": "4f03f3d0466672c8b3b8cb83189f46420189c36eff7934e3e1ac4eb4253b9304",
+      "sha256": "4f03f3d0466672c8b3b8cb83189f46420189c36eff7934e3e1ac4eb4253b9304",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "adapters/Cargo.lock",
+      "file": "engine/stockmesh/adapters/Cargo.lock",
+      "sourceSha256": "9de46a5073d263bc5f1e5145adec8175206a83bc06a89b9cb9d890a9dc183404",
+      "sha256": "9de46a5073d263bc5f1e5145adec8175206a83bc06a89b9cb9d890a9dc183404",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "adapters/Cargo.toml",
+      "file": "engine/stockmesh/adapters/Cargo.toml",
+      "sourceSha256": "50abb818388b8745d939f25807667f6fde0d151c8f34154e79e8f883b7996934",
+      "sha256": "50abb818388b8745d939f25807667f6fde0d151c8f34154e79e8f883b7996934",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "adapters/graph.rs",
+      "file": "engine/stockmesh/adapters/graph.rs",
+      "sourceSha256": "3f5c0c55dba18f13e2aae7cc19bfcd7da40ebb54918bcc3670298d72224ed050",
+      "sha256": "3f5c0c55dba18f13e2aae7cc19bfcd7da40ebb54918bcc3670298d72224ed050",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "adapters/lib.rs",
+      "file": "engine/stockmesh/adapters/lib.rs",
+      "sourceSha256": "329b5b877d7a2dd08a62b69c7f7a20ea1e58d49ccd0ad4eb750ae5f399d8b416",
+      "sha256": "329b5b877d7a2dd08a62b69c7f7a20ea1e58d49ccd0ad4eb750ae5f399d8b416",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "native/Cargo.lock",
+      "file": "engine/stockmesh/native/Cargo.lock",
+      "sourceSha256": "506c60d3f91909d3593df92855ca455141b289aedd5dee2b6c1768fc5cd4c16e",
+      "sha256": "506c60d3f91909d3593df92855ca455141b289aedd5dee2b6c1768fc5cd4c16e",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "native/Cargo.toml",
+      "file": "engine/stockmesh/native/Cargo.toml",
+      "sourceSha256": "a757b5069d58d289f40cf35a080cde69d451ec58686306b7b269a24bbc173cd7",
+      "sha256": "a757b5069d58d289f40cf35a080cde69d451ec58686306b7b269a24bbc173cd7",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "native/src/clmm.rs",
+      "file": "engine/stockmesh/native/src/clmm.rs",
+      "sourceSha256": "b5318efdc50d0b550ba7106c6386949f40a13f843a651cfee1e919ae84c4bf4a",
+      "sha256": "b5318efdc50d0b550ba7106c6386949f40a13f843a651cfee1e919ae84c4bf4a",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "native/src/clmm_dynamic.rs",
+      "file": "engine/stockmesh/native/src/clmm_dynamic.rs",
+      "sourceSha256": "575c9ef017e79b565efdddff809889d4a8e9d67dda1d47d974ed9fc4ffc1830d",
+      "sha256": "575c9ef017e79b565efdddff809889d4a8e9d67dda1d47d974ed9fc4ffc1830d",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "native/src/damm.rs",
+      "file": "engine/stockmesh/native/src/damm.rs",
+      "sourceSha256": "417e3ed2d5a0bf131af72df993b1a315b0884438426b7399f9757c2dedf93f46",
+      "sha256": "417e3ed2d5a0bf131af72df993b1a315b0884438426b7399f9757c2dedf93f46",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "native/src/dlmm.rs",
+      "file": "engine/stockmesh/native/src/dlmm.rs",
+      "sourceSha256": "3f70902fe295ca2c35a50cde0b3a09f2fe6924bb5b4dd399a693d6cf27facae2",
+      "sha256": "3f70902fe295ca2c35a50cde0b3a09f2fe6924bb5b4dd399a693d6cf27facae2",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "native/src/lib.rs",
+      "file": "engine/stockmesh/native/src/lib.rs",
+      "sourceSha256": "e5b473c4acf488079e1ad435de56dc71d2297c439be062fc747dd4da6776aa72",
+      "sha256": "e5b473c4acf488079e1ad435de56dc71d2297c439be062fc747dd4da6776aa72",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "native/src/memo.rs",
+      "file": "engine/stockmesh/native/src/memo.rs",
+      "sourceSha256": "d06ae7cc99901c58319696ac6f88e9aa34aa8dc610d0257a078d1e83e43f1b3c",
+      "sha256": "d06ae7cc99901c58319696ac6f88e9aa34aa8dc610d0257a078d1e83e43f1b3c",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "native/src/orca.rs",
+      "file": "engine/stockmesh/native/src/orca.rs",
+      "sourceSha256": "19270e043d307161f2690af51b41001cf48ebf84b239cffaf434a0874ccf87dc",
+      "sha256": "19270e043d307161f2690af51b41001cf48ebf84b239cffaf434a0874ccf87dc",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "native/src/surface.rs",
+      "file": "engine/stockmesh/native/src/surface.rs",
+      "sourceSha256": "471dce8661aad79f8157fe7b12507038a9d43bc18956da1af1ae0b0e40dcd9cf",
+      "sha256": "471dce8661aad79f8157fe7b12507038a9d43bc18956da1af1ae0b0e40dcd9cf",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "native/tests/boundaries.rs",
+      "file": "engine/stockmesh/native/tests/boundaries.rs",
+      "sourceSha256": "197e52af77086636164dc0ec5624f3b880799017b5f417d4163785eb959b1b84",
+      "sha256": "197e52af77086636164dc0ec5624f3b880799017b5f417d4163785eb959b1b84",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "native/tests/damm.rs",
+      "file": "engine/stockmesh/native/tests/damm.rs",
+      "sourceSha256": "9d90565baf056698a91aa4bff89776c87337f7ec3247325486dfc07529b3d4be",
+      "sha256": "9d90565baf056698a91aa4bff89776c87337f7ec3247325486dfc07529b3d4be",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "native/tests/dlmm.rs",
+      "file": "engine/stockmesh/native/tests/dlmm.rs",
+      "sourceSha256": "e5e205097651007f1defb964c10cb7357a8ce318dd8033a1572b650ed76373d3",
+      "sha256": "e5e205097651007f1defb964c10cb7357a8ce318dd8033a1572b650ed76373d3",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "native/tests/memo.rs",
+      "file": "engine/stockmesh/native/tests/memo.rs",
+      "sourceSha256": "2fcb5e6fac0dcda3a9e6e9e123a286df775c8b153dd00f4a7c865179eb2464f1",
+      "sha256": "2fcb5e6fac0dcda3a9e6e9e123a286df775c8b153dd00f4a7c865179eb2464f1",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "native/tests/orca.rs",
+      "file": "engine/stockmesh/native/tests/orca.rs",
+      "sourceSha256": "e66f8c353b1d23a90b5075c779f0f2b7d084807b64d218225a5813a93609331a",
+      "sha256": "e66f8c353b1d23a90b5075c779f0f2b7d084807b64d218225a5813a93609331a",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "native/tests/scaled_ui.rs",
+      "file": "engine/stockmesh/native/tests/scaled_ui.rs",
+      "sourceSha256": "c1b6190eb9819acb65cc19572fc6ed843035ebef57420dccf75cfd7f4b570c7d",
+      "sha256": "c1b6190eb9819acb65cc19572fc6ed843035ebef57420dccf75cfd7f4b570c7d",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/Cargo.lock",
+      "file": "engine/stockmesh/host/Cargo.lock",
+      "sourceSha256": "e655cd6fe06470afe999d78afed04ebaa36a07694705094c25f1a94656b76a3f",
+      "sha256": "e655cd6fe06470afe999d78afed04ebaa36a07694705094c25f1a94656b76a3f",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/Cargo.toml",
+      "file": "engine/stockmesh/host/Cargo.toml",
+      "sourceSha256": "6c299256dac17b589b533fb0f1268deb035d7cf9d6a14823f6d5711b6df559fe",
+      "sha256": "6c299256dac17b589b533fb0f1268deb035d7cf9d6a14823f6d5711b6df559fe",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/README.md",
+      "file": "engine/stockmesh/host/README.md",
+      "sourceSha256": "7856f1e1628e3e851bb79a3eeb796881d9f9cfaee8f8a08ba566c5a276d0886f",
+      "sha256": "7856f1e1628e3e851bb79a3eeb796881d9f9cfaee8f8a08ba566c5a276d0886f",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/examples/sender-load.rs",
+      "file": "engine/stockmesh/host/examples/sender-load.rs",
+      "sourceSha256": "027556b935c8bec1cde3b82f6f7b07f3193b50f79bc3d584325dea85d9bcde9c",
+      "sha256": "027556b935c8bec1cde3b82f6f7b07f3193b50f79bc3d584325dea85d9bcde9c",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/basket_wire/execution.rs",
+      "file": "engine/stockmesh/host/src/basket_wire/execution.rs",
+      "sourceSha256": "4088226914d90fa95f9eac347a56ffbe92f8698b6d6fa7bc7d8a91c1fb5a65e0",
+      "sha256": "4088226914d90fa95f9eac347a56ffbe92f8698b6d6fa7bc7d8a91c1fb5a65e0",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/basket_wire.rs",
+      "file": "engine/stockmesh/host/src/basket_wire.rs",
+      "sourceSha256": "1bf2c128697a4acf6246c2c3af204d1e0e98209e34b5e15d20140d6e5a29a7c3",
+      "sha256": "1bf2c128697a4acf6246c2c3af204d1e0e98209e34b5e15d20140d6e5a29a7c3",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/bind-exposure-fixture.rs",
+      "file": "engine/stockmesh/host/src/bin/bind-exposure-fixture.rs",
+      "sourceSha256": "141bc1aa0d138d6acdbca6da45742057fc917e66dd39a7d3e282ec106932ec0e",
+      "sha256": "141bc1aa0d138d6acdbca6da45742057fc917e66dd39a7d3e282ec106932ec0e",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/plan-gate.rs",
+      "file": "engine/stockmesh/host/src/bin/plan-gate.rs",
+      "sourceSha256": "503a3b38a2295f0513782a67df8f5aa084603fcbfa8628ba19dc1f7d8a423966",
+      "sha256": "503a3b38a2295f0513782a67df8f5aa084603fcbfa8628ba19dc1f7d8a423966",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/policy-heartbeat.rs",
+      "file": "engine/stockmesh/host/src/bin/policy-heartbeat.rs",
+      "sourceSha256": "ea1733463f59f573d7a4584a50403ce9a09a5d2684cc986f8a3fe7bbeab1d3b1",
+      "sha256": "ea1733463f59f573d7a4584a50403ce9a09a5d2684cc986f8a3fe7bbeab1d3b1",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/product-policy-bundle.rs",
+      "file": "engine/stockmesh/host/src/bin/product-policy-bundle.rs",
+      "sourceSha256": "c7b07d89ac477bb1a3c6f09c487c16fbf163ec479503089ef82056a4d981e07f",
+      "sha256": "c7b07d89ac477bb1a3c6f09c487c16fbf163ec479503089ef82056a4d981e07f",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/provider-quota.rs",
+      "file": "engine/stockmesh/host/src/bin/provider-quota.rs",
+      "sourceSha256": "c3d326b13ec6b3a092807d732932cada097810afe00d4c53a50893b1a1cce593",
+      "sha256": "c3d326b13ec6b3a092807d732932cada097810afe00d4c53a50893b1a1cce593",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/provider-read-lines.rs",
+      "file": "engine/stockmesh/host/src/bin/provider-read-lines.rs",
+      "sourceSha256": "f4127d94c8268e81e6368c61f2beeda81f1b1a3d7d3e2adb61b84dc855cf3743",
+      "sha256": "f4127d94c8268e81e6368c61f2beeda81f1b1a3d7d3e2adb61b84dc855cf3743",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/provider-read-probe.rs",
+      "file": "engine/stockmesh/host/src/bin/provider-read-probe.rs",
+      "sourceSha256": "c9169c21ffceabddb1e34770158d71750d5bc446c5b7ed9a64fefa07922d4e50",
+      "sha256": "c9169c21ffceabddb1e34770158d71750d5bc446c5b7ed9a64fefa07922d4e50",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/quote-server.rs",
+      "file": "engine/stockmesh/host/src/bin/quote-server.rs",
+      "sourceSha256": "9cb199512d1c9ce41f18448f1588b902e05208c3ac99be65dc4ef84398689387",
+      "sha256": "9cb199512d1c9ce41f18448f1588b902e05208c3ac99be65dc4ef84398689387",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/sender-step.rs",
+      "file": "engine/stockmesh/host/src/bin/sender-step.rs",
+      "sourceSha256": "a8489131448369385bfa9cd430aede56d2c374559ed98f0f213850b8e2c01473",
+      "sha256": "a8489131448369385bfa9cd430aede56d2c374559ed98f0f213850b8e2c01473",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/stock-catalog-scan.rs",
+      "file": "engine/stockmesh/host/src/bin/stock-catalog-scan.rs",
+      "sourceSha256": "8db68b632f82eea70795df310bb6b1735fddada6598f9b4550b7fab1a27b9eea",
+      "sha256": "8db68b632f82eea70795df310bb6b1735fddada6598f9b4550b7fab1a27b9eea",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/stockmesh-api.rs",
+      "file": "engine/stockmesh/host/src/bin/stockmesh-api.rs",
+      "sourceSha256": "d0fde5b5ffaded9a06dcef47f10b8dc2e6beabc6c1e6b5cc55d63b6fd28b0e1a",
+      "sha256": "d0fde5b5ffaded9a06dcef47f10b8dc2e6beabc6c1e6b5cc55d63b6fd28b0e1a",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/stockmesh-array-horizon.rs",
+      "file": "engine/stockmesh/host/src/bin/stockmesh-array-horizon.rs",
+      "sourceSha256": "6050b4b0003a894a75ba1660a8c9a43cb8dcf295525664982c702294e37dfdf9",
+      "sha256": "6050b4b0003a894a75ba1660a8c9a43cb8dcf295525664982c702294e37dfdf9",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/stockmesh-deployment-preflight.rs",
+      "file": "engine/stockmesh/host/src/bin/stockmesh-deployment-preflight.rs",
+      "sourceSha256": "a1de9fcbaa5d44d88728badbf64f8f61c8bb0ba688c5446b30f33ab6a24a0cbc",
+      "sha256": "a1de9fcbaa5d44d88728badbf64f8f61c8bb0ba688c5446b30f33ab6a24a0cbc",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/stockmesh-execution-dependencies.rs",
+      "file": "engine/stockmesh/host/src/bin/stockmesh-execution-dependencies.rs",
+      "sourceSha256": "df441983e8c6e3e1a23ea783152dcb8d93499754af83bdc26dbda819b646a753",
+      "sha256": "df441983e8c6e3e1a23ea783152dcb8d93499754af83bdc26dbda819b646a753",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/stockmesh-identity-probe.rs",
+      "file": "engine/stockmesh/host/src/bin/stockmesh-identity-probe.rs",
+      "sourceSha256": "4f8afb3b715bce706e6ad693bd145de9e9804c971648587603899917c5286277",
+      "sha256": "4f8afb3b715bce706e6ad693bd145de9e9804c971648587603899917c5286277",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/stockmesh-lookup-plan.rs",
+      "file": "engine/stockmesh/host/src/bin/stockmesh-lookup-plan.rs",
+      "sourceSha256": "1e71f169f6cc963c3c87008ceb831b37d460f69491e99a2154bc7ee8b991f4c3",
+      "sha256": "1e71f169f6cc963c3c87008ceb831b37d460f69491e99a2154bc7ee8b991f4c3",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/bin/world-proof.rs",
+      "file": "engine/stockmesh/host/src/bin/world-proof.rs",
+      "sourceSha256": "78d3823af206b4a219e56db3c5f91147b47917da20be5821494cc33526543a41",
+      "sha256": "78d3823af206b4a219e56db3c5f91147b47917da20be5821494cc33526543a41",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/capsule.rs",
+      "file": "engine/stockmesh/host/src/capsule.rs",
+      "sourceSha256": "fb14bae1298bc4e482e095b83d96f6bed4cc37ba8e9a5133b67ab15fb3ee3375",
+      "sha256": "fb14bae1298bc4e482e095b83d96f6bed4cc37ba8e9a5133b67ab15fb3ee3375",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/catalog.rs",
+      "file": "engine/stockmesh/host/src/catalog.rs",
+      "sourceSha256": "1396e2ce103d16465c811112a6e186fa8e1287869daacce77bda2721a851dbc1",
+      "sha256": "1396e2ce103d16465c811112a6e186fa8e1287869daacce77bda2721a851dbc1",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/direct_prepare/basket.rs",
+      "file": "engine/stockmesh/host/src/direct_prepare/basket.rs",
+      "sourceSha256": "50eb247c5c664fdacb1d2a6980c0b3a36ac10f61dce36f4c20b4ad6bc1c955ed",
+      "sha256": "50eb247c5c664fdacb1d2a6980c0b3a36ac10f61dce36f4c20b4ad6bc1c955ed",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/direct_prepare.rs",
+      "file": "engine/stockmesh/host/src/direct_prepare.rs",
+      "sourceSha256": "42388af663bb39b80dba65a44362a9129b6db04f1938b4a27df68bab6d2e166a",
+      "sha256": "42388af663bb39b80dba65a44362a9129b6db04f1938b4a27df68bab6d2e166a",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/direct_state.rs",
+      "file": "engine/stockmesh/host/src/direct_state.rs",
+      "sourceSha256": "8b55a209101f136df4fe5ce81f35c3ed191575de027339f449c4ace0dddfdad5",
+      "sha256": "8b55a209101f136df4fe5ce81f35c3ed191575de027339f449c4ace0dddfdad5",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/exposure_pipeline.rs",
+      "file": "engine/stockmesh/host/src/exposure_pipeline.rs",
+      "sourceSha256": "2f4271abe03c7dbf1daf01e24bd52d2e681ef5dfc62353e8aa0a2f31977be585",
+      "sha256": "2f4271abe03c7dbf1daf01e24bd52d2e681ef5dfc62353e8aa0a2f31977be585",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/exposure_receipt/direct_reflow_vector.rs",
+      "file": "engine/stockmesh/host/src/exposure_receipt/direct_reflow_vector.rs",
+      "sourceSha256": "2930ee7345e00ae7c14e47109b6690ef41050917242c06dd3fd7a5a0f6068043",
+      "sha256": "2930ee7345e00ae7c14e47109b6690ef41050917242c06dd3fd7a5a0f6068043",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/exposure_receipt/funded_vector.rs",
+      "file": "engine/stockmesh/host/src/exposure_receipt/funded_vector.rs",
+      "sourceSha256": "ea127de69fe3b65846285076a44be9ae7be35acf053009c547ce006ae62915d7",
+      "sha256": "ea127de69fe3b65846285076a44be9ae7be35acf053009c547ce006ae62915d7",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/exposure_receipt/sbf_vector.rs",
+      "file": "engine/stockmesh/host/src/exposure_receipt/sbf_vector.rs",
+      "sourceSha256": "5791b303a238bff14dd2fa4d1c3d2780707671a16e8d2d75ac208d1e37b0ad05",
+      "sha256": "5791b303a238bff14dd2fa4d1c3d2780707671a16e8d2d75ac208d1e37b0ad05",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/exposure_receipt/tests.rs",
+      "file": "engine/stockmesh/host/src/exposure_receipt/tests.rs",
+      "sourceSha256": "2256043bc56e5134563cb03441aaa8945b741dfdcd17673286371d27d414829e",
+      "sha256": "2256043bc56e5134563cb03441aaa8945b741dfdcd17673286371d27d414829e",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/exposure_receipt.rs",
+      "file": "engine/stockmesh/host/src/exposure_receipt.rs",
+      "sourceSha256": "aaab7e7ee7e72024513de036645c3221c82012bcde713f5360b27a7c2d565f32",
+      "sha256": "aaab7e7ee7e72024513de036645c3221c82012bcde713f5360b27a7c2d565f32",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/exposure_wire.rs",
+      "file": "engine/stockmesh/host/src/exposure_wire.rs",
+      "sourceSha256": "b1875168b0fd93879582ff1e937cac318ad3b7e9d010fccf5f0f011b1a99b8b0",
+      "sha256": "b1875168b0fd93879582ff1e937cac318ad3b7e9d010fccf5f0f011b1a99b8b0",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/fair.rs",
+      "file": "engine/stockmesh/host/src/fair.rs",
+      "sourceSha256": "f30c83ece07f0d467863259898ccae86c1a63e17a432d022a0ca1661e295019e",
+      "sha256": "f30c83ece07f0d467863259898ccae86c1a63e17a432d022a0ca1661e295019e",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/feed.rs",
+      "file": "engine/stockmesh/host/src/feed.rs",
+      "sourceSha256": "6ae9a1fa9de66be15e3beaf548f9d0e9559c2e7b1df31e26ba706f1ea7129116",
+      "sha256": "6ae9a1fa9de66be15e3beaf548f9d0e9559c2e7b1df31e26ba706f1ea7129116",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/investment.rs",
+      "file": "engine/stockmesh/host/src/investment.rs",
+      "sourceSha256": "89a15c87095483ac31ae00538a7efa5107407bc0d817833888c61c4566efe5e1",
+      "sha256": "89a15c87095483ac31ae00538a7efa5107407bc0d817833888c61c4566efe5e1",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/journal.rs",
+      "file": "engine/stockmesh/host/src/journal.rs",
+      "sourceSha256": "ab8f39a993e804db3cee73f3f2486a35543dbb94ea64a37683121505587c57ed",
+      "sha256": "ab8f39a993e804db3cee73f3f2486a35543dbb94ea64a37683121505587c57ed",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/lib.rs",
+      "file": "engine/stockmesh/host/src/lib.rs",
+      "sourceSha256": "899843051c221cc3c7a3b8d8053bb781b9cbb59095940ae99d3dd7ab990b43b5",
+      "sha256": "899843051c221cc3c7a3b8d8053bb781b9cbb59095940ae99d3dd7ab990b43b5",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/local_chain_state.rs",
+      "file": "engine/stockmesh/host/src/local_chain_state.rs",
+      "sourceSha256": "f29e8121c0884f724891a2bd05d83b5ced9e27faed394d00efa403fd1f471ab4",
+      "sha256": "f29e8121c0884f724891a2bd05d83b5ced9e27faed394d00efa403fd1f471ab4",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/lookup_registry.rs",
+      "file": "engine/stockmesh/host/src/lookup_registry.rs",
+      "sourceSha256": "fc446602f8b719dcd0d118bb69c76feaf84ab49516c673a26ef3113b3cbea8cf",
+      "sha256": "fc446602f8b719dcd0d118bb69c76feaf84ab49516c673a26ef3113b3cbea8cf",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/market.rs",
+      "file": "engine/stockmesh/host/src/market.rs",
+      "sourceSha256": "75c803fb6afc50277cb81b409bd2ecac83bc7cd34eafd8f8fc10c3e0749d6f79",
+      "sha256": "75c803fb6afc50277cb81b409bd2ecac83bc7cd34eafd8f8fc10c3e0749d6f79",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/mesh.rs",
+      "file": "engine/stockmesh/host/src/mesh.rs",
+      "sourceSha256": "daac8fc901b551857db8b14fa06cb0b528f82d2f7afde70ff6d452cfaba56f55",
+      "sha256": "daac8fc901b551857db8b14fa06cb0b528f82d2f7afde70ff6d452cfaba56f55",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/model_store.rs",
+      "file": "engine/stockmesh/host/src/model_store.rs",
+      "sourceSha256": "aea71dc3fd42d2431f0e2d19d5e5e183e058c491d224ddf2c8344cfd223ac4af",
+      "sha256": "aea71dc3fd42d2431f0e2d19d5e5e183e058c491d224ddf2c8344cfd223ac4af",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/native_payout.rs",
+      "file": "engine/stockmesh/host/src/native_payout.rs",
+      "sourceSha256": "3d1de115fcae8967381c409cb3fb79c3976f16e1ac1b58a8389f76b84088017f",
+      "sha256": "3d1de115fcae8967381c409cb3fb79c3976f16e1ac1b58a8389f76b84088017f",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/native_wire/captured_inventory_tests.rs",
+      "file": "engine/stockmesh/host/src/native_wire/captured_inventory_tests.rs",
+      "sourceSha256": "7060af96c521855653eff903da5ffa043092376bbe84d9237379e1efdaac8b77",
+      "sha256": "7060af96c521855653eff903da5ffa043092376bbe84d9237379e1efdaac8b77",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/native_wire.rs",
+      "file": "engine/stockmesh/host/src/native_wire.rs",
+      "sourceSha256": "f2911c69bac509e747d341e0e6ed7d53681a79df5a4a87c97142f64dffc51a66",
+      "sha256": "f2911c69bac509e747d341e0e6ed7d53681a79df5a4a87c97142f64dffc51a66",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/onebook_wire.rs",
+      "file": "engine/stockmesh/host/src/onebook_wire.rs",
+      "sourceSha256": "cb3629e47645ddf56ae61c8ceb9f5106b132630f2b306df69f3873c8d3d270a8",
+      "sha256": "cb3629e47645ddf56ae61c8ceb9f5106b132630f2b306df69f3873c8d3d270a8",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/pipeline.rs",
+      "file": "engine/stockmesh/host/src/pipeline.rs",
+      "sourceSha256": "91c09069d95fed9dc87ad3cfed22b6bad0f2f8953a18a29dfc3a1d7e82058393",
+      "sha256": "91c09069d95fed9dc87ad3cfed22b6bad0f2f8953a18a29dfc3a1d7e82058393",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/policy_bindings.rs",
+      "file": "engine/stockmesh/host/src/policy_bindings.rs",
+      "sourceSha256": "3c59fb1a281a7ae6e2915168db037a4cfabec73b29cbe222f655a492a8c12ec4",
+      "sha256": "3c59fb1a281a7ae6e2915168db037a4cfabec73b29cbe222f655a492a8c12ec4",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/prepared_quotes.rs",
+      "file": "engine/stockmesh/host/src/prepared_quotes.rs",
+      "sourceSha256": "a32d2eff86f80d53b7c19597e495971ed28cd6fa92bc63f3b74d8edacc7947c6",
+      "sha256": "a32d2eff86f80d53b7c19597e495971ed28cd6fa92bc63f3b74d8edacc7947c6",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/provider.rs",
+      "file": "engine/stockmesh/host/src/provider.rs",
+      "sourceSha256": "a4e8fd974d06795b3a1a19953b73468a1c3f798895f1347987c48b3f3088c9bc",
+      "sha256": "a4e8fd974d06795b3a1a19953b73468a1c3f798895f1347987c48b3f3088c9bc",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/provider_quota.rs",
+      "file": "engine/stockmesh/host/src/provider_quota.rs",
+      "sourceSha256": "4f94d0d5b20f3cf1b318d5c08a649e8037b519c9d17656dab22e52ecfc144f7c",
+      "sha256": "4f94d0d5b20f3cf1b318d5c08a649e8037b519c9d17656dab22e52ecfc144f7c",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/pyth.rs",
+      "file": "engine/stockmesh/host/src/pyth.rs",
+      "sourceSha256": "69866027c63053cad4b1066785f7d2d7e8da7775ec6be1ad2e6c48618b260f62",
+      "sha256": "69866027c63053cad4b1066785f7d2d7e8da7775ec6be1ad2e6c48618b260f62",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/receipt.rs",
+      "file": "engine/stockmesh/host/src/receipt.rs",
+      "sourceSha256": "d5a788a4b4c87d77b7ac9723d8735ab11931243bd602934b3b39bbf18e6d4d0d",
+      "sha256": "d5a788a4b4c87d77b7ac9723d8735ab11931243bd602934b3b39bbf18e6d4d0d",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/rpc.rs",
+      "file": "engine/stockmesh/host/src/rpc.rs",
+      "sourceSha256": "f1c639209339e3a62116fc2e4db1feef41be42759968fe43f94d211fc6552d3c",
+      "sha256": "f1c639209339e3a62116fc2e4db1feef41be42759968fe43f94d211fc6552d3c",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/sender.rs",
+      "file": "engine/stockmesh/host/src/sender.rs",
+      "sourceSha256": "0cf6bef7fd8e30e4ea2bb1231d08b0c94a212466f9a4b8f68d6398261eca66f0",
+      "sha256": "0cf6bef7fd8e30e4ea2bb1231d08b0c94a212466f9a4b8f68d6398261eca66f0",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/slot_signal.rs",
+      "file": "engine/stockmesh/host/src/slot_signal.rs",
+      "sourceSha256": "933f1dca8b83ef17ba5cea510c7bceba52d7e0964a9e5bfdd18ac3bdd2e02ff5",
+      "sha256": "933f1dca8b83ef17ba5cea510c7bceba52d7e0964a9e5bfdd18ac3bdd2e02ff5",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/stock.rs",
+      "file": "engine/stockmesh/host/src/stock.rs",
+      "sourceSha256": "6d00352f8b6bde7e75b683382190c673f5c67ce64e8194679b57527a8d8d7b6c",
+      "sha256": "6d00352f8b6bde7e75b683382190c673f5c67ce64e8194679b57527a8d8d7b6c",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/stockmesh_api/order_page.rs",
+      "file": "engine/stockmesh/host/src/stockmesh_api/order_page.rs",
+      "sourceSha256": "6f2b4c0d8aef21db6a8a7013670729281d699e445df49c05830f65b998734871",
+      "sha256": "6f2b4c0d8aef21db6a8a7013670729281d699e445df49c05830f65b998734871",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/stockmesh_api/portfolio_discovery.rs",
+      "file": "engine/stockmesh/host/src/stockmesh_api/portfolio_discovery.rs",
+      "sourceSha256": "90c5617d8f76903d3773a9b8ddee52898fd99e1e0305e068b22268e08cd214d0",
+      "sha256": "90c5617d8f76903d3773a9b8ddee52898fd99e1e0305e068b22268e08cd214d0",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/stockmesh_api/sell_route.rs",
+      "file": "engine/stockmesh/host/src/stockmesh_api/sell_route.rs",
+      "sourceSha256": "f1729fbe66ed915dfb016f62db5624000b494b22948c91640d8de49f3ad0d965",
+      "sha256": "f1729fbe66ed915dfb016f62db5624000b494b22948c91640d8de49f3ad0d965",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/stockmesh_api/strategies/basket.rs",
+      "file": "engine/stockmesh/host/src/stockmesh_api/strategies/basket.rs",
+      "sourceSha256": "cbf12d1fd51e1dc9223cae2bb4e579a3bba08e87602a0fac5df3ef70227f42f5",
+      "sha256": "cbf12d1fd51e1dc9223cae2bb4e579a3bba08e87602a0fac5df3ef70227f42f5",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/stockmesh_api/strategies.rs",
+      "file": "engine/stockmesh/host/src/stockmesh_api/strategies.rs",
+      "sourceSha256": "b21b3756f92d33c6fd77abb37101c257b2853d9dd6a3f6f47d35405a99223e78",
+      "sha256": "b21b3756f92d33c6fd77abb37101c257b2853d9dd6a3f6f47d35405a99223e78",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/stockmesh_api/submission_recovery_tests.rs",
+      "file": "engine/stockmesh/host/src/stockmesh_api/submission_recovery_tests.rs",
+      "sourceSha256": "af6bbf49275eb2c88166143fc6ee5014a0be555ea2ec430faea634a218f7241c",
+      "sha256": "af6bbf49275eb2c88166143fc6ee5014a0be555ea2ec430faea634a218f7241c",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/stockmesh_api/universe_execution_tests.rs",
+      "file": "engine/stockmesh/host/src/stockmesh_api/universe_execution_tests.rs",
+      "sourceSha256": "eb49ad70a989bae5af06d00bbaf40bbec7b57d9504c71e460c844de9849e0ead",
+      "sha256": "eb49ad70a989bae5af06d00bbaf40bbec7b57d9504c71e460c844de9849e0ead",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/stockmesh_api.rs",
+      "file": "engine/stockmesh/host/src/stockmesh_api.rs",
+      "sourceSha256": "a6b98bc3de6c88181bee15608fd2efe91329a4bbdeb6900a53930dfc0b0360a1",
+      "sha256": "a6b98bc3de6c88181bee15608fd2efe91329a4bbdeb6900a53930dfc0b0360a1",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/strategy.rs",
+      "file": "engine/stockmesh/host/src/strategy.rs",
+      "sourceSha256": "70628d06ae812112ee3855d9862c4e44301269fb09eecac577ba8ed4978392e4",
+      "sha256": "70628d06ae812112ee3855d9862c4e44301269fb09eecac577ba8ed4978392e4",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/swap_wire/tests.rs",
+      "file": "engine/stockmesh/host/src/swap_wire/tests.rs",
+      "sourceSha256": "6ab661b44a3fe34c9770b30e629f3be4e28e3acbed29f597a22f81f0cff30e2b",
+      "sha256": "6ab661b44a3fe34c9770b30e629f3be4e28e3acbed29f597a22f81f0cff30e2b",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/swap_wire.rs",
+      "file": "engine/stockmesh/host/src/swap_wire.rs",
+      "sourceSha256": "5bcf1cea7644805c178b8046257481fdc483c46dd8e71e905693c5c1d7b44d1c",
+      "sha256": "5bcf1cea7644805c178b8046257481fdc483c46dd8e71e905693c5c1d7b44d1c",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/tests.rs",
+      "file": "engine/stockmesh/host/src/tests.rs",
+      "sourceSha256": "690f0e8c36e59bde0510758535bddb07d7533f677c6e9abbda7ef7d0b6e2eb53",
+      "sha256": "690f0e8c36e59bde0510758535bddb07d7533f677c6e9abbda7ef7d0b6e2eb53",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/wallet_wire.rs",
+      "file": "engine/stockmesh/host/src/wallet_wire.rs",
+      "sourceSha256": "6330835681cd01c6bbe68f4a6162aa79df198d4899885a912497bfcb25e6f135",
+      "sha256": "6330835681cd01c6bbe68f4a6162aa79df198d4899885a912497bfcb25e6f135",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/src/world.rs",
+      "file": "engine/stockmesh/host/src/world.rs",
+      "sourceSha256": "f87630924ac90f7576611967355870380b5655e5159f038c6f617589db77c303",
+      "sha256": "f87630924ac90f7576611967355870380b5655e5159f038c6f617589db77c303",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/tests/currentness.rs",
+      "file": "engine/stockmesh/host/tests/currentness.rs",
+      "sourceSha256": "397fa649ad04fb9f886b4c8acfb7a00fb70a9ceab63425aa0074cad032a49135",
+      "sha256": "397fa649ad04fb9f886b4c8acfb7a00fb70a9ceab63425aa0074cad032a49135",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/tests/fair.rs",
+      "file": "engine/stockmesh/host/tests/fair.rs",
+      "sourceSha256": "b5d0915671d7221b88d986e03049637df1d996fdccbefbaf59f805d88fb5ede5",
+      "sha256": "b5d0915671d7221b88d986e03049637df1d996fdccbefbaf59f805d88fb5ede5",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/tests/order_observation.rs",
+      "file": "engine/stockmesh/host/tests/order_observation.rs",
+      "sourceSha256": "865447ab7080ec774a66f79ccdd0ffa800eb3d76622ccfd2cf696ce144b28423",
+      "sha256": "865447ab7080ec774a66f79ccdd0ffa800eb3d76622ccfd2cf696ce144b28423",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/tests/provider_boundary.rs",
+      "file": "engine/stockmesh/host/tests/provider_boundary.rs",
+      "sourceSha256": "02c726da32c84aed40b960a32127c74df7c11ff4c7ef36cf2dfa59c3c8362a31",
+      "sha256": "02c726da32c84aed40b960a32127c74df7c11ff4c7ef36cf2dfa59c3c8362a31",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/tests/provider_quota.rs",
+      "file": "engine/stockmesh/host/tests/provider_quota.rs",
+      "sourceSha256": "c2b5324c0b786722147a80707861797fe90da1e52f37a61c6b82818a328b7042",
+      "sha256": "c2b5324c0b786722147a80707861797fe90da1e52f37a61c6b82818a328b7042",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/tests/recovery.rs",
+      "file": "engine/stockmesh/host/tests/recovery.rs",
+      "sourceSha256": "f47565203d397e2b9dcfc4972967f851f68a140be7267ccd4797423659ac9e58",
+      "sha256": "f47565203d397e2b9dcfc4972967f851f68a140be7267ccd4797423659ac9e58",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/tests/resource_admission.rs",
+      "file": "engine/stockmesh/host/tests/resource_admission.rs",
+      "sourceSha256": "1cb93acf28d163d765dc35a003451da78d9dae49c7aa025c4f2b8c40d22b4a72",
+      "sha256": "1cb93acf28d163d765dc35a003451da78d9dae49c7aa025c4f2b8c40d22b4a72",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "host/tests/stock.rs",
+      "file": "engine/stockmesh/host/tests/stock.rs",
+      "sourceSha256": "6a516cc0b70a0a86edf82f4ace2ed00e5763f1632ab19c658223c177e0e41aa0",
+      "sha256": "6a516cc0b70a0a86edf82f4ace2ed00e5763f1632ab19c658223c177e0e41aa0",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "quoters/Cargo.lock",
+      "file": "engine/stockmesh/quoters/Cargo.lock",
+      "sourceSha256": "c81624d3765e967d59c49c829b6cd6f91a14da7d6576d8c9aae7c57d835e2f99",
+      "sha256": "c81624d3765e967d59c49c829b6cd6f91a14da7d6576d8c9aae7c57d835e2f99",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "quoters/Cargo.toml",
+      "file": "engine/stockmesh/quoters/Cargo.toml",
+      "sourceSha256": "663e4e538963e8f0a7dc5001023533e2eadc23146adf54ee2519d900f01b20bb",
+      "sha256": "663e4e538963e8f0a7dc5001023533e2eadc23146adf54ee2519d900f01b20bb",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "quoters/README.md",
+      "file": "engine/stockmesh/quoters/README.md",
+      "sourceSha256": "de9a425b3fb7e70043b29cb1543402453effbedbc1fefd4580eb3732239c6ddb",
+      "sha256": "de9a425b3fb7e70043b29cb1543402453effbedbc1fefd4580eb3732239c6ddb",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "quoters/examples/latency.rs",
+      "file": "engine/stockmesh/quoters/examples/latency.rs",
+      "sourceSha256": "e162a2d3f7032638ddec6b2f7d5d0fc46f3d02edbfed95c6eebd74d997cb8648",
+      "sha256": "e162a2d3f7032638ddec6b2f7d5d0fc46f3d02edbfed95c6eebd74d997cb8648",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "quoters/src/lib.rs",
+      "file": "engine/stockmesh/quoters/src/lib.rs",
+      "sourceSha256": "b4981dbcf36b93a2727111018bf17bb6dc349748a498caf49da9c7c2b835662f",
+      "sha256": "b4981dbcf36b93a2727111018bf17bb6dc349748a498caf49da9c7c2b835662f",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "quoters/src/riptide.rs",
+      "file": "engine/stockmesh/quoters/src/riptide.rs",
+      "sourceSha256": "463aa2b716c6b3ccf77be41673b78c6faefdfb6188d561fe872a3aa45d84ea41",
+      "sha256": "463aa2b716c6b3ccf77be41673b78c6faefdfb6188d561fe872a3aa45d84ea41",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/stocklana-settle/Cargo.lock",
+      "file": "engine/stockmesh/programs/stocklana-settle/Cargo.lock",
+      "sourceSha256": "c6f46c63523fef52704bb152ce4df40d2364ae945a8ebf6cac3da7200f6071c5",
+      "sha256": "c6f46c63523fef52704bb152ce4df40d2364ae945a8ebf6cac3da7200f6071c5",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/stocklana-settle/Cargo.toml",
+      "file": "engine/stockmesh/programs/stocklana-settle/Cargo.toml",
+      "sourceSha256": "324676307daf48174db7974fffd281231bd09affe96cb6777a0e83f9d7b6672d",
+      "sha256": "324676307daf48174db7974fffd281231bd09affe96cb6777a0e83f9d7b6672d",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/stocklana-settle/src/allocation.rs",
+      "file": "engine/stockmesh/programs/stocklana-settle/src/allocation.rs",
+      "sourceSha256": "98b7d22545a2e5bd8ec6304fbc65f30816b220bf5eb3eed168f772e3363dfad2",
+      "sha256": "98b7d22545a2e5bd8ec6304fbc65f30816b220bf5eb3eed168f772e3363dfad2",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/stocklana-settle/src/capsule.rs",
+      "file": "engine/stockmesh/programs/stocklana-settle/src/capsule.rs",
+      "sourceSha256": "bea55b4c46920871d5af6e682aa20b054eb918035ef48fcfa58b0f240bad023e",
+      "sha256": "bea55b4c46920871d5af6e682aa20b054eb918035ef48fcfa58b0f240bad023e",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/stocklana-settle/src/claim.rs",
+      "file": "engine/stockmesh/programs/stocklana-settle/src/claim.rs",
+      "sourceSha256": "aa3495de5318c40d2196f64189f798ad88ca9884a256c541f0386a67d6796b0c",
+      "sha256": "aa3495de5318c40d2196f64189f798ad88ca9884a256c541f0386a67d6796b0c",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/stocklana-settle/src/crossing.rs",
+      "file": "engine/stockmesh/programs/stocklana-settle/src/crossing.rs",
+      "sourceSha256": "526d9ca8133cf8632b91372e4d4db063d9445d475896ad79294f7c90e6abbf41",
+      "sha256": "526d9ca8133cf8632b91372e4d4db063d9445d475896ad79294f7c90e6abbf41",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/stocklana-settle/src/exposure.rs",
+      "file": "engine/stockmesh/programs/stocklana-settle/src/exposure.rs",
+      "sourceSha256": "d2eb850dc46fa1dc5a6bea586f7ca94345feab2dc745a03e709ea8ee5e87c690",
+      "sha256": "d2eb850dc46fa1dc5a6bea586f7ca94345feab2dc745a03e709ea8ee5e87c690",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/stocklana-settle/src/flowcell.rs",
+      "file": "engine/stockmesh/programs/stocklana-settle/src/flowcell.rs",
+      "sourceSha256": "2ef514aae87a94dcc6e4360e2fbb61bc893df36f9b6835e3909b6f2b70ad5b04",
+      "sha256": "2ef514aae87a94dcc6e4360e2fbb61bc893df36f9b6835e3909b6f2b70ad5b04",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/stocklana-settle/src/funding.rs",
+      "file": "engine/stockmesh/programs/stocklana-settle/src/funding.rs",
+      "sourceSha256": "1e969dcd420958a3737ecefa5fbd86c5ff41abf9d1e9e1a65befcb793a6b9910",
+      "sha256": "1e969dcd420958a3737ecefa5fbd86c5ff41abf9d1e9e1a65befcb793a6b9910",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/stocklana-settle/src/graph.rs",
+      "file": "engine/stockmesh/programs/stocklana-settle/src/graph.rs",
+      "sourceSha256": "ef1e39697c5b63c92020e9717a4d6690be97414f068ac6916835991007320bc3",
+      "sha256": "ef1e39697c5b63c92020e9717a4d6690be97414f068ac6916835991007320bc3",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/stocklana-settle/src/lib.rs",
+      "file": "engine/stockmesh/programs/stocklana-settle/src/lib.rs",
+      "sourceSha256": "3c2a8ed7b899d19f5fc4f82b0e3d3506ab9732e3f1a25c59d1aeb7e32c6debe8",
+      "sha256": "3c2a8ed7b899d19f5fc4f82b0e3d3506ab9732e3f1a25c59d1aeb7e32c6debe8",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/stocklana-settle/src/meshcell.rs",
+      "file": "engine/stockmesh/programs/stocklana-settle/src/meshcell.rs",
+      "sourceSha256": "3a2b1cb9f338c73d26534c4409cdf6e2bfea9153338d1cacdd80dcb3f4e706da",
+      "sha256": "3a2b1cb9f338c73d26534c4409cdf6e2bfea9153338d1cacdd80dcb3f4e706da",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/stocklana-settle/src/order.rs",
+      "file": "engine/stockmesh/programs/stocklana-settle/src/order.rs",
+      "sourceSha256": "7ff39acb6f324ef88a8645ad6a867682f82d35a5b09349dc83063cf03548af73",
+      "sha256": "7ff39acb6f324ef88a8645ad6a867682f82d35a5b09349dc83063cf03548af73",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/stocklana-settle/src/stock.rs",
+      "file": "engine/stockmesh/programs/stocklana-settle/src/stock.rs",
+      "sourceSha256": "4d5270717afba552a0a0d3c3d7be146e8bc6cf822c7211dfc374158af7f26070",
+      "sha256": "4d5270717afba552a0a0d3c3d7be146e8bc6cf822c7211dfc374158af7f26070",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/xtxc-basket-vault/Cargo.lock",
+      "file": "engine/stockmesh/programs/xtxc-basket-vault/Cargo.lock",
+      "sourceSha256": "bf4142e703482b8c04dfac560e22ea58fa7b1ea780b102343851b99ec6e986e5",
+      "sha256": "bf4142e703482b8c04dfac560e22ea58fa7b1ea780b102343851b99ec6e986e5",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/xtxc-basket-vault/Cargo.toml",
+      "file": "engine/stockmesh/programs/xtxc-basket-vault/Cargo.toml",
+      "sourceSha256": "3ad166de13fca7142cb5f3370cdf51f545b374a83859d9a3e040b03a642db17e",
+      "sha256": "3ad166de13fca7142cb5f3370cdf51f545b374a83859d9a3e040b03a642db17e",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/xtxc-basket-vault/README.md",
+      "file": "engine/stockmesh/programs/xtxc-basket-vault/README.md",
+      "sourceSha256": "e35513628a3beae0242663cbb629be8196bab045dda40379f803cd094aaf80fe",
+      "sha256": "1e90ecb8d6f8369e5d5040d1b577d9098ca20ae828ac46752e5804f775f46723",
+      "transformations": [
+        "redacted documentation-only operator paths"
+      ]
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/xtxc-basket-vault/proof/Cargo.lock",
+      "file": "engine/stockmesh/programs/xtxc-basket-vault/proof/Cargo.lock",
+      "sourceSha256": "8ae2a24cd2a8192d0f7f106c06d20fc6b1aeaba1ed0d817bf6676bd4daab8bb4",
+      "sha256": "8ae2a24cd2a8192d0f7f106c06d20fc6b1aeaba1ed0d817bf6676bd4daab8bb4",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/xtxc-basket-vault/proof/Cargo.toml",
+      "file": "engine/stockmesh/programs/xtxc-basket-vault/proof/Cargo.toml",
+      "sourceSha256": "417f4570d593683a91c4ac59df12033ab83713e1acaa224dd5b3c91c8bc6b4a8",
+      "sha256": "417f4570d593683a91c4ac59df12033ab83713e1acaa224dd5b3c91c8bc6b4a8",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/xtxc-basket-vault/proof/src/main.rs",
+      "file": "engine/stockmesh/programs/xtxc-basket-vault/proof/src/main.rs",
+      "sourceSha256": "e71ad20022e4b4abd077778c6d31def2d17613643cec4297349cd8eb5b047349",
+      "sha256": "e71ad20022e4b4abd077778c6d31def2d17613643cec4297349cd8eb5b047349",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "programs/xtxc-basket-vault/src/lib.rs",
+      "file": "engine/stockmesh/programs/xtxc-basket-vault/src/lib.rs",
+      "sourceSha256": "ed45527227c04d17110441631769fc552a35b5064dbe0f1dec420b6ce0ef9c08",
+      "sha256": "ed45527227c04d17110441631769fc552a35b5064dbe0f1dec420b6ce0ef9c08",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/Cargo.lock",
+      "file": "engine/stockmesh/svm-harness/Cargo.lock",
+      "sourceSha256": "30f051e39e41d1e872a12c69df0518f388fff2212cdbe4d3fb1394e960d40e3f",
+      "sha256": "30f051e39e41d1e872a12c69df0518f388fff2212cdbe4d3fb1394e960d40e3f",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/Cargo.toml",
+      "file": "engine/stockmesh/svm-harness/Cargo.toml",
+      "sourceSha256": "4ff94633a7f6f733ca9bc98f10e4ad6cfbedbcde4459cc905eb30a4cf4d6611e",
+      "sha256": "4ff94633a7f6f733ca9bc98f10e4ad6cfbedbcde4459cc905eb30a4cf4d6611e",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/crossing-proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/crossing-proof.rs",
+      "sourceSha256": "80fee329380347fd4613bf2d389140eff97ba80d8fd75140935ff26eb1051413",
+      "sha256": "80fee329380347fd4613bf2d389140eff97ba80d8fd75140935ff26eb1051413",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/exact-split-proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/exact-split-proof.rs",
+      "sourceSha256": "1b7f0853d37dfe752cc7c941bcaf1d09dcb42d64caf4b24c7b61f5cebd6e7271",
+      "sha256": "1b7f0853d37dfe752cc7c941bcaf1d09dcb42d64caf4b24c7b61f5cebd6e7271",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/flowcell-v2-proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/flowcell-v2-proof.rs",
+      "sourceSha256": "86d684a0d6806e2a2796c28a8a47722b54a7e85177fa86327d8df267c22a6a34",
+      "sha256": "86d684a0d6806e2a2796c28a8a47722b54a7e85177fa86327d8df267c22a6a34",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/graph-adversarial.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/graph-adversarial.rs",
+      "sourceSha256": "0bba7c81453949447a5229c79969419272bf2ab1f7deb111f1ce4d7ad72f8a15",
+      "sha256": "0bba7c81453949447a5229c79969419272bf2ab1f7deb111f1ce4d7ad72f8a15",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/native-kernel-proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/native-kernel-proof.rs",
+      "sourceSha256": "33cd3361ec5e33212ea5db2ab853188a2296530de1e4993f5bcddf9b2b74ed7e",
+      "sha256": "33cd3361ec5e33212ea5db2ab853188a2296530de1e4993f5bcddf9b2b74ed7e",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/native-quote-proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/native-quote-proof.rs",
+      "sourceSha256": "1f1b4e8c6dffad68cdcf9f14b1d912b30658e17d2f4d1f24bdc7a6b73f544648",
+      "sha256": "1f1b4e8c6dffad68cdcf9f14b1d912b30658e17d2f4d1f24bdc7a6b73f544648",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/native-wire-proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/native-wire-proof.rs",
+      "sourceSha256": "52a211e00498e98977bcbb8d610247c6a7f5aff2eb9470796ddce722c02ea0cf",
+      "sha256": "52a211e00498e98977bcbb8d610247c6a7f5aff2eb9470796ddce722c02ea0cf",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/riptide-context.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/riptide-context.rs",
+      "sourceSha256": "5c0e255f049e7a81a701e85e7ed6e1ff6db20f40fa32294c1311a7ac91a41344",
+      "sha256": "5c0e255f049e7a81a701e85e7ed6e1ff6db20f40fa32294c1311a7ac91a41344",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/secondary-issuer-proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/secondary-issuer-proof.rs",
+      "sourceSha256": "4043e32627b7c2efe387abb4b479565ca6cfc70684d63589f342b405f7823a9f",
+      "sha256": "4043e32627b7c2efe387abb4b479565ca6cfc70684d63589f342b405f7823a9f",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/stock-proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/stock-proof.rs",
+      "sourceSha256": "46c5b99502b2d8cc8c0ce41a1eefd8485c09e5b7fa0a124e1bf3519192589c8b",
+      "sha256": "46c5b99502b2d8cc8c0ce41a1eefd8485c09e5b7fa0a124e1bf3519192589c8b",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/stock-reverse-proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/stock-reverse-proof.rs",
+      "sourceSha256": "8b6eb8528e6d2cfee6fd466e0a629c70f912e580462dac6dc37b57435a9f4cd7",
+      "sha256": "8b6eb8528e6d2cfee6fd466e0a629c70f912e580462dac6dc37b57435a9f4cd7",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/stockmesh-cell-proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/stockmesh-cell-proof.rs",
+      "sourceSha256": "1528ce64d7924e6b6ae99da8fbf3cdf127793b6e081a9c75eccab11794f6eedd",
+      "sha256": "1528ce64d7924e6b6ae99da8fbf3cdf127793b6e081a9c75eccab11794f6eedd",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/stockmesh-current-bank-proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/stockmesh-current-bank-proof.rs",
+      "sourceSha256": "392d56f619e665f511547bdf0b60fe15603f4d832c00a7058f1e88ab5258044f",
+      "sha256": "392d56f619e665f511547bdf0b60fe15603f4d832c00a7058f1e88ab5258044f",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/stockmesh-exposure-proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/stockmesh-exposure-proof.rs",
+      "sourceSha256": "8f181f26abf3c634251acaf82aff92a5bf5f4021f451194e806c2046d3fb0328",
+      "sha256": "8f181f26abf3c634251acaf82aff92a5bf5f4021f451194e806c2046d3fb0328",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/stockmesh-real-spy-mesh-proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/stockmesh-real-spy-mesh-proof.rs",
+      "sourceSha256": "85e23c6c7c1c46ec168779e779065a81c799fda53f2ea4061fe0b73da2db0357",
+      "sha256": "85e23c6c7c1c46ec168779e779065a81c799fda53f2ea4061fe0b73da2db0357",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/stockmesh-universe-proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/stockmesh-universe-proof.rs",
+      "sourceSha256": "9a4c9e9c4d139d05abe3bd2d11ebe56080450eda3b60ce6ce9d545cb6b77dbdd",
+      "sha256": "9a4c9e9c4d139d05abe3bd2d11ebe56080450eda3b60ce6ce9d545cb6b77dbdd",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/typed-graph-proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/typed-graph-proof.rs",
+      "sourceSha256": "e5c616a3a62b63861a14b7c08dd46d4b17017397b03d85aaefc1648bf92e199b",
+      "sha256": "e5c616a3a62b63861a14b7c08dd46d4b17017397b03d85aaefc1648bf92e199b",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/bin/venue-matrix.rs",
+      "file": "engine/stockmesh/svm-harness/src/bin/venue-matrix.rs",
+      "sourceSha256": "a6db3f8490f949d4fbdfbdb09b418f6fb1140b17bf079de04e39ffc1d2012616",
+      "sha256": "a6db3f8490f949d4fbdfbdb09b418f6fb1140b17bf079de04e39ffc1d2012616",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/fast_search.rs",
+      "file": "engine/stockmesh/svm-harness/src/fast_search.rs",
+      "sourceSha256": "68430feaa8a3f255458c8ad6c662105c08d40f9bd92823d47f2668e48801101c",
+      "sha256": "68430feaa8a3f255458c8ad6c662105c08d40f9bd92823d47f2668e48801101c",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/main.rs",
+      "file": "engine/stockmesh/svm-harness/src/main.rs",
+      "sourceSha256": "f51fbe1e121ff90129767e4ba266d49f985c18792b063b4502ca3e96a3fe203c",
+      "sha256": "f51fbe1e121ff90129767e4ba266d49f985c18792b063b4502ca3e96a3fe203c",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/matrix.rs",
+      "file": "engine/stockmesh/svm-harness/src/matrix.rs",
+      "sourceSha256": "a9077efd714121e471a3dc299cc00e09f2fef8ed50a1e4393f3b39e7d5c89b5b",
+      "sha256": "a9077efd714121e471a3dc299cc00e09f2fef8ed50a1e4393f3b39e7d5c89b5b",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/native_bridge.rs",
+      "file": "engine/stockmesh/svm-harness/src/native_bridge.rs",
+      "sourceSha256": "971fdd54125c4880fb692820317e663b1269f7fba66acc0f6e2c760e6e45f902",
+      "sha256": "971fdd54125c4880fb692820317e663b1269f7fba66acc0f6e2c760e6e45f902",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/reflow_proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/reflow_proof.rs",
+      "sourceSha256": "cdb6f28a5abf7d58074e450c1b513937fd188999414bd63024df6a2b1d920cb3",
+      "sha256": "cdb6f28a5abf7d58074e450c1b513937fd188999414bd63024df6a2b1d920cb3",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/stockmesh_basket_proof.rs",
+      "file": "engine/stockmesh/svm-harness/src/stockmesh_basket_proof.rs",
+      "sourceSha256": "e7e74151cbba8e8bbfdd3656aa50a283a6b9590e32ae846d64d282420ddf892f",
+      "sha256": "e7e74151cbba8e8bbfdd3656aa50a283a6b9590e32ae846d64d282420ddf892f",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "svm-harness/src/stockmesh_dynamic_conformance.rs",
+      "file": "engine/stockmesh/svm-harness/src/stockmesh_dynamic_conformance.rs",
+      "sourceSha256": "de9dca79f2be19b48fde715737c67556ffeeb0c1587f10f6d10fbb5e380153af",
+      "sha256": "de9dca79f2be19b48fde715737c67556ffeeb0c1587f10f6d10fbb5e380153af",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "tests/admission.rs",
+      "file": "engine/stockmesh/tests/admission.rs",
+      "sourceSha256": "35dab8182a63e7b5b16232b69b0606bce6f7799ac43c9d1b1a9e366075791961",
+      "sha256": "35dab8182a63e7b5b16232b69b0606bce6f7799ac43c9d1b1a9e366075791961",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "tests/cell.rs",
+      "file": "engine/stockmesh/tests/cell.rs",
+      "sourceSha256": "7db8f98b899ef805e140386528801f5974dc9c2cda0410c63ba52a1800b2d283",
+      "sha256": "7db8f98b899ef805e140386528801f5974dc9c2cda0410c63ba52a1800b2d283",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "tests/clearing.rs",
+      "file": "engine/stockmesh/tests/clearing.rs",
+      "sourceSha256": "84b927b06497ba250e37ad02ce11693e423fe4cb0ba5f2b1c342fc04fa4d6a4e",
+      "sha256": "84b927b06497ba250e37ad02ce11693e423fe4cb0ba5f2b1c342fc04fa4d6a4e",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "tests/exposure_oracle.rs",
+      "file": "engine/stockmesh/tests/exposure_oracle.rs",
+      "sourceSha256": "7f0f5fee915fa5898c87dfd1f32a953291877adfe9327e83a137e67ed7be5fdb",
+      "sha256": "7f0f5fee915fa5898c87dfd1f32a953291877adfe9327e83a137e67ed7be5fdb",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "tests/fair.rs",
+      "file": "engine/stockmesh/tests/fair.rs",
+      "sourceSha256": "ede5580ced0be3d2a8e2f8172b81969cde9aea7d08489ce115387ff63ced87fa",
+      "sha256": "ede5580ced0be3d2a8e2f8172b81969cde9aea7d08489ce115387ff63ced87fa",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "tests/kernel.rs",
+      "file": "engine/stockmesh/tests/kernel.rs",
+      "sourceSha256": "a9f0425115483a7328c1c19c941c673c31a1bc16fbaf62c2c71b3e9565654ed9",
+      "sha256": "a9f0425115483a7328c1c19c941c673c31a1bc16fbaf62c2c71b3e9565654ed9",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "tests/onebook.rs",
+      "file": "engine/stockmesh/tests/onebook.rs",
+      "sourceSha256": "08ed1a577a1c2e63306dcafe6a697fa32a768360f53ab0249d0dbd12e0bda426",
+      "sha256": "08ed1a577a1c2e63306dcafe6a697fa32a768360f53ab0249d0dbd12e0bda426",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "tests/optimizer_regressions.rs",
+      "file": "engine/stockmesh/tests/optimizer_regressions.rs",
+      "sourceSha256": "3e04257098e638841b7d94fe351cd4c3ab132f58229989722d7e06cdb8d79d3d",
+      "sha256": "3e04257098e638841b7d94fe351cd4c3ab132f58229989722d7e06cdb8d79d3d",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "tests/oracle.rs",
+      "file": "engine/stockmesh/tests/oracle.rs",
+      "sourceSha256": "1a77daa545d84f5c0c22add2693b2c0c539d002d558cefe2cf0740b4e808fc0f",
+      "sha256": "1a77daa545d84f5c0c22add2693b2c0c539d002d558cefe2cf0740b4e808fc0f",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "benchmarks/main.rs",
+      "file": "engine/stockmesh/benchmarks/main.rs",
+      "sourceSha256": "b350d880b593ce3dfa9f4c2c1e97ce3a06b04eda2451063ac6542cb5ec0e9771",
+      "sha256": "b350d880b593ce3dfa9f4c2c1e97ce3a06b04eda2451063ac6542cb5ec0e9771",
+      "transformations": []
+    },
+    {
+      "component": "stockmesh",
+      "source": "benchmarks/hotpath.rs",
+      "file": "engine/stockmesh/benchmarks/hotpath.rs",
+      "sourceSha256": "4075fb299b40985cf93533637cdb6df2735e8f108dfc1532726b69a7fcccb197",
+      "sha256": "4075fb299b40985cf93533637cdb6df2735e8f108dfc1532726b69a7fcccb197",
+      "transformations": []
+    }
+  ]
+}

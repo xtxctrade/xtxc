@@ -1,0 +1,10 @@
+title = "XTXC core source review scan"
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Published SPL executable SHA256 used to identify fixture input"
+condition = "AND"
+paths = ['''^engine/stockmesh/programs/xtxc-basket-vault/README\.md$''']
+regexTarget = "secret"
+regexes = ['''^8190d3f7ceb6cb7a7a8d8924bff89f9f611e15ce1f806f2b6237f3311a98f697$''']

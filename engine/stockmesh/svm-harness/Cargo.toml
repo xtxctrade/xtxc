@@ -1,0 +1,53 @@
+[package]
+name = "stocklana-svm-proof"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+mollusk-svm = { version = "=0.13.4", features = ["inner-instructions"] }
+solana-account = "3"
+solana-compute-budget-program = { version = "=4.0.0", features = ["agave-unstable-api"] }
+solana-instruction = "3"
+solana-hash = "=3.1.0"
+solana-message = { version = "=3.1.0", features = ["bincode"] }
+solana-pubkey = { version = "4", features = ["curve25519"] }
+serde_json = "1"
+sha2 = "0.10"
+base64 = "0.22"
+stocklana-adapters = { path = "../adapters" }
+skew-engine = { path = ".." }
+skew-native = { path = "../native" }
+skew-execution-host = { path = "../host" }
+skew-native-quoters = { path = "../quoters", optional = true }
+riptide-amm = { version = "=2.1.1", default-features = false, optional = true }
+
+[features]
+native-reference = ["dep:skew-native-quoters", "dep:riptide-amm"]
+
+[[bin]]
+name = "native-quote-proof"
+path = "src/bin/native-quote-proof.rs"
+required-features = ["native-reference"]
+
+[[bin]]
+name = "stockmesh-exposure-proof"
+path = "src/bin/stockmesh-exposure-proof.rs"
+
+[[bin]]
+name = "stockmesh-cell-proof"
+path = "src/bin/stockmesh-cell-proof.rs"
+
+[[bin]]
+name = "stockmesh-real-spy-mesh-proof"
+path = "src/bin/stockmesh-real-spy-mesh-proof.rs"
+
+[workspace]
+
+[profile.dev]
+debug = 0
+
+[profile.release]
+debug = 0
+lto = "thin"
+codegen-units = 1

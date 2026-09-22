@@ -1,0 +1,31 @@
+[package]
+name = "stocklana-settle"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[features]
+no-entrypoint = []
+profile-cu = []
+
+[dependencies]
+solana-program = "=2.3.0"
+solana-system-interface = { version = "=1.0.0", features = ["bincode"] }
+solana-sdk-ids = "=2.2.1"
+stocklana-adapters = { path = "../../adapters" }
+skew-native = { path = "../../native", features = ["lazy-ticks"] }
+skew-engine = { path = "../..", features = ["onchain-oracle"] }
+
+[workspace]
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+overflow-checks = true
+
+[lints.rust]
+unexpected_cfgs = { level = "allow", check-cfg = ['cfg(target_os, values("solana"))'] }

@@ -1,0 +1,17 @@
+**/target/
+**/node_modules/
+**/.next/
+**/dist/
+**/.env
+**/.env.*
+!**/.env.example
+**/*keypair*.json
+**/*.pem
+**/*.key
+**/*.wal
+**/*.log
+**/.DS_Store
+**/._*
+**/.ssh/
+**/credentials*
+**/runtime-secrets/

@@ -1,0 +1,32 @@
+[package]
+name = "skew-engine"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+publish = false
+
+[features]
+onchain-oracle = []
+
+[lib]
+path = "lib.rs"
+
+[[bin]]
+name = "skew-benchmark"
+path = "benchmarks/main.rs"
+
+[[bin]]
+name = "skew-hotpath"
+path = "benchmarks/hotpath.rs"
+
+[workspace]
+members = ["."]
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+overflow-checks = true
+
+[lints.rust]
+unsafe_code = "forbid"

@@ -1,0 +1,17 @@
+[package]
+name = "skew-native"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[features]
+lazy-ticks = []
+
+[dependencies]
+ethnum = "=1.5.2"
+stocklana-adapters = { path = "../adapters" }
+
+[workspace]
+
+[lints.rust]
+unsafe_code = "forbid"
