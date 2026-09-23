@@ -1,0 +1,13 @@
+{
+  "schema": "xtxc.monad.deployment/v1",
+  "network": "monad-mainnet",
+  "chainId": 143,
+  "state": "DISABLED",
+  "catalogSha256": "a8acef18afde8210d3941dfafc8a6cc0c012ed7fa5941e268c5f295c01acd760",
+  "executor": null,
+  "etfFactory": null,
+  "etfVaultImplementation": null,
+  "approvedFeePolicy": null,
+  "admittedProducts": [],
+  "admittedVenues": []
+}

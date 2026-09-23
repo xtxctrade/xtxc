@@ -1,0 +1,40 @@
+{
+  "schema": "xtxc.monad.stock-catalog/v1",
+  "chain": {
+    "chainId": 143,
+    "usdc": "0x754704bc059f8c67012fed69bc8a327a5aafb603",
+    "usdcDecimals": 6
+  },
+  "candidates": [
+    { "instrumentId": "AAPL", "issuer": "Anchored Finance", "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/" },
+    { "instrumentId": "MSFT", "issuer": "Anchored Finance", "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/" },
+    { "instrumentId": "NVDA", "issuer": "Anchored Finance", "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/" },
+    { "instrumentId": "AMZN", "issuer": "Anchored Finance", "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/" },
+    { "instrumentId": "META", "issuer": "Anchored Finance", "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/" },
+    { "instrumentId": "TSLA", "issuer": "Anchored Finance", "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/" },
+    { "instrumentId": "AVGO", "issuer": "Anchored Finance", "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/" },
+    { "instrumentId": "ASML", "issuer": "Anchored Finance", "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/" },
+    { "instrumentId": "PLTR", "issuer": "Anchored Finance", "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/" },
+    { "instrumentId": "AMD", "issuer": "Anchored Finance", "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/" },
+    { "instrumentId": "COIN", "issuer": "Anchored Finance", "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/" },
+    { "instrumentId": "HOOD", "issuer": "Anchored Finance", "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/" },
+    { "instrumentId": "CRCL", "issuer": "Anchored Finance", "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/" },
+    { "instrumentId": "MSTR", "issuer": "Anchored Finance", "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/" }
+  ],
+  "venueObservations": [
+    {
+      "venueId": "monday-stock-router",
+      "contract": "0x2f903ac6ddaf57eadcbbc46adc3ad739c3506a2d",
+      "role": "stock-router",
+      "sourceUrl": "https://github.com/monad-crypto/protocols/blob/main/mainnet/monday_trade.jsonc"
+    },
+    {
+      "venueId": "monday-stock",
+      "contract": "0xff63e828254888c3ea46268d7c3db63deb80e25d",
+      "role": "stock-system",
+      "sourceUrl": "https://github.com/monad-crypto/protocols/blob/main/mainnet/monday_trade.jsonc"
+    }
+  ],
+  "admittedVenues": [],
+  "products": []
+}
