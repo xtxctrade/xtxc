@@ -212,4 +212,23 @@ mod tests {
         candidate.expires_at_ms = 1;
         assert!(encode_executor_call(&catalog, &order, &candidate, &executor, 1).is_err());
     }
+
+    #[test]
+    fn sell_uses_stock_input_and_net_usdc_output() {
+        let (catalog, mut order, mut candidate) = fixture();
+        let executor = format!("0x{}", "7".repeat(40));
+        order.intent.side = Side::Sell;
+        candidate.operation = Operation::Sell;
+        candidate.wallet_input_atoms = 100;
+        candidate.venue_input_atoms = 100;
+        candidate.expected_output_atoms = 1_000_000;
+        candidate.min_output_atoms = 999_950;
+        candidate.platform_fee_atoms = 50;
+        candidate.call.calldata = exact_venue_data(
+            &catalog.products[0].token_address, &catalog.chain.usdc, &candidate, &executor,
+        ).unwrap();
+        let encoded = encode_executor_call(&catalog, &order, &candidate, &executor, 1).unwrap();
+        assert!(encoded.data.ends_with(&"0".repeat(64)));
+        assert!(candidate.call.calldata.contains(&catalog.products[0].token_address[2..]));
+    }
 }
