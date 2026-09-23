@@ -61,6 +61,7 @@ impl Rpc for BoundedRpc {
                 | "eth_getStorageAt"
                 | "eth_call"
                 | "eth_getLogs"
+                | "eth_getTransactionReceipt"
         ) {
             return Err("Monad read-only method required".into());
         }

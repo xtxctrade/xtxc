@@ -16,7 +16,7 @@ fn run() -> Result<(), String> {
             .to_owned(),
         Err(_) => "https://rpc.monad.xyz".into(),
     };
-    let mut rpc = BoundedRpc::new(endpoint, 12)?;
+    let mut rpc = BoundedRpc::new(endpoint, 20)?;
     chain_guard(&mut rpc)?;
     let block = read_latest(&mut rpc)?;
     let state = read_contract_state(&mut rpc, block)?;
