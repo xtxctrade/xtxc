@@ -1,0 +1,1738 @@
+{
+  "schema": "xtxc.monad.stock-catalog/v1",
+  "chain": {
+    "chainId": 143,
+    "usdc": "0x754704bc059f8c67012fed69bc8a327a5aafb603",
+    "usdcDecimals": 6
+  },
+  "candidates": [
+    {
+      "instrumentId": "AAPL",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aAAPL"
+    },
+    {
+      "instrumentId": "AI",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aAI"
+    },
+    {
+      "instrumentId": "AIQ",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aAIQ"
+    },
+    {
+      "instrumentId": "ALLW",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aALLW"
+    },
+    {
+      "instrumentId": "AMD",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aAMD"
+    },
+    {
+      "instrumentId": "AMZN",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aAMZN"
+    },
+    {
+      "instrumentId": "ANET",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aANET"
+    },
+    {
+      "instrumentId": "ARKQ",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aARKQ"
+    },
+    {
+      "instrumentId": "ARM",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aARM"
+    },
+    {
+      "instrumentId": "ASML",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aASML"
+    },
+    {
+      "instrumentId": "AVGO",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aAVGO"
+    },
+    {
+      "instrumentId": "BETR",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aBETR"
+    },
+    {
+      "instrumentId": "BIL",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aBIL"
+    },
+    {
+      "instrumentId": "BNO",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aBNO"
+    },
+    {
+      "instrumentId": "BOT",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aBOT"
+    },
+    {
+      "instrumentId": "BOTZ",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aBOTZ"
+    },
+    {
+      "instrumentId": "BULL",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aBULL"
+    },
+    {
+      "instrumentId": "CCJ",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aCCJ"
+    },
+    {
+      "instrumentId": "CD",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aCD"
+    },
+    {
+      "instrumentId": "CIEN",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aCIEN"
+    },
+    {
+      "instrumentId": "COIN",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aCOIN"
+    },
+    {
+      "instrumentId": "CONI",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aCONI"
+    },
+    {
+      "instrumentId": "CRCL",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aCRCL"
+    },
+    {
+      "instrumentId": "CRM",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aCRM"
+    },
+    {
+      "instrumentId": "CSCO",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aCSCO"
+    },
+    {
+      "instrumentId": "DELL",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aDELL"
+    },
+    {
+      "instrumentId": "DRAM",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aDRAM"
+    },
+    {
+      "instrumentId": "EBAY",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aEBAY"
+    },
+    {
+      "instrumentId": "ETN",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aETN"
+    },
+    {
+      "instrumentId": "EWY",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aEWY"
+    },
+    {
+      "instrumentId": "FLKR",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aFLKR"
+    },
+    {
+      "instrumentId": "FLNC",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aFLNC"
+    },
+    {
+      "instrumentId": "FLWS",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aFLWS"
+    },
+    {
+      "instrumentId": "FORM",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aFORM"
+    },
+    {
+      "instrumentId": "GDX",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aGDX"
+    },
+    {
+      "instrumentId": "GEV",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aGEV"
+    },
+    {
+      "instrumentId": "GLD",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aGLD"
+    },
+    {
+      "instrumentId": "GME",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aGME"
+    },
+    {
+      "instrumentId": "GOOGL",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aGOOGL"
+    },
+    {
+      "instrumentId": "GRPN",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aGRPN"
+    },
+    {
+      "instrumentId": "HOOD",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aHOOD"
+    },
+    {
+      "instrumentId": "HTZ",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aHTZ"
+    },
+    {
+      "instrumentId": "IBRX",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aIBRX"
+    },
+    {
+      "instrumentId": "INDI",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aINDI"
+    },
+    {
+      "instrumentId": "INTC",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aINTC"
+    },
+    {
+      "instrumentId": "IONQ",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aIONQ"
+    },
+    {
+      "instrumentId": "LCID",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aLCID"
+    },
+    {
+      "instrumentId": "MEME",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aMEME"
+    },
+    {
+      "instrumentId": "META",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aMETA"
+    },
+    {
+      "instrumentId": "METC",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aMETC"
+    },
+    {
+      "instrumentId": "MRNA",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aMRNA"
+    },
+    {
+      "instrumentId": "MRNX",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aMRNX"
+    },
+    {
+      "instrumentId": "MRVL",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aMRVL"
+    },
+    {
+      "instrumentId": "MSFT",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aMSFT"
+    },
+    {
+      "instrumentId": "MSTR",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aMSTR"
+    },
+    {
+      "instrumentId": "MU",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aMU"
+    },
+    {
+      "instrumentId": "NBIS",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aNBIS"
+    },
+    {
+      "instrumentId": "NEGG",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aNEGG"
+    },
+    {
+      "instrumentId": "NOW",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aNOW"
+    },
+    {
+      "instrumentId": "NVD",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aNVD"
+    },
+    {
+      "instrumentId": "NVDA",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aNVDA"
+    },
+    {
+      "instrumentId": "ONDS",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aONDS"
+    },
+    {
+      "instrumentId": "ORKA",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aORKA"
+    },
+    {
+      "instrumentId": "PANW",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aPANW"
+    },
+    {
+      "instrumentId": "PCT",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aPCT"
+    },
+    {
+      "instrumentId": "PLTR",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aPLTR"
+    },
+    {
+      "instrumentId": "PUMP",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aPUMP"
+    },
+    {
+      "instrumentId": "QBTS",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aQBTS"
+    },
+    {
+      "instrumentId": "QQQ",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aQQQ"
+    },
+    {
+      "instrumentId": "QTUM",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aQTUM"
+    },
+    {
+      "instrumentId": "QUBT",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aQUBT"
+    },
+    {
+      "instrumentId": "RDDT",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aRDDT"
+    },
+    {
+      "instrumentId": "RGTI",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aRGTI"
+    },
+    {
+      "instrumentId": "RKLB",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aRKLB"
+    },
+    {
+      "instrumentId": "RXRX",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aRXRX"
+    },
+    {
+      "instrumentId": "RXT",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aRXT"
+    },
+    {
+      "instrumentId": "SDS",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSDS"
+    },
+    {
+      "instrumentId": "SERV",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSERV"
+    },
+    {
+      "instrumentId": "SKDD",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSKDD"
+    },
+    {
+      "instrumentId": "SKHY",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSKHY"
+    },
+    {
+      "instrumentId": "SLV",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSLV"
+    },
+    {
+      "instrumentId": "SMCI",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSMCI"
+    },
+    {
+      "instrumentId": "SMH",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSMH"
+    },
+    {
+      "instrumentId": "SNDK",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSNDK"
+    },
+    {
+      "instrumentId": "SOUN",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSOUN"
+    },
+    {
+      "instrumentId": "SOXL",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSOXL"
+    },
+    {
+      "instrumentId": "SPCG",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSPCG"
+    },
+    {
+      "instrumentId": "SPCX",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSPCX"
+    },
+    {
+      "instrumentId": "SPY",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSPY"
+    },
+    {
+      "instrumentId": "SQQQ",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSQQQ"
+    },
+    {
+      "instrumentId": "STX",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSTX"
+    },
+    {
+      "instrumentId": "TBT",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aTBT"
+    },
+    {
+      "instrumentId": "TLT",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aTLT"
+    },
+    {
+      "instrumentId": "TQQQ",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aTQQQ"
+    },
+    {
+      "instrumentId": "TSLA",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aTSLA"
+    },
+    {
+      "instrumentId": "TSLZ",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aTSLZ"
+    },
+    {
+      "instrumentId": "URA",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aURA"
+    },
+    {
+      "instrumentId": "USO",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aUSO"
+    },
+    {
+      "instrumentId": "VRT",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aVRT"
+    },
+    {
+      "instrumentId": "VST",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aVST"
+    },
+    {
+      "instrumentId": "WDC",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aWDC"
+    },
+    {
+      "instrumentId": "WDH",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aWDH"
+    },
+    {
+      "instrumentId": "WEN",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aWEN"
+    },
+    {
+      "instrumentId": "WGS",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aWGS"
+    },
+    {
+      "instrumentId": "WMT",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aWMT"
+    },
+    {
+      "instrumentId": "WOOF",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aWOOF"
+    },
+    {
+      "instrumentId": "WRLD",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aWRLD"
+    },
+    {
+      "instrumentId": "WTF",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aWTF"
+    },
+    {
+      "instrumentId": "WYFI",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aWYFI"
+    },
+    {
+      "instrumentId": "XLK",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aXLK"
+    },
+    {
+      "instrumentId": "XPOF",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aXPOF"
+    },
+    {
+      "instrumentId": "XRX",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://app.monday.trade/#/rwa/aXRX"
+    }
+  ],
+  "venueObservations": [
+    {
+      "venueId": "anchored-stock-router",
+      "contract": "0x4f090d817fd83753988a7b0c1d76f170f8461be8",
+      "role": "issuer-order-entry",
+      "executionClass": "ISSUER_ASYNC",
+      "sourceUrl": "https://docs.anchored.finance/trading-api/reference/environments-and-chains"
+    },
+    {
+      "venueId": "anchored-cashier",
+      "contract": "0x8c1b182bb0fe4e8407404ffe37c974d6dacef3a9",
+      "role": "issuer-cash-accounting",
+      "executionClass": "ISSUER_ASYNC",
+      "sourceUrl": "https://docs.anchored.finance/trading-api/reference/environments-and-chains"
+    },
+    {
+      "venueId": "anchored-stock",
+      "contract": "0x6d202d2f78aa26a7db51491416abf7f7a5003aac",
+      "role": "issuer-stock-accounting",
+      "executionClass": "ISSUER_ASYNC",
+      "sourceUrl": "https://docs.anchored.finance/trading-api/reference/environments-and-chains"
+    },
+    {
+      "venueId": "anchored-one-click-router",
+      "contract": "0x102c30ac544aed8cbf838fdc1b1677ff16df0e65",
+      "role": "optional-delegated-entry",
+      "executionClass": "ISSUER_ASYNC",
+      "sourceUrl": "https://docs.anchored.finance/trading-api/reference/environments-and-chains"
+    },
+    {
+      "venueId": "monday-stock-router",
+      "contract": "0x2f903ac6ddaf57eadcbbc46adc3ad739c3506a2d",
+      "role": "stock-router",
+      "executionClass": "UNKNOWN",
+      "sourceUrl": "https://github.com/monad-crypto/protocols/blob/main/mainnet/monday_trade.jsonc"
+    },
+    {
+      "venueId": "monday-stock",
+      "contract": "0xff63e828254888c3ea46268d7c3db63deb80e25d",
+      "role": "stock-system",
+      "executionClass": "UNKNOWN",
+      "sourceUrl": "https://github.com/monad-crypto/protocols/blob/main/mainnet/monday_trade.jsonc"
+    }
+  ],
+  "admittedVenues": [],
+  "products": [],
+  "tokenObservations": [
+    {
+      "instrumentId": "AAPL",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aAAPL",
+      "chainId": 143,
+      "tokenAddress": "0x17683e492d0c8910f7c0157d04af31cb7a23ad71",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "AI",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aAI",
+      "chainId": 143,
+      "tokenAddress": "0x59a036fc042b5b15cb36a4e1fe1bccfcf18f8d63",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aAI",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "AIQ",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aAIQ",
+      "chainId": 143,
+      "tokenAddress": "0x1d236e2ef49bf8b425a5d81332230fdfdaa20aee",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "ALLW",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aALLW",
+      "chainId": 143,
+      "tokenAddress": "0x057a4712d82d83909b149f6e4390e5298ffdeb3c",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "AMD",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aAMD",
+      "chainId": 143,
+      "tokenAddress": "0xbdf82c0dafcf73834d10639c0f0bf14b84808c43",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "AMZN",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aAMZN",
+      "chainId": 143,
+      "tokenAddress": "0x06f272082339a90e81e1dcb8ab892fd1a8c5e4c0",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "ANET",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aANET",
+      "chainId": 143,
+      "tokenAddress": "0xb8e03ad48dddc2e415715f6dbefb51839e756c25",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "ARKQ",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aARKQ",
+      "chainId": 143,
+      "tokenAddress": "0x4ebaf539fb82f35d09f24c709b4c7b9a56777c03",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "ARM",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aARM",
+      "chainId": 143,
+      "tokenAddress": "0x37bb22af99a6c2b23cfc2ea0ccb7151752a0fd5a",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "ASML",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aASML",
+      "chainId": 143,
+      "tokenAddress": "0xfae6ba6d36a6388c5a944a9366e55b6597e4f8af",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "AVGO",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aAVGO",
+      "chainId": 143,
+      "tokenAddress": "0x4dfbcd033662bc41de8996886e751613c2b8e8e5",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "BETR",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aBETR",
+      "chainId": 143,
+      "tokenAddress": "0xd70b950fd70e96933ebd991005fe6f37aef1354f",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aBETR",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "BIL",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aBIL",
+      "chainId": 143,
+      "tokenAddress": "0x4fc5b9f8933597d3ecf84d0611687e1dc8dd576f",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "BNO",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aBNO",
+      "chainId": 143,
+      "tokenAddress": "0xc924b71a10c356c15e3d7cb76ac8efe8f5522347",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "BOT",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aBOT",
+      "chainId": 143,
+      "tokenAddress": "0x5f3b897deea4ea0cb6aefe50bd2ae556cf6f4b63",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aBOT",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "BOTZ",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aBOTZ",
+      "chainId": 143,
+      "tokenAddress": "0xfd8ae3a6e660efdfce2ae9bdcdcb81c9a959a846",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "BULL",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aBULL",
+      "chainId": 143,
+      "tokenAddress": "0xff7fb9f9044523dfcab1f65f204ac79e6327a1cc",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aBULL",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "CCJ",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aCCJ",
+      "chainId": 143,
+      "tokenAddress": "0xdaba319970c3502e152088e45e5a803e78cf51d8",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "CD",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aCD",
+      "chainId": 143,
+      "tokenAddress": "0xa69b48373f8a34a6a53dbe188db3a664a4e6a7fc",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aCD",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "CIEN",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aCIEN",
+      "chainId": 143,
+      "tokenAddress": "0xd90007e68aa0557e3e9fbf17140d00611dc793ec",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "COIN",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aCOIN",
+      "chainId": 143,
+      "tokenAddress": "0xd8c1dae1c55b2fa349f78ce34553e075aad6b8a2",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "CONI",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aCONI",
+      "chainId": 143,
+      "tokenAddress": "0x2c82e424f8b36352bae1bcd585c82938b8b78ec8",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "CRCL",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aCRCL",
+      "chainId": 143,
+      "tokenAddress": "0x72e4f625b68f8d7a08dfb5a88065d6bb90052098",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "CRM",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aCRM",
+      "chainId": 143,
+      "tokenAddress": "0x8339d77b003589cf90f17729595afe05ad951ac5",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "CSCO",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aCSCO",
+      "chainId": 143,
+      "tokenAddress": "0x991c1f370adbab08e1f7978b01cb1dc022b902bb",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "DELL",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aDELL",
+      "chainId": 143,
+      "tokenAddress": "0x87db2ceac8b2321443d0bfef67340096867c91ba",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "DRAM",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aDRAM",
+      "chainId": 143,
+      "tokenAddress": "0xf90bf694935638374b238de65222139010592c8f",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aDRAM",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "EBAY",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aEBAY",
+      "chainId": 143,
+      "tokenAddress": "0x33f74ac6aa7a73aca8ab09c52d9158061f634ff3",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "ETN",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aETN",
+      "chainId": 143,
+      "tokenAddress": "0x678ed8ccc3f3d8ff2873d6beab5748e4321c1670",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "EWY",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aEWY",
+      "chainId": 143,
+      "tokenAddress": "0xa01a050440b8d77fc868ff33d290a2dab5b79366",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "FLKR",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aFLKR",
+      "chainId": 143,
+      "tokenAddress": "0x4f9b7d336b1972dd4c93ca250121aacaa6b083aa",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "FLNC",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aFLNC",
+      "chainId": 143,
+      "tokenAddress": "0xfa63f789664f761e38e39f83a3617dbc1c8e0226",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aFLNC",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "FLWS",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aFLWS",
+      "chainId": 143,
+      "tokenAddress": "0x3a013978cbd3ed7b270c92009e6a6d1be8e6ac25",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aFLWS",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "FORM",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aFORM",
+      "chainId": 143,
+      "tokenAddress": "0xbe10e0c583e46ff8d9a5a6ab578a89b7e49ad005",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "GDX",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aGDX",
+      "chainId": 143,
+      "tokenAddress": "0x7b17054c9621930f3cdd38177217c2b73956856a",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "GEV",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aGEV",
+      "chainId": 143,
+      "tokenAddress": "0xdbd41398c970a1649c7eec1d72c9d50e0aa3b095",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "GLD",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aGLD",
+      "chainId": 143,
+      "tokenAddress": "0x3e4a2f26fc4f92d92d7cd1e49ddade32869d00a4",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "GME",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aGME",
+      "chainId": 143,
+      "tokenAddress": "0x8e18ac2b7ebdd781e7a15c333f3b80eed8de4a27",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "GOOGL",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aGOOGL",
+      "chainId": 143,
+      "tokenAddress": "0xbde676cdf5564ef64ccd8555aa9b56867d8d1ad5",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "GRPN",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aGRPN",
+      "chainId": 143,
+      "tokenAddress": "0x8eee4aab4acbe84182c0f2cdbc906e39c6b076e8",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aGRPN",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "HOOD",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aHOOD",
+      "chainId": 143,
+      "tokenAddress": "0x5a4860addcc094fce026384caeecb1e634dd9af4",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "HTZ",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aHTZ",
+      "chainId": 143,
+      "tokenAddress": "0x9b76297343f272481f23dd0bbd4f20a9a227b392",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aHTZ",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "IBRX",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aIBRX",
+      "chainId": 143,
+      "tokenAddress": "0xe8bc8f7ce09d0b3b9f2cc017bbbf0ef0535ca573",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aIBRX",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "INDI",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aINDI",
+      "chainId": 143,
+      "tokenAddress": "0x7fe49b79e7acf9fbd840c8f11035c618425c36ca",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aINDI",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "INTC",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aINTC",
+      "chainId": 143,
+      "tokenAddress": "0x126250964e05b9e34d025e9d3b309349cf92402a",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "IONQ",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aIONQ",
+      "chainId": 143,
+      "tokenAddress": "0xc8c3bbd0af3f10293d75dd468c51f3f81fc22fee",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "LCID",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aLCID",
+      "chainId": 143,
+      "tokenAddress": "0x490c6311948ae3e3a6a96d3842e333302034d4d3",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aLCID",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "MEME",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aMEME",
+      "chainId": 143,
+      "tokenAddress": "0x6f75b1b886bd1b1295325c9619f9f6b9fb760588",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aMEME",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "META",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aMETA",
+      "chainId": 143,
+      "tokenAddress": "0xa1847139cbd660abc2f7b889d7cbcf18c56407fb",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "METC",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aMETC",
+      "chainId": 143,
+      "tokenAddress": "0x297df276f30a22c1f94eab7daf1e280e54bc439a",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aMETC",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "MRNA",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aMRNA",
+      "chainId": 143,
+      "tokenAddress": "0xda230a7ec7aff66e62ff3e225c3d9c42093c23ae",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "MRNX",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aMRNX",
+      "chainId": 143,
+      "tokenAddress": "0x69825e4cf138fe7441a75af72da1ae8f9e720434",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "MRVL",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aMRVL",
+      "chainId": 143,
+      "tokenAddress": "0x870e3495f5d7f0872ad7c0fbdd163016ae9122b5",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "MSFT",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aMSFT",
+      "chainId": 143,
+      "tokenAddress": "0x73e9eb2c7a4b4e8c68232b31ea0f1246963d0375",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "MSTR",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aMSTR",
+      "chainId": 143,
+      "tokenAddress": "0x294f40996134d067b56dcbacbf6a36396bbbea7a",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "MU",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aMU",
+      "chainId": 143,
+      "tokenAddress": "0xc54ce75193a68602bc01ffd2b112da3948eb14a7",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "NBIS",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aNBIS",
+      "chainId": 143,
+      "tokenAddress": "0x822594e4bc4c8237e77e5620744d3f383e77d4fe",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "NEGG",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aNEGG",
+      "chainId": 143,
+      "tokenAddress": "0x6031e48580fd0d8ed23d6a9ad89b69758adcf7b2",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aNEGG",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "NOW",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aNOW",
+      "chainId": 143,
+      "tokenAddress": "0x6b97a52c6877faf6f3836377b37e4a0a27edde01",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "NVD",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aNVD",
+      "chainId": 143,
+      "tokenAddress": "0x9b4d9b20eac87c4da9912cdbdc111d991eef0681",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "NVDA",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aNVDA",
+      "chainId": 143,
+      "tokenAddress": "0x701193374879131f923532987c7ef363a91a80eb",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "ONDS",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aONDS",
+      "chainId": 143,
+      "tokenAddress": "0x049cbb2180dcced2b69fcad0a98f6d046cce1c6e",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aONDS",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "ORKA",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aORKA",
+      "chainId": 143,
+      "tokenAddress": "0x344fca3683cd01aa5833e67179f826080bda98fc",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "PANW",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aPANW",
+      "chainId": 143,
+      "tokenAddress": "0xb66340a2bc5f95b127534ba5f24827802b9bc7ee",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "PCT",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aPCT",
+      "chainId": 143,
+      "tokenAddress": "0x13077a525ae6ca771e04fc91871b2f8f55ecfe3a",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aPCT",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "PLTR",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aPLTR",
+      "chainId": 143,
+      "tokenAddress": "0xb95956daace89226185fb696c2cc3f0d9bbfd4e3",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "PUMP",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aPUMP",
+      "chainId": 143,
+      "tokenAddress": "0xab7d864bc08f4322de2f94fabaf14d71a687d7c5",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aPUMP",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "QBTS",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aQBTS",
+      "chainId": 143,
+      "tokenAddress": "0xdfa678fa8d208ed3125e84a184fb39f2a22817a4",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "QQQ",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aQQQ",
+      "chainId": 143,
+      "tokenAddress": "0x1446501e886c7f830db9b494a1890cbccc072f57",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "QTUM",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aQTUM",
+      "chainId": 143,
+      "tokenAddress": "0x472a83495b50ce62b124cabfef7a7c0db067c1e7",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "QUBT",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aQUBT",
+      "chainId": 143,
+      "tokenAddress": "0x11917c87b177e134116d1a538acc9f832b76d0f2",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aQUBT",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "RDDT",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aRDDT",
+      "chainId": 143,
+      "tokenAddress": "0x167ef0d9ae3d001146865ec8aa4a7a78b048b615",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "RGTI",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aRGTI",
+      "chainId": 143,
+      "tokenAddress": "0xc3b236fb3cd15e3d996f3b49c0ee034bc18accf9",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "RKLB",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aRKLB",
+      "chainId": 143,
+      "tokenAddress": "0x8bce7712ca1efc613ce73f9471ad2388dac09413",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "RXRX",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aRXRX",
+      "chainId": 143,
+      "tokenAddress": "0xa886aaac8752548cbd9ffd7940b99b9b46eab219",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aRXRX",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "RXT",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aRXT",
+      "chainId": 143,
+      "tokenAddress": "0xb2eaa18aaab01d049edf2b845c9ea0480f72c18a",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aRXT",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "SDS",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aSDS",
+      "chainId": 143,
+      "tokenAddress": "0x9b5803e173b3118d70a17c3be0babdd912a4000e",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "SERV",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aSERV",
+      "chainId": 143,
+      "tokenAddress": "0x1076356059c5fe9fad3a053c4c84a32efd116274",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSERV",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "SKDD",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aSKDD",
+      "chainId": 143,
+      "tokenAddress": "0x215cce3e783fc7fafbed758d55ef5b654fd69a34",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "SKHY",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aSKHY",
+      "chainId": 143,
+      "tokenAddress": "0x6e8568ba7b43138d9210959a9523155e274550c9",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "SLV",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aSLV",
+      "chainId": 143,
+      "tokenAddress": "0xa6d6d48d778539103d379a66697acc22dd7b1d3c",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "SMCI",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aSMCI",
+      "chainId": 143,
+      "tokenAddress": "0xfd38813a547b30155914383919cebe83a98435fa",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "SMH",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aSMH",
+      "chainId": 143,
+      "tokenAddress": "0x74110fb3858d91418227007851362672514925ef",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "SNDK",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aSNDK",
+      "chainId": 143,
+      "tokenAddress": "0x57e2613fa6193c11913299cbdc1c8cb4916c15e8",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "SOUN",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aSOUN",
+      "chainId": 143,
+      "tokenAddress": "0x3197fb576b8daa0a5a9c1c5923e91a4d41d25d71",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aSOUN",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "SOXL",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aSOXL",
+      "chainId": 143,
+      "tokenAddress": "0x6910acdc21a86dad4fde233764fdac4f4ce187e8",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "SPCG",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aSPCG",
+      "chainId": 143,
+      "tokenAddress": "0xa67f4594e3c8441a58d1df95f1ab7d3d65367afd",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "SPCX",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aSPCX",
+      "chainId": 143,
+      "tokenAddress": "0x12473790e09d415abac7441401f7abec64fa959c",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "SPY",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aSPY",
+      "chainId": 143,
+      "tokenAddress": "0x4716cfb68c73bff797eea4f94ffad8d198aefc4b",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "SQQQ",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aSQQQ",
+      "chainId": 143,
+      "tokenAddress": "0x3d054231ed348b1c52684e2477f935fe06dafd85",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "STX",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aSTX",
+      "chainId": 143,
+      "tokenAddress": "0xc060d393df9ca0e96fb5434ff3223c085c4b2e2a",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "TBT",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aTBT",
+      "chainId": 143,
+      "tokenAddress": "0xc614d4ad49ec4f4854d70cb4fd788ddb5c3fe41e",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "TLT",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aTLT",
+      "chainId": 143,
+      "tokenAddress": "0x5da938ad48c46bd22ca362a91517ce2c16367d09",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "TQQQ",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aTQQQ",
+      "chainId": 143,
+      "tokenAddress": "0xb57b6c37526cecdddbf92da1783b7f4b4b53d45f",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "TSLA",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aTSLA",
+      "chainId": 143,
+      "tokenAddress": "0x10fad4a60adb421f8f5ca6f9f2eaf2dbc110e146",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "TSLZ",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aTSLZ",
+      "chainId": 143,
+      "tokenAddress": "0x3f670133caa4d10cf726028a68602114c1a3f15c",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "URA",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aURA",
+      "chainId": 143,
+      "tokenAddress": "0x7e952b8c28d855804c7fe8d64ecac30ace16c4da",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "USO",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aUSO",
+      "chainId": 143,
+      "tokenAddress": "0x7388ed3371407471d48637b4ad8445b8d4fc3f8f",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "VRT",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aVRT",
+      "chainId": 143,
+      "tokenAddress": "0x0b45e5afea928030988704ef60995d8925b91cd6",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "VST",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aVST",
+      "chainId": 143,
+      "tokenAddress": "0x49cccd75b2b0fb9ccd8c1d2a5d313e050c52fa89",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "WDC",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aWDC",
+      "chainId": 143,
+      "tokenAddress": "0x49e30f2d4a1b9a1766f0675adaf04f70681fbb63",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "WDH",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aWDH",
+      "chainId": 143,
+      "tokenAddress": "0x6458d4844ccaad06dbf566d1df93d8815f89d9b0",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aWDH",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "WEN",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aWEN",
+      "chainId": 143,
+      "tokenAddress": "0x4644fd1eab16a21969b4c16be8a2d5c986033f2a",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "WGS",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aWGS",
+      "chainId": 143,
+      "tokenAddress": "0xd13163b837a3736c0ac4da9239b108fe0e04dbae",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aWGS",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "WMT",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aWMT",
+      "chainId": 143,
+      "tokenAddress": "0xbdcd7e902861094164d4b4048ac62d3897a32721",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "WOOF",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aWOOF",
+      "chainId": 143,
+      "tokenAddress": "0x2f5d2eace3890e5e53dd4e5462ba252c3746feef",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aWOOF",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "WRLD",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aWRLD",
+      "chainId": 143,
+      "tokenAddress": "0x72584a4d919b7969ce030fb58f7f56e2137af9b0",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aWRLD",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "WTF",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aWTF",
+      "chainId": 143,
+      "tokenAddress": "0xe1e495fa46eed2b6da96fcedc051de23166fa892",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aWTF",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "WYFI",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aWYFI",
+      "chainId": 143,
+      "tokenAddress": "0xa359b67304f183d3308577d856eed0d98dfb715d",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aWYFI",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "XLK",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aXLK",
+      "chainId": 143,
+      "tokenAddress": "0xf63ad58f1d4d1276ea0de2490689942303d2d446",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "XPOF",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aXPOF",
+      "chainId": 143,
+      "tokenAddress": "0x5d04786d76a9ea0c91c6a2f25fd4922846527c4c",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aXPOF",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    },
+    {
+      "instrumentId": "XRX",
+      "issuer": "Anchored Finance",
+      "issuerProductId": "aXRX",
+      "chainId": 143,
+      "tokenAddress": "0x5c55e3da9d7bbfad6c5fdb4b6b4dac85c9d6e5c7",
+      "tokenDecimals": 18,
+      "sourceUrl": "https://app.monday.trade/#/rwa/aXRX",
+      "rightsSourceUrl": "https://docs.anchored.finance/getting-started/anchored-tokens"
+    }
+  ]
+}

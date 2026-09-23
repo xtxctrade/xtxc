@@ -1,0 +1,232 @@
+{
+  "schema": "xtxc.monad.read-only-token-check/v1",
+  "chainId": 143,
+  "rpc": "https://rpc.monad.xyz",
+  "sourceSha256": "0a680f43d57a16f81f0db5d353457a85f592f966db8e8a21d94421e3caf2872e",
+  "tokens": [
+    {
+      "ticker": "AI",
+      "tokenAddress": "0x59a036fc042b5b15cb36a4e1fe1bccfcf18f8d63",
+      "tokenDecimals": 18,
+      "symbol": "aAI",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "BETR",
+      "tokenAddress": "0xd70b950fd70e96933ebd991005fe6f37aef1354f",
+      "tokenDecimals": 18,
+      "symbol": "aBETR",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "BOT",
+      "tokenAddress": "0x5f3b897deea4ea0cb6aefe50bd2ae556cf6f4b63",
+      "tokenDecimals": 18,
+      "symbol": "aBOT",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "BULL",
+      "tokenAddress": "0xff7fb9f9044523dfcab1f65f204ac79e6327a1cc",
+      "tokenDecimals": 18,
+      "symbol": "aBULL",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "CD",
+      "tokenAddress": "0xa69b48373f8a34a6a53dbe188db3a664a4e6a7fc",
+      "tokenDecimals": 18,
+      "symbol": "aCD",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "DRAM",
+      "tokenAddress": "0xf90bf694935638374b238de65222139010592c8f",
+      "tokenDecimals": 18,
+      "symbol": "aDRAM",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "FLNC",
+      "tokenAddress": "0xfa63f789664f761e38e39f83a3617dbc1c8e0226",
+      "tokenDecimals": 18,
+      "symbol": "aFLNC",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "FLWS",
+      "tokenAddress": "0x3a013978cbd3ed7b270c92009e6a6d1be8e6ac25",
+      "tokenDecimals": 18,
+      "symbol": "aFLWS",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "GRPN",
+      "tokenAddress": "0x8eee4aab4acbe84182c0f2cdbc906e39c6b076e8",
+      "tokenDecimals": 18,
+      "symbol": "aGRPN",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "HTZ",
+      "tokenAddress": "0x9b76297343f272481f23dd0bbd4f20a9a227b392",
+      "tokenDecimals": 18,
+      "symbol": "aHTZ",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "IBRX",
+      "tokenAddress": "0xe8bc8f7ce09d0b3b9f2cc017bbbf0ef0535ca573",
+      "tokenDecimals": 18,
+      "symbol": "aIBRX",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "INDI",
+      "tokenAddress": "0x7fe49b79e7acf9fbd840c8f11035c618425c36ca",
+      "tokenDecimals": 18,
+      "symbol": "aINDI",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "LCID",
+      "tokenAddress": "0x490c6311948ae3e3a6a96d3842e333302034d4d3",
+      "tokenDecimals": 18,
+      "symbol": "aLCID",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "MEME",
+      "tokenAddress": "0x6f75b1b886bd1b1295325c9619f9f6b9fb760588",
+      "tokenDecimals": 18,
+      "symbol": "aMEME",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "METC",
+      "tokenAddress": "0x297df276f30a22c1f94eab7daf1e280e54bc439a",
+      "tokenDecimals": 18,
+      "symbol": "aMETC",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "NEGG",
+      "tokenAddress": "0x6031e48580fd0d8ed23d6a9ad89b69758adcf7b2",
+      "tokenDecimals": 18,
+      "symbol": "aNEGG",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "ONDS",
+      "tokenAddress": "0x049cbb2180dcced2b69fcad0a98f6d046cce1c6e",
+      "tokenDecimals": 18,
+      "symbol": "aONDS",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "PCT",
+      "tokenAddress": "0x13077a525ae6ca771e04fc91871b2f8f55ecfe3a",
+      "tokenDecimals": 18,
+      "symbol": "aPCT",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "PUMP",
+      "tokenAddress": "0xab7d864bc08f4322de2f94fabaf14d71a687d7c5",
+      "tokenDecimals": 18,
+      "symbol": "aPUMP",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "QUBT",
+      "tokenAddress": "0x11917c87b177e134116d1a538acc9f832b76d0f2",
+      "tokenDecimals": 18,
+      "symbol": "aQUBT",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "RXRX",
+      "tokenAddress": "0xa886aaac8752548cbd9ffd7940b99b9b46eab219",
+      "tokenDecimals": 18,
+      "symbol": "aRXRX",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "RXT",
+      "tokenAddress": "0xb2eaa18aaab01d049edf2b845c9ea0480f72c18a",
+      "tokenDecimals": 18,
+      "symbol": "aRXT",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "SERV",
+      "tokenAddress": "0x1076356059c5fe9fad3a053c4c84a32efd116274",
+      "tokenDecimals": 18,
+      "symbol": "aSERV",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "SOUN",
+      "tokenAddress": "0x3197fb576b8daa0a5a9c1c5923e91a4d41d25d71",
+      "tokenDecimals": 18,
+      "symbol": "aSOUN",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "WDH",
+      "tokenAddress": "0x6458d4844ccaad06dbf566d1df93d8815f89d9b0",
+      "tokenDecimals": 18,
+      "symbol": "aWDH",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "WGS",
+      "tokenAddress": "0xd13163b837a3736c0ac4da9239b108fe0e04dbae",
+      "tokenDecimals": 18,
+      "symbol": "aWGS",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "WOOF",
+      "tokenAddress": "0x2f5d2eace3890e5e53dd4e5462ba252c3746feef",
+      "tokenDecimals": 18,
+      "symbol": "aWOOF",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "WRLD",
+      "tokenAddress": "0x72584a4d919b7969ce030fb58f7f56e2137af9b0",
+      "tokenDecimals": 18,
+      "symbol": "aWRLD",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "WTF",
+      "tokenAddress": "0xe1e495fa46eed2b6da96fcedc051de23166fa892",
+      "tokenDecimals": 18,
+      "symbol": "aWTF",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "WYFI",
+      "tokenAddress": "0xa359b67304f183d3308577d856eed0d98dfb715d",
+      "tokenDecimals": 18,
+      "symbol": "aWYFI",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "XPOF",
+      "tokenAddress": "0x5d04786d76a9ea0c91c6a2f25fd4922846527c4c",
+      "tokenDecimals": 18,
+      "symbol": "aXPOF",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    },
+    {
+      "ticker": "XRX",
+      "tokenAddress": "0x5c55e3da9d7bbfad6c5fdb4b6b4dac85c9d6e5c7",
+      "tokenDecimals": 18,
+      "symbol": "aXRX",
+      "runtimeCodeSha256": "fcbba8cf334825aca57823cb3d2237bc768b5fc487d46ff444df21bf338ae6cf"
+    }
+  ]
+}

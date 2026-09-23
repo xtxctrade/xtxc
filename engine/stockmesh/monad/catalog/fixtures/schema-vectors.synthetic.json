@@ -1,0 +1,66 @@
+{
+  "schema": "xtxc.monad.stock-catalog/v1",
+  "chain": {
+    "chainId": 143,
+    "usdc": "0x754704bc059f8c67012fed69bc8a327a5aafb603",
+    "usdcDecimals": 6
+  },
+  "candidates": [],
+  "tokenObservations": [
+    { "instrumentId": "NVDA", "issuer": "FixtureIssuerA", "issuerProductId": "NVDA-A", "chainId": 143, "tokenAddress": "0x1111111111111111111111111111111111111111", "tokenDecimals": 18, "sourceUrl": "https://example.invalid/fixture", "rightsSourceUrl": "https://example.invalid/fixture" },
+    { "instrumentId": "NVDA", "issuer": "FixtureIssuerB", "issuerProductId": "NVDA-B", "chainId": 143, "tokenAddress": "0x2222222222222222222222222222222222222222", "tokenDecimals": 18, "sourceUrl": "https://example.invalid/fixture", "rightsSourceUrl": "https://example.invalid/fixture" }
+  ],
+  "venueObservations": [],
+  "admittedVenues": [
+    {
+      "venueId": "fixture-venue",
+      "contract": "0x3333333333333333333333333333333333333333",
+      "typedAbiHash": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "executionClass": "ISSUER_ASYNC",
+      "evidence": {
+        "sourceUrl": "https://example.invalid/fixture",
+        "observedAt": "2026-09-23T00:00:00Z",
+        "runtimeCodeHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    }
+  ],
+  "products": [
+    {
+      "instrumentId": "NVDA",
+      "issuer": "FixtureIssuerA",
+      "issuerProductId": "NVDA-A",
+      "chainId": 143,
+      "tokenAddress": "0x1111111111111111111111111111111111111111",
+      "tokenDecimals": 18,
+      "rightsHash": "0xcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "tokenEvidence": {
+        "sourceUrl": "https://example.invalid/fixture",
+        "observedAt": "2026-09-23T00:00:00Z",
+        "runtimeCodeHash": "0xdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      },
+      "operations": [
+        { "operation": "BUY", "venueId": "fixture-venue", "evidence": { "sourceUrl": "https://example.invalid/fixture", "observedAt": "2026-09-23T00:00:00Z", "runtimeCodeHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" } },
+        { "operation": "SELL", "venueId": "fixture-venue", "evidence": { "sourceUrl": "https://example.invalid/fixture", "observedAt": "2026-09-23T00:00:00Z", "runtimeCodeHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" } },
+        { "operation": "STOCK_WALLET_WITHDRAW", "venueId": "fixture-venue", "evidence": { "sourceUrl": "https://example.invalid/fixture", "observedAt": "2026-09-23T00:00:00Z", "runtimeCodeHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" } },
+        { "operation": "STOCK_WALLET_DEPOSIT", "venueId": "fixture-venue", "evidence": { "sourceUrl": "https://example.invalid/fixture", "observedAt": "2026-09-23T00:00:00Z", "runtimeCodeHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" } },
+        { "operation": "VAULT_DEPOSIT", "venueId": "fixture-venue", "evidence": { "sourceUrl": "https://example.invalid/fixture", "observedAt": "2026-09-23T00:00:00Z", "runtimeCodeHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" } },
+        { "operation": "VAULT_WITHDRAW", "venueId": "fixture-venue", "evidence": { "sourceUrl": "https://example.invalid/fixture", "observedAt": "2026-09-23T00:00:00Z", "runtimeCodeHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" } }
+      ]
+    },
+    {
+      "instrumentId": "NVDA",
+      "issuer": "FixtureIssuerB",
+      "issuerProductId": "NVDA-B",
+      "chainId": 143,
+      "tokenAddress": "0x2222222222222222222222222222222222222222",
+      "tokenDecimals": 18,
+      "rightsHash": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "tokenEvidence": {
+        "sourceUrl": "https://example.invalid/fixture",
+        "observedAt": "2026-09-23T00:00:00Z",
+        "runtimeCodeHash": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
+      "operations": []
+    }
+  ]
+}

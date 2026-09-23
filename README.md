@@ -166,6 +166,7 @@ Rust 1.94.0. Other Solana packages have separate toolchain requirements; see
 
 - [Algorithm walkthrough](docs/ALGORITHMS.md)
 - [Architecture and boundaries](docs/ARCHITECTURE.md)
+- [Monad stock catalog v1 (candidate stage)](docs/MONAD_CATALOG.md)
 - [Code-reading route and implementation scope](docs/REVIEW.md)
 - [Setup and verification results](docs/VERIFY.md)
 - [Source provenance](docs/PROVENANCE.md)
