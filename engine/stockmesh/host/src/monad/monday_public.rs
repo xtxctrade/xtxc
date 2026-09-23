@@ -12,6 +12,9 @@ const SELL: &str = "depositStockAndMarketSell(address,uint256,int96,uint32)";
 const MAX_U96: u128 = (1u128 << 96) - 1;
 const MAX_I96: u128 = (1u128 << 95) - 1;
 const MAX_DEADLINE_WINDOW: u64 = 15 * 60;
+const CASH_WAD_PER_USDC_ATOM: u128 = 1_000_000_000_000;
+const CASH_CENT_WAD: u128 = 10_000_000_000_000_000;
+const STOCK_BROKER_ATOM_STEP: u128 = 1_000_000_000;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
@@ -23,11 +26,10 @@ pub struct MarketRequest {
     pub owner: String,
     pub asset_id: String,
     pub side: MarketSide,
-    /// BUY: wallet USDC atoms. SELL: wallet stock atoms.
+    /// BUY: wallet USDC 6-decimal atoms. SELL: wallet stock 18-decimal atoms.
     pub wallet_debit_atoms: u128,
-    /// BUY: positive mUSD accounting atoms. Until the venue's unit conversion
-    /// and residual-withdrawal path are verified, require the exact same
-    /// integer as deposited USDC. SELL: deposited stock amount.
+    /// BUY: positive mUSD 18-decimal accounting atoms, after venue fees.
+    /// SELL: stock 18-decimal atoms. Never copy USDC atoms into this field.
     pub order_amount_atoms: u128,
     pub deadline_secs: u64,
 }
@@ -103,18 +105,25 @@ pub fn encode_market_call(
         format!("eip155:{}:erc20:{}:{}:{}", token.chain_id, token.token_address,
             token.issuer, token.issuer_product_id) == request.asset_id
     }).ok_or("Monday token identity not observed")?;
-    if token.chain_id != MAINNET_CHAIN_ID || token.token_decimals != 18 {
+    if token.chain_id != MAINNET_CHAIN_ID || token.token_decimals != 18
+        || catalog.chain.usdc_decimals != 6 {
         return Err("Monday token chain or decimals changed".into());
     }
     let (signature, input_token, allowance_atoms) = match request.side {
         MarketSide::Buy => {
-            if request.wallet_debit_atoms > MAX_U96 || request.order_amount_atoms != request.wallet_debit_atoms {
-                return Err("Monday buy requires verified one-to-one accounting amount".into());
+            let available_cash_wad = request.wallet_debit_atoms
+                .checked_mul(CASH_WAD_PER_USDC_ATOM)
+                .ok_or("Monday USDC-to-mUSD conversion overflow")?;
+            if request.wallet_debit_atoms > MAX_U96
+                || request.order_amount_atoms > available_cash_wad
+                || request.order_amount_atoms % CASH_CENT_WAD != 0 {
+                return Err("Monday buy cash units or cent precision invalid".into());
             }
             (BUY, catalog.chain.usdc.as_str(), request.wallet_debit_atoms)
         }
         MarketSide::Sell => {
-            if request.wallet_debit_atoms != request.order_amount_atoms {
+            if request.wallet_debit_atoms != request.order_amount_atoms
+                || request.order_amount_atoms % STOCK_BROKER_ATOM_STEP != 0 {
                 return Err("Monday sell must deposit exact stock quantity".into());
             }
             (SELL, token.token_address.as_str(), request.wallet_debit_atoms)
@@ -154,9 +163,13 @@ mod tests {
     fn catalog() -> Catalog { serde_json::from_str(include_str!("../../../monad/catalog/registry.v1.json")).unwrap() }
     fn request(side: MarketSide) -> MarketRequest {
         let token = &catalog().token_observations[0];
+        let (wallet_debit_atoms, order_amount_atoms) = match side {
+            MarketSide::Buy => (1_000_000, 990_000_000_000_000_000),
+            MarketSide::Sell => (1_000_000_000_000_000_000, 1_000_000_000_000_000_000),
+        };
         MarketRequest { owner: "0x1111111111111111111111111111111111111111".into(),
             asset_id: format!("eip155:143:erc20:{}:{}:{}", token.token_address, token.issuer, token.issuer_product_id),
-            side, wallet_debit_atoms: 1_000_000, order_amount_atoms: 1_000_000,
+            side, wallet_debit_atoms, order_amount_atoms,
             deadline_secs: 1_800_000_100 }
     }
     #[test]
@@ -167,12 +180,14 @@ mod tests {
         assert_eq!(buy.data.len(), 2 + (4 + 5 * 32) * 2);
         assert_eq!(buy.input_token, catalog.chain.usdc);
         assert!(!buy.guarantees_stock_minimum);
-        assert_eq!(buy.data, "0x4e4bc420000000000000000000000000754704bc059f8c67012fed69bc8a327a5aafb60300000000000000000000000000000000000000000000000000000000000f424000000000000000000000000017683e492d0c8910f7c0157d04af31cb7a23ad7100000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000000000000000000000000000000000006b49d264");
+        assert_eq!(&buy.data[10 + 64..10 + 128], "00000000000000000000000000000000000000000000000000000000000f4240");
+        assert_eq!(&buy.data[10 + 192..10 + 256], "0000000000000000000000000000000000000000000000000dbd2fc137a30000");
         let sell = encode_market_call(&catalog, &request(MarketSide::Sell), 1_800_000_000).unwrap();
         assert_eq!(&sell.data[..10], "0x0e5d1a7a");
         assert_eq!(sell.data.len(), 2 + (4 + 4 * 32) * 2);
         assert!(sell.data[2 + (4 + 2 * 32) * 2..].starts_with(&"ff".repeat(20)));
-        assert_eq!(sell.data, "0x0e5d1a7a00000000000000000000000017683e492d0c8910f7c0157d04af31cb7a23ad7100000000000000000000000000000000000000000000000000000000000f4240fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0bdc0000000000000000000000000000000000000000000000000000000006b49d264");
+        assert_eq!(&sell.data[10 + 64..10 + 128], "0000000000000000000000000000000000000000000000000de0b6b3a7640000");
+        assert!(sell.data[10 + 128..10 + 192].starts_with(&"ff".repeat(20)));
     }
     #[test]
     fn rejects_wrong_identity_amount_and_expiry() {
@@ -181,7 +196,7 @@ mod tests {
         buy.asset_id.push('x');
         assert!(encode_market_call(&catalog, &buy, 1_800_000_000).is_err());
         buy = request(MarketSide::Buy);
-        buy.order_amount_atoms = buy.wallet_debit_atoms + 1;
+        buy.order_amount_atoms = 1_010_000_000_000_000_000;
         assert!(encode_market_call(&catalog, &buy, 1_800_000_000).is_err());
         buy.order_amount_atoms = 1;
         buy.deadline_secs = 1_800_001_000;
