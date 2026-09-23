@@ -7,6 +7,7 @@ use serde::{Deserialize, Serialize};
 use sha3::{Digest, Keccak256};
 
 const EXECUTE_SIGNATURE: &str = "execute((bytes32,bytes32,address,address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool))";
+const VENUE_SIGNATURE: &str = "swapExactIn(address,address,uint256,uint256,address)";
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -50,6 +51,20 @@ fn encoded(bytes: &[u8]) -> String {
     hex
 }
 
+fn exact_venue_data(stock: &str, usdc: &str, candidate: &AtomicCandidate, executor: &str) -> Result<String> {
+    let selector = Keccak256::digest(VENUE_SIGNATURE.as_bytes());
+    let token_in = if candidate.operation == Operation::Buy { usdc } else { stock };
+    let token_out = if candidate.operation == Operation::Buy { stock } else { usdc };
+    let mut data = Vec::with_capacity(4 + 5 * 32);
+    data.extend_from_slice(&selector[..4]);
+    data.extend_from_slice(&address_word(token_in)?);
+    data.extend_from_slice(&address_word(token_out)?);
+    data.extend_from_slice(&word(candidate.venue_input_atoms));
+    data.extend_from_slice(&word(candidate.min_output_atoms));
+    data.extend_from_slice(&address_word(executor)?);
+    Ok(encoded(&data))
+}
+
 /// Use this only after `compile_atomic_candidate`; it intentionally has no gas
 /// limit or `submitAllowed` bit because the outer executor call was not yet
 /// simulated. A live prepare path must validate the *whole* call at this block.
@@ -74,17 +89,30 @@ pub fn encode_executor_call(
     let operation = match order.intent.side { Side::Buy => Operation::Buy, Side::Sell => Operation::Sell };
     if !product.operations.iter().any(|o| o.operation == operation && o.venue_id == venue.venue_id)
         || candidate.operation != operation || candidate.asset_id != order.intent.asset_id
+        || candidate.order_id != order.intent.order_id
         || !candidate.owner.eq_ignore_ascii_case(&order.intent.owner)
         || !candidate.receiver.eq_ignore_ascii_case(&order.intent.owner)
         || !candidate.quote_digest.eq_ignore_ascii_case(&order.intent.quote_digest)
         || candidate.product_id != executor_product_id(&candidate.asset_id)
         || candidate.call.chain_id != MAINNET_CHAIN_ID || candidate.call.value_atoms != 0
-        || candidate.wallet_input_atoms == 0 || candidate.min_output_atoms == 0
+        || candidate.wallet_input_atoms == 0 || candidate.venue_input_atoms == 0
+        || candidate.min_output_atoms == 0 || candidate.expected_output_atoms == 0
         || candidate.platform_fee_atoms > candidate.platform_fee_cap_atoms
     { return Err("executor call differs from admitted order".into()); }
     let max_debit = order.intent.max_input_atoms.parse::<u128>()
         .map_err(|_| "invalid executor max debit")?;
     if candidate.wallet_input_atoms > max_debit { return Err("executor debit exceeds order".into()); }
+    let expected_fee = if operation == Operation::Buy {
+        candidate.wallet_input_atoms / 20_000
+    } else { candidate.expected_output_atoms / 20_000 };
+    if candidate.platform_fee_atoms != expected_fee
+        || (operation == Operation::Buy && candidate.venue_input_atoms != candidate.wallet_input_atoms - expected_fee)
+        || (operation == Operation::Sell && candidate.venue_input_atoms != candidate.wallet_input_atoms)
+        || (operation == Operation::Buy && candidate.min_output_atoms < order.intent.quantity_atoms.parse::<u128>()
+            .map_err(|_| "invalid executor stock quantity")?)
+        || !candidate.call.calldata.eq_ignore_ascii_case(&exact_venue_data(
+            &product.token_address, &catalog.chain.usdc, candidate, executor)?)
+    { return Err("executor and simulated venue call differ".into()); }
     let deadline_secs = candidate.expires_at_ms / 1000;
     if deadline_secs == 0 || deadline_secs * 1000 <= now_ms { return Err("executor deadline expired".into()); }
 
@@ -138,7 +166,7 @@ mod tests {
         let mut intent = fixture_intent("mon_executor", "idempotency_executor_0001");
         intent.asset_id = asset_id.clone();
         let order = Order::new(intent).unwrap();
-        let candidate = AtomicCandidate {
+        let mut candidate = AtomicCandidate {
             order_id: order.intent.order_id.clone(), product_id: executor_product_id(&asset_id), asset_id,
             operation: Operation::Buy, owner: order.intent.owner.clone(), receiver: order.intent.owner.clone(),
             venue_id: venue.venue_id.clone(), quote_digest: order.intent.quote_digest.clone(),
@@ -147,6 +175,10 @@ mod tests {
             platform_fee_atoms: 50, platform_fee_cap_atoms: 50, expires_at_ms: 2_000_000_000_000,
             gas_used: 200_000, call: BuiltCall { chain_id: MAINNET_CHAIN_ID, target: venue.contract, calldata: "0x12345678".into(), value_atoms: 0, spender: None },
         };
+        candidate.call.calldata = exact_venue_data(
+            &catalog.products[0].token_address, &catalog.chain.usdc, &candidate,
+            &format!("0x{}", "7".repeat(40)),
+        ).unwrap();
         (catalog, order, candidate)
     }
 
@@ -174,6 +206,9 @@ mod tests {
         candidate.receiver = format!("0x{}", "8".repeat(40));
         assert!(encode_executor_call(&catalog, &order, &candidate, &executor, 1).is_err());
         candidate.receiver = order.intent.owner.clone();
+        candidate.call.calldata = "0x12345678".into();
+        assert!(encode_executor_call(&catalog, &order, &candidate, &executor, 1).is_err());
+        candidate.call.calldata = exact_venue_data(&catalog.products[0].token_address, &catalog.chain.usdc, &candidate, &executor).unwrap();
         candidate.expires_at_ms = 1;
         assert!(encode_executor_call(&catalog, &order, &candidate, &executor, 1).is_err());
     }
