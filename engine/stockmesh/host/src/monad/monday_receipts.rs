@@ -536,6 +536,7 @@ mod tests {
         assert_eq!(submitted.requested_amount, 100_000_000);
         let mut wrong = request.clone();
         wrong.wallet_debit_atoms = 101_000_000;
+        wrong.order_amount_atoms = 101_000_000;
         let wrong_proposal = encode_market_call(&catalog, &wrong, 1_800_000_000).unwrap();
         assert!(decode_submission_exact(&catalog, &buy_receipt,
             &wrong, &wrong_proposal).is_err());

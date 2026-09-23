@@ -25,8 +25,9 @@ pub struct MarketRequest {
     pub side: MarketSide,
     /// BUY: wallet USDC atoms. SELL: wallet stock atoms.
     pub wallet_debit_atoms: u128,
-    /// BUY: positive mUSD accounting atoms, independently supplied by the
-    /// observed venue quote. SELL: exactly the stock amount being deposited.
+    /// BUY: positive mUSD accounting atoms. Until the venue's unit conversion
+    /// and residual-withdrawal path are verified, require the exact same
+    /// integer as deposited USDC. SELL: deposited stock amount.
     pub order_amount_atoms: u128,
     pub deadline_secs: u64,
 }
@@ -107,8 +108,8 @@ pub fn encode_market_call(
     }
     let (signature, input_token, allowance_atoms) = match request.side {
         MarketSide::Buy => {
-            if request.wallet_debit_atoms > MAX_U96 || request.order_amount_atoms > request.wallet_debit_atoms {
-                return Err("Monday buy amount exceeds deposited USDC".into());
+            if request.wallet_debit_atoms > MAX_U96 || request.order_amount_atoms != request.wallet_debit_atoms {
+                return Err("Monday buy requires verified one-to-one accounting amount".into());
             }
             (BUY, catalog.chain.usdc.as_str(), request.wallet_debit_atoms)
         }
