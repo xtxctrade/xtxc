@@ -3,7 +3,7 @@
   "network": "monad-mainnet",
   "chainId": 143,
   "state": "DISABLED",
-  "catalogSha256": "b0036243180181c476d0a09863e87df2b77106d8b713453fc4c7cfc021247408",
+  "catalogSha256": "06120b91cfce155f999d942df5692328cbf3a4b11794951279039e01fbacecfa",
   "executor": null,
   "etfFactory": null,
   "etfVaultImplementation": null,

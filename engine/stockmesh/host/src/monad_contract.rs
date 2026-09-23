@@ -33,7 +33,7 @@ pub struct Candidate {
     pub source_url: String,
 }
 
-/// Issuer-published token identity. This is inventory, not a live route.
+/// Issuer- or venue-published token identity. This is inventory, not a live route.
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct TokenObservation {
@@ -513,9 +513,14 @@ mod tests {
     fn registry_is_discovery_only() {
         let catalog = observed_catalog();
         catalog.validate().unwrap();
-        assert!(catalog.candidates.len() >= 34);
-        assert!(catalog.token_observations.len() >= 80);
+        assert_eq!(catalog.candidates.len(), 112);
+        assert_eq!(catalog.token_observations.len(), 112);
         assert!(catalog.candidates.iter().any(|candidate| candidate.instrument_id == "WMT"));
+        assert!(catalog
+            .token_observations
+            .iter()
+            .any(|token| token.issuer_product_id == "aNEGG"
+                && token.token_address == "0x6031e48580fd0d8ed23d6a9ad89b69758adcf7b2"));
         assert!(catalog
             .token_observations
             .iter()
