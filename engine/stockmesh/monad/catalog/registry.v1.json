@@ -7,6 +7,101 @@
   },
   "candidates": [
     {
+      "instrumentId": "BNO",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "USO",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "GLD",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "GDX",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "SLV",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "BIL",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "TLT",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "QQQ",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "SPY",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "ALLW",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "EWY",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "FLKR",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "TQQQ",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "XLK",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "SMH",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "SOXL",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "BOTZ",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "AIQ",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "ARKQ",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
       "instrumentId": "AAPL",
       "issuer": "Anchored Finance",
       "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
@@ -73,6 +168,11 @@
     },
     {
       "instrumentId": "MSTR",
+      "issuer": "Anchored Finance",
+      "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
+    },
+    {
+      "instrumentId": "WMT",
       "issuer": "Anchored Finance",
       "sourceUrl": "https://blog.monday.trade/rwas-are-live-on-monday-trade/"
     }

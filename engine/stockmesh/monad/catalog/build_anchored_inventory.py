@@ -21,8 +21,11 @@ def main() -> None:
     snapshot = Path(sys.argv[1]).read_text()
     section = snapshot.split("### Tokenized stocks", 1)[1].split("### Tokenized funds", 1)[0]
     rows = ROW.findall(section)
-    if len(rows) != 80 or len(set(rows)) != 80:
-        raise SystemExit(f"expected 80 distinct published stock tokens; found {len(rows)}")
+    # Eighty is the verified September baseline, not a permanent product cap.
+    # A smaller page is treated as a possibly incomplete fetch, while new
+    # issuer-published rows can be incorporated without changing the parser.
+    if len(rows) < 80 or len({symbol for symbol, _ in rows}) != len(rows) or len({address.lower() for _, address in rows}) != len(rows):
+        raise SystemExit(f"expected at least 80 distinct published stock tokens; found {len(rows)}")
     catalog_dir = Path(sys.argv[2])
     catalog_path = catalog_dir / "registry.v1.json"
     catalog = json.loads(catalog_path.read_text())

@@ -506,8 +506,9 @@ mod tests {
     fn registry_is_discovery_only() {
         let catalog = observed_catalog();
         catalog.validate().unwrap();
-        assert!(!catalog.candidates.is_empty());
-        assert_eq!(catalog.token_observations.len(), 80);
+        assert!(catalog.candidates.len() >= 34);
+        assert!(catalog.token_observations.len() >= 80);
+        assert!(catalog.candidates.iter().any(|candidate| candidate.instrument_id == "WMT"));
         assert!(catalog
             .token_observations
             .iter()

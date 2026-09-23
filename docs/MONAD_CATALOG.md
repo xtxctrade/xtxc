@@ -26,9 +26,15 @@ The XTXC consumer web app remains outside this repository.
   any transaction.
 
 `engine/stockmesh/monad/catalog/registry.v1.json` contains 80 official Anchored
-stock token observations, 14 Monday launch candidates, Monad-native USDC,
+stock token observations, 34 Monday launch-market candidates, Monad-native USDC,
 the Anchored router/accounting contracts and two observed Monday contracts.
 Its executable product and admitted venue lists are empty.
+The 80-token source snapshot is not a product cap. `build_anchored_inventory.py`
+accepts a larger issuer-published list and rejects a truncated or duplicate
+one. `build_monday_market_candidates.py` extracts venue-published market names
+from the saved official article and joins them to issuer identities; Walmart's
+unprefixed `WMT` resolves to `aWMT`. A launch announcement does not establish a
+currently available quote, venue access, or a completed trade.
 `deployment-manifest.v1.json` pins the catalog bytes and is `DISABLED`, with
 no executor, ETF factory, vault implementation or approved fee policy.
 
@@ -56,8 +62,10 @@ contract-vault behavior belong to later integration PRs. Issuer
 [eligibility restrictions](https://docs.anchored.finance/getting-started/eligibility)
 must be applied before exposing a live route to a user.
 
-The importer `build_anchored_inventory.py` only rebuilds observations from a
-saved official document and refuses catalogs with executable admissions.
+Both importers only rebuild observations from saved official documents and
+refuse catalogs with executable admissions. Other issuers can be added under
+the same `InstrumentId` after their Monad token address and rights are verified;
+Solana-only stock candidates are not silently imported as Monad products.
 
 Run the focused Rust tests on a build host:
 
