@@ -526,24 +526,30 @@ mod tests {
             owner: address(3),
             asset_id: format!("eip155:143:erc20:{}:{}:{}", token.token_address, token.issuer, token.issuer_product_id),
             side: MarketSide::Buy, wallet_debit_atoms: 100_000_000,
-            order_amount_atoms: 100_000_000, deadline_secs: 1_800_000_100,
+            order_amount_atoms: 99_000_000_000_000_000_000, deadline_secs: 1_800_000_100,
         };
         let proposal = encode_market_call(&catalog, &request, 1_800_000_000).unwrap();
         let mut buy_receipt = receipt(vec![buy_log(3, 4, 5)], 10, 100);
+        buy_receipt.logs[0].data = format!("0x{}{}{}{}", aword(5),
+            uword(request.wallet_debit_atoms), aword(4), iword(request.order_amount_atoms as i128));
         buy_receipt.transaction_input = proposal.data.clone();
         let submitted = decode_submission_exact(&catalog, &buy_receipt,
             &request, &proposal).unwrap();
-        assert_eq!(submitted.requested_amount, 100_000_000);
+        assert_eq!(submitted.requested_amount, 99_000_000_000_000_000_000);
         let mut wrong = request.clone();
         wrong.wallet_debit_atoms = 101_000_000;
-        wrong.order_amount_atoms = 101_000_000;
+        wrong.order_amount_atoms = 100_000_000_000_000_000_000;
         let wrong_proposal = encode_market_call(&catalog, &wrong, 1_800_000_000).unwrap();
         assert!(decode_submission_exact(&catalog, &buy_receipt,
             &wrong, &wrong_proposal).is_err());
         let mut sell = request;
         sell.side = MarketSide::Sell;
+        sell.wallet_debit_atoms = 1_000_000_000_000_000_000;
+        sell.order_amount_atoms = 1_000_000_000_000_000_000;
         let sell_proposal = encode_market_call(&catalog, &sell, 1_800_000_000).unwrap();
         let mut sell_receipt = receipt(vec![sell_log(3, 4)], 10, 100);
+        sell_receipt.logs[0].data = format!("0x{}{}", uword(sell.wallet_debit_atoms),
+            iword(-(sell.order_amount_atoms as i128)));
         sell_receipt.transaction_input = sell_proposal.data.clone();
         assert!(decode_submission_exact(&catalog, &sell_receipt,
             &sell, &sell_proposal).is_ok());
