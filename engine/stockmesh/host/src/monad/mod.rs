@@ -9,6 +9,7 @@ pub mod journal;
 pub mod monday;
 pub mod monday_public;
 pub mod monday_receipts;
+pub mod market_observer;
 pub mod orders;
 pub mod prepare;
 pub mod preflight_market;
