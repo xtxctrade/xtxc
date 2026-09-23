@@ -1,8 +1,10 @@
 //! Isolated loopback control plane for PR02. No RPC sender, signer or private
 //! key. A reported transaction hash is not proof of inclusion or delivery.
 use serde_json::{json, Value};
-use skew_execution_host::{monad::journal::MonadJournal, monad_contract::Catalog};
-use std::{env, io::{Read, Write}, net::{TcpListener, TcpStream}, path::Path, time::Duration};
+use skew_execution_host::{monad::{feed::BoundedRpc, journal::MonadJournal,
+    monday_public::{MarketRequest, MarketSide}, preflight_market::preflight_market_call}, monad_contract::Catalog};
+use std::{env, io::{Read, Write}, net::{TcpListener, TcpStream}, path::Path,
+    time::{Duration, SystemTime, UNIX_EPOCH}};
 
 const HEADER_BOUND: usize = 4096;
 const BODY_BOUND: usize = 8192;
@@ -17,6 +19,72 @@ fn answer(stream: &mut TcpStream, status: u16, value: Value) {
     let _ = stream.flush();
 }
 fn error(status: u16, code: &str) -> (u16, Value) { (status, json!({"error":{"code":code}})) }
+
+#[derive(serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct MarketPreflightInput {
+    owner: String,
+    asset_id: String,
+    side: MarketSide,
+    wallet_debit_atoms: String,
+    order_amount_atoms: String,
+    deadline_secs: u64,
+}
+
+fn decimal_atoms(value: &str) -> Option<u128> {
+    if value.is_empty() || value.len() > 39 || value.starts_with('0')
+        || !value.bytes().all(|byte| byte.is_ascii_digit()) { return None; }
+    value.parse().ok()
+}
+
+fn market_preflight(body: &[u8], owner: &str, catalog: &Catalog) -> (u16, Value) {
+    let input: MarketPreflightInput = match serde_json::from_slice(body) {
+        Ok(value) => value, Err(_) => return error(422, "MARKET_REQUEST_INVALID"),
+    };
+    if !input.owner.eq_ignore_ascii_case(owner) { return error(403, "OWNER_MISMATCH"); }
+    let (Some(wallet_debit_atoms), Some(order_amount_atoms)) =
+        (decimal_atoms(&input.wallet_debit_atoms), decimal_atoms(&input.order_amount_atoms))
+    else { return error(422, "MARKET_AMOUNT_INVALID"); };
+    let request = MarketRequest { owner: input.owner, asset_id: input.asset_id,
+        side: input.side, wallet_debit_atoms, order_amount_atoms,
+        deadline_secs: input.deadline_secs };
+    let endpoint = match env::var("MONAD_RPC_URL_FILE") {
+        Ok(path) => match std::fs::read_to_string(path) {
+            Ok(value) => value.trim().to_owned(), Err(_) => return error(503, "MONAD_PROVIDER_UNAVAILABLE"),
+        },
+        Err(_) => "https://rpc.monad.xyz".into(),
+    };
+    let Ok(mut rpc) = BoundedRpc::new(endpoint, 32) else {
+        return error(503, "MONAD_PROVIDER_UNAVAILABLE");
+    };
+    let Ok(now) = SystemTime::now().duration_since(UNIX_EPOCH) else {
+        return error(503, "CLOCK_UNAVAILABLE");
+    };
+    let result = match preflight_market_call(&mut rpc, catalog, &request, now.as_secs()) {
+        Ok(value) => value,
+        Err(message) if message.contains("wallet input balance insufficient") =>
+            return error(422, "WALLET_INPUT_INSUFFICIENT"),
+        Err(_) => return error(503, "MARKET_PREFLIGHT_FAILED"),
+    };
+    // Never serialize u128 atoms as JSON numbers: browser Number would lose
+    // precision for 18-decimal stock balances and order amounts.
+    (200, json!({"schema":"xtxc.monad.market-preflight/v1",
+        "call":{"chainId":result.call.chain_id,"from":result.call.from,
+            "to":result.call.to,"data":result.call.data,"valueAtoms":result.call.value_atoms,
+            "inputToken":result.call.input_token,"stockToken":result.call.stock_token,
+            "allowanceSpender":result.call.allowance_spender,
+            "allowanceAtoms":result.call.allowance_atoms.to_string(),
+            "deadlineSecs":result.call.deadline_secs,
+            "executionClass":result.call.execution_class,
+            "guaranteesStockMinimum":result.call.guarantees_stock_minimum},
+        "blockNumber":result.block_number,"blockHash":result.block_hash,
+        "routerImplementationSha256":result.router_implementation_sha256,
+        "stockImplementationSha256":result.stock_implementation_sha256,
+        "inputBalanceAtoms":result.input_balance_atoms.to_string(),
+        "inputAllowanceAtoms":result.input_allowance_atoms.to_string(),
+        "approvalRequired":result.approval_required,"simulated":result.simulated,
+        "settlementPendingAfterSubmission":result.settlement_pending_after_submission}))
+}
 
 struct Request { method: String, path: String, owner: String, body: Vec<u8> }
 fn read_request(stream: &mut TcpStream, secret: &str) -> Result<Request, (u16, Value)> {
@@ -75,6 +143,9 @@ fn dispatch(req: Request, catalog: &Catalog, journal: &mut MonadJournal) -> (u16
     if req.method == "GET" && req.path.starts_with("/v1/orders/") {
         let id = &req.path[11..];
         return match journal.get(id, &req.owner) { Some(order) => (200, json!(order)), None => error(404, "ORDER_NOT_FOUND") };
+    }
+    if req.method == "POST" && req.path == "/v1/market-preflight" {
+        return market_preflight(&req.body, &req.owner, catalog);
     }
     if req.method == "POST" && req.path == "/v1/prepare" {
         // A catalog entry does not attest a quote. PR03 must bind an actual
@@ -143,5 +214,16 @@ mod tests {
         drop(journal);
         std::fs::remove_file(&path).unwrap();
         std::fs::remove_file(format!("{}.lock", path.display())).unwrap();
+    }
+    #[test]
+    fn market_request_rejects_foreign_owner_and_precision_loss_before_rpc() {
+        let catalog: Catalog = serde_json::from_str(include_str!("../../../monad/catalog/registry.v1.json")).unwrap();
+        assert_eq!(decimal_atoms("1000000000000000000"), Some(1_000_000_000_000_000_000));
+        assert_eq!(decimal_atoms("01"), None);
+        let input = serde_json::json!({"owner":"0x2222222222222222222222222222222222222222",
+            "assetId":"unused","side":"BUY","walletDebitAtoms":"1000000",
+            "orderAmountAtoms":"990000000000000000","deadlineSecs":1});
+        assert_eq!(market_preflight(input.to_string().as_bytes(),
+            "0x1111111111111111111111111111111111111111", &catalog).0, 403);
     }
 }
