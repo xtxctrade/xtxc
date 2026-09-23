@@ -19,8 +19,12 @@ const MAX_CALLDATA_HEX: usize = 16_386;
 pub struct ExecutionLimits {
     /// V1 never delegates delivery to a third party.
     pub receiver: String,
+    /// BUY: total wallet USDC debit (including platform fee); SELL: stock debit.
+    pub wallet_input_atoms: u128,
     /// BUY: stock atoms; SELL: USDC atoms. Wallet authorization must bind this.
     pub min_output_atoms: u128,
+    /// USDC fee ceiling explicitly shown to and authorized by the wallet.
+    pub platform_fee_cap_atoms: u128,
     pub max_gas: u64,
 }
 
@@ -35,10 +39,12 @@ pub struct AtomicCandidate {
     pub venue_id: String,
     pub quote_digest: String,
     pub state_block_hash: String,
-    pub input_atoms: u128,
+    pub wallet_input_atoms: u128,
+    pub venue_input_atoms: u128,
     pub min_output_atoms: u128,
     pub expected_output_atoms: u128,
-    pub fee_atoms: u128,
+    pub venue_fee_atoms: u128,
+    pub platform_fee_atoms: u128,
     pub gas_used: u64,
     pub call: BuiltCall,
 }
@@ -69,7 +75,7 @@ pub fn compile_atomic_candidate(
     if now_ms >= order.intent.quote_expires_at_ms
         || !address(&limits.receiver)
         || !same_hex(&limits.receiver, &order.intent.owner)
-        || limits.min_output_atoms == 0
+        || limits.wallet_input_atoms == 0 || limits.min_output_atoms == 0
         || limits.max_gas == 0
         || !digest(&block.hash)
         || adapter.execution_class() != ExecutionClass::MonadAtomic
@@ -87,7 +93,18 @@ pub fn compile_atomic_candidate(
     }
     let stock_amount = amount(&order.intent.quantity_atoms)?;
     let max_debit = amount(&order.intent.max_input_atoms)?;
-    let input_atoms = if operation == Operation::Buy { max_debit } else { stock_amount };
+    if limits.wallet_input_atoms > max_debit
+        || (operation == Operation::Sell && limits.wallet_input_atoms != stock_amount)
+    { return Err("wallet debit exceeds order bounds".into()); }
+    // The release fee is 0.5 bps, floored in USDC atoms. For BUY it is
+    // included in wallet debit; for SELL it is deducted from USDC output.
+    let buy_platform_fee = if operation == Operation::Buy { limits.wallet_input_atoms / 20_000 } else { 0 };
+    if buy_platform_fee > limits.platform_fee_cap_atoms {
+        return Err("platform fee exceeds wallet cap".into());
+    }
+    let input_atoms = if operation == Operation::Buy {
+        limits.wallet_input_atoms.checked_sub(buy_platform_fee).ok_or("fee exceeds debit")?
+    } else { stock_amount };
     if operation == Operation::Buy && limits.min_output_atoms < stock_amount {
         return Err("buy output falls below order quantity".into());
     }
@@ -119,11 +136,15 @@ pub fn compile_atomic_candidate(
     }
     // BUY fees are USDC-denominated and must fit the wallet debit. SELL fees
     // are taken from quote output, never silently from stock input.
-    if (operation == Operation::Buy && quote.fee_atoms >= max_debit)
-        || (operation == Operation::Sell && quote.fee_atoms >= quote.output_atoms)
+    if (quote.fee_atoms >= quote.input_atoms && operation == Operation::Buy)
+        || (quote.fee_atoms >= quote.output_atoms && operation == Operation::Sell)
     {
         return Err("venue fee exceeds economic amount".into());
     }
+    let platform_fee = if operation == Operation::Sell { quote.output_atoms / 20_000 } else { buy_platform_fee };
+    if platform_fee > limits.platform_fee_cap_atoms
+        || (operation == Operation::Sell && quote.output_atoms.saturating_sub(platform_fee) < limits.min_output_atoms)
+    { return Err("net output or platform fee exceeds wallet limits".into()); }
     let call = adapter.build(&quote)?;
     if call.chain_id != MAINNET_CHAIN_ID || !same_hex(&call.target, &venue.contract)
         || call.value_atoms != 0
@@ -135,8 +156,10 @@ pub fn compile_atomic_candidate(
         return Err("call is outside the admitted atomic venue boundary".into());
     }
     let simulation: SimulatedResult = adapter.simulate(&call, &state)?;
+    let simulated_platform_fee = if operation == Operation::Sell { simulation.estimated_output_atoms / 20_000 } else { buy_platform_fee };
     if !simulation.success || !same_hex(&simulation.state_block_hash, &block.hash)
-        || simulation.estimated_output_atoms < limits.min_output_atoms
+        || simulation.estimated_output_atoms.saturating_sub(if operation == Operation::Sell { simulated_platform_fee } else { 0 }) < limits.min_output_atoms
+        || simulated_platform_fee > limits.platform_fee_cap_atoms
         || simulation.gas_used == 0 || simulation.gas_used > limits.max_gas
     {
         return Err("full-call simulation failed at pinned state or limits".into());
@@ -145,10 +168,12 @@ pub fn compile_atomic_candidate(
         order_id: order.intent.order_id.clone(), asset_id: request.asset_id,
         operation, owner: request.owner, receiver: limits.receiver.clone(),
         venue_id: venue.venue_id.clone(), quote_digest: quote.quote_digest,
-        state_block_hash: block.hash.clone(), input_atoms,
+        state_block_hash: block.hash.clone(), wallet_input_atoms: limits.wallet_input_atoms,
+        venue_input_atoms: input_atoms,
         min_output_atoms: limits.min_output_atoms,
         expected_output_atoms: simulation.estimated_output_atoms,
-        fee_atoms: quote.fee_atoms, gas_used: simulation.gas_used, call,
+        venue_fee_atoms: quote.fee_atoms, platform_fee_atoms: simulated_platform_fee,
+        gas_used: simulation.gas_used, call,
     })
 }
 
@@ -175,7 +200,7 @@ mod tests {
         intent.quote_digest = hash('a');
         Order::new(intent).unwrap()
     }
-    fn limits() -> ExecutionLimits { ExecutionLimits { receiver: format!("0x{}", "1".repeat(40)), min_output_atoms: 100, max_gas: 300_000 } }
+    fn limits() -> ExecutionLimits { ExecutionLimits { receiver: format!("0x{}", "1".repeat(40)), wallet_input_atoms: 1_000_000, min_output_atoms: 100, platform_fee_cap_atoms: 50, max_gas: 300_000 } }
     struct Fixture { wrong_block: bool, wrong_target: bool, wrong_quote: bool, low_output: bool, gas: u64 }
     impl Default for Fixture { fn default() -> Self { Self { wrong_block: false, wrong_target: false, wrong_quote: false, low_output: false, gas: 20_000 } } }
     impl VenueAdapter for Fixture {
@@ -201,8 +226,10 @@ mod tests {
     fn admitted_buy_and_sell_compile_with_exact_pins() {
         let c = catalog();
         for side in [Side::Buy, Side::Sell] {
-            let candidate = compile_atomic_candidate(&c, &order(&c, side), &Fixture::default(), &block(), &limits(), 1).unwrap();
-            assert_eq!(candidate.input_atoms, if side == Side::Buy { 1_000_000 } else { 100 });
+            let mut limits = limits();
+            if side == Side::Sell { limits.wallet_input_atoms = 100; }
+            let candidate = compile_atomic_candidate(&c, &order(&c, side), &Fixture::default(), &block(), &limits, 1).unwrap();
+            assert_eq!(candidate.venue_input_atoms, if side == Side::Buy { 999_950 } else { 100 });
             assert_eq!(candidate.state_block_hash, block().hash);
         }
     }
