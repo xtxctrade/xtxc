@@ -134,9 +134,18 @@ impl MonadJournal {
         submitted: &SubmittedOrder) -> Result<&Order> {
         let mut next = self.orders.get(id).ok_or("Monad order not found")?.clone();
         let binding = next.market_binding.as_ref().ok_or("not a direct market order")?;
+        let expected_amount = i128::try_from(binding.request.order_amount_atoms)
+            .map_err(|_| "issuer amount overflow")?;
+        let (expected_side, expected_amount) = match binding.request.side {
+            super::monday_public::MarketSide::Buy => (super::monday_receipts::Side::Buy, expected_amount),
+            super::monday_public::MarketSide::Sell => (super::monday_receipts::Side::Sell, -expected_amount),
+        };
         if next.tx_hash.as_deref() != Some(submitted.submission_tx.as_str())
             || !next.intent.owner.eq_ignore_ascii_case(&submitted.owner)
-            || !binding.call.stock_token.eq_ignore_ascii_case(&submitted.stock_token) {
+            || !binding.call.stock_token.eq_ignore_ascii_case(&submitted.stock_token)
+            || submitted.side != expected_side
+            || submitted.input_atoms != binding.request.wallet_debit_atoms
+            || submitted.requested_amount != expected_amount {
             return Err("issuer submission does not bind prepared order".into());
         }
         if next.market_issuer_order_id.as_deref() == Some(submitted.order_id.as_str())
@@ -268,10 +277,27 @@ mod tests {
         let order = Order::new_market(intent, binding).unwrap();
         let json = serde_json::to_string(&order).unwrap();
         assert!(json.contains("\"orderAmountAtoms\":\"9970000000000000000\""));
+        let tx_hash = format!("0x{}", "d".repeat(64));
+        let issuer_id = format!("0x{}", "e".repeat(64));
+        let block_hash = format!("0x{}", "f".repeat(64));
         { let mut journal = MonadJournal::open(&path).unwrap();
-          journal.prepare(order.clone()).unwrap(); }
+          journal.prepare(order.clone()).unwrap();
+          journal.report_submission("mon_market", &request.owner, &tx_hash, 2).unwrap();
+          let submitted = SubmittedOrder { order_id: issuer_id.clone(), owner: request.owner.clone(),
+              stock_token: token.token_address.clone(), side: super::super::monday_receipts::Side::Buy,
+              input_atoms: request.wallet_debit_atoms, requested_amount: request.order_amount_atoms as i128,
+              submission_tx: tx_hash.clone(), submission_block_hash: block_hash.clone(),
+              submission_block_number: 100 };
+          let mut wrong = submitted.clone(); wrong.input_atoms += 1;
+          assert!(journal.observe_market_submission("mon_market", &wrong).is_err());
+          assert_eq!(journal.observe_market_submission("mon_market", &submitted).unwrap().phase, Phase::Finalized);
+          assert_eq!(journal.observe_market_submission("mon_market", &submitted).unwrap().phase, Phase::Finalized);
+        }
         { let journal = MonadJournal::open(&path).unwrap();
-          assert_eq!(journal.get("mon_market", &request.owner), Some(&order)); }
+          let found = journal.get("mon_market", &request.owner).unwrap();
+          assert_eq!(found.market_issuer_order_id.as_deref(), Some(issuer_id.as_str()));
+          assert_eq!(found.phase, Phase::Finalized);
+          assert!(found.market_binding.is_some()); }
         std::fs::remove_file(&path).unwrap();
         std::fs::remove_file(format!("{}.lock", path.display())).unwrap();
     }
