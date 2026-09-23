@@ -2,12 +2,29 @@
 //! A passing eth_call proves only that submission is currently possible;
 //! the venue settles the stock order asynchronously at an unknown price.
 use super::{feed::{chain_guard, read_block, read_latest, Rpc},
-    monday::{read_contract_state, MondayState},
-    monday_public::{encode_market_call, MarketRequest, UnsimulatedMondayCall}};
+    monday::{read_contract_state, MondayState, CASHIER, STOCK},
+    monday_public::{encode_market_call, MarketRequest, MarketSide, UnsimulatedMondayCall}};
 use crate::{monad_contract::Catalog, Result};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use sha3::{Digest, Keccak256};
+
+const CASH_CENT_WAD: u128 = 10_000_000_000_000_000;
+const MIN_MINT_FEE_WAD: u128 = 20_000_000_000_000_000;
+const FEE_DENOMINATOR: u128 = 1_000_000;
+const MAX_I96: u128 = (1u128 << 95) - 1;
+const MAX_U96: u128 = (1u128 << 96) - 1;
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct MarketBudgetRequest {
+    pub owner: String,
+    pub asset_id: String,
+    pub side: MarketSide,
+    /// BUY: USDC 6-decimal atoms; SELL: stock 18-decimal atoms.
+    pub wallet_debit_atoms: u128,
+    pub deadline_secs: u64,
+}
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -47,6 +64,47 @@ fn token_call(rpc: &mut impl Rpc, token: &str, data: String, block_hash: &str) -
     let result = rpc.call("eth_call", json!([{"to":token,"data":data},block_hash]))?;
     strict_u128(result.as_str().ok_or("preflight ERC20 call absent")?)
 }
+
+fn ceil_fee(amount: u128, rate: u128) -> Result<u128> {
+    amount.checked_mul(rate).and_then(|n| n.checked_add(FEE_DENOMINATOR - 1))
+        .map(|n| n / FEE_DENOMINATOR).ok_or("Monday fee arithmetic overflow".into())
+}
+
+fn affordable_order(credit: u128, mint_rate: u128, protocol_rate: u128,
+                    min_order_value: u128) -> Result<u128> {
+    if mint_rate > FEE_DENOMINATOR || protocol_rate > FEE_DENOMINATOR {
+        return Err("Monday fee rate out of bounds".into());
+    }
+    let mut low = 0u128;
+    let mut high = credit.min(MAX_I96) / CASH_CENT_WAD;
+    while low < high {
+        let mid = low + (high - low + 1) / 2;
+        let amount = mid.checked_mul(CASH_CENT_WAD).ok_or("Monday order overflow")?;
+        let protocol_fee = ceil_fee(amount, protocol_rate)?;
+        let mint_fee = ceil_fee(amount, mint_rate)?.max(MIN_MINT_FEE_WAD);
+        let cost = amount.checked_add(protocol_fee).and_then(|n| n.checked_add(mint_fee))
+            .ok_or("Monday order cost overflow")?;
+        if cost <= credit { low = mid; } else { high = mid - 1; }
+    }
+    let amount = low.checked_mul(CASH_CENT_WAD).ok_or("Monday order overflow")?;
+    if amount == 0 || amount < min_order_value { return Err("Monday budget below minimum order".into()); }
+    Ok(amount)
+}
+
+fn buy_order_from_budget(rpc: &mut impl Rpc, state: &MondayState,
+                         catalog: &Catalog, budget_atoms: u128) -> Result<u128> {
+    if budget_atoms == 0 || budget_atoms > MAX_U96 { return Err("Monday budget invalid".into()); }
+    let fee_raw = rpc.call("eth_call", json!([{"to":STOCK,"data":selector("getFeeInfo()")}, state.block.hash]))?;
+    let fee_hex = fee_raw.as_str().ok_or("Monday fee info absent")?;
+    if fee_hex.len() != 258 || !fee_hex.starts_with("0x") { return Err("Monday fee info ABI changed".into()); }
+    let values = (0..4).map(|index| strict_u128(&format!("0x{}", &fee_hex[2+index*64..2+(index+1)*64])))
+        .collect::<Result<Vec<_>>>()?;
+    let data = format!("{}{}{}", selector("tokenToBalanceInstant(address,uint96)"),
+        address_word(&catalog.chain.usdc)?, format!("{budget_atoms:064x}"));
+    let credit = token_call(rpc, CASHIER, data, &state.block.hash)?;
+    affordable_order(credit, values[0], values[1], values[2])
+}
+
 fn read_wallet_input(rpc: &mut impl Rpc, call: &UnsimulatedMondayCall,
                      state: &MondayState) -> Result<(u128, u128)> {
     let owner = address_word(&call.from)?;
@@ -58,12 +116,9 @@ fn read_wallet_input(rpc: &mut impl Rpc, call: &UnsimulatedMondayCall,
     Ok((balance, allowance))
 }
 
-pub fn preflight_market_call(rpc: &mut impl Rpc, catalog: &Catalog,
-    request: &MarketRequest, now_secs: u64) -> Result<MarketPreflight> {
+fn preflight_at_state(rpc: &mut impl Rpc, catalog: &Catalog, request: &MarketRequest,
+                      now_secs: u64, state: MondayState) -> Result<MarketPreflight> {
     let call = encode_market_call(catalog, request, now_secs)?;
-    chain_guard(rpc)?;
-    let block = read_latest(rpc)?;
-    let state = read_contract_state(rpc, block)?;
     if state.block.timestamp > now_secs + 30 || now_secs.saturating_sub(state.block.timestamp) > 30 {
         return Err("Monday state is not fresh".into());
     }
@@ -96,6 +151,32 @@ pub fn preflight_market_call(rpc: &mut impl Rpc, catalog: &Catalog,
     })
 }
 
+pub fn preflight_market_call(rpc: &mut impl Rpc, catalog: &Catalog,
+    request: &MarketRequest, now_secs: u64) -> Result<MarketPreflight> {
+    chain_guard(rpc)?;
+    let block = read_latest(rpc)?;
+    let state = read_contract_state(rpc, block)?;
+    preflight_at_state(rpc, catalog, request, now_secs, state)
+}
+
+/// Derive the largest cent-precise issuer order from the user's USDC cap at
+/// one canonical block, then simulate the exact Router calldata there.
+pub fn preflight_market_budget(rpc: &mut impl Rpc, catalog: &Catalog,
+    budget: &MarketBudgetRequest, now_secs: u64) -> Result<(MarketRequest, MarketPreflight)> {
+    chain_guard(rpc)?;
+    let block = read_latest(rpc)?;
+    let state = read_contract_state(rpc, block)?;
+    let order_amount_atoms = match budget.side {
+        MarketSide::Buy => buy_order_from_budget(rpc, &state, catalog, budget.wallet_debit_atoms)?,
+        MarketSide::Sell => budget.wallet_debit_atoms,
+    };
+    let request = MarketRequest { owner: budget.owner.clone(), asset_id: budget.asset_id.clone(),
+        side: budget.side, wallet_debit_atoms: budget.wallet_debit_atoms,
+        order_amount_atoms, deadline_secs: budget.deadline_secs };
+    let result = preflight_at_state(rpc, catalog, &request, now_secs, state)?;
+    Ok((request, result))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -106,5 +187,12 @@ mod tests {
         assert_eq!(strict_u128(&format!("0x{}f", "0".repeat(63))).unwrap(), 15);
         assert!(strict_u128(&format!("0x1{}", "0".repeat(63))).is_err());
         assert_eq!(address_word("0x1111111111111111111111111111111111111111").unwrap().len(), 64);
+    }
+    #[test]
+    fn budget_fee_search_is_exact_and_fails_under_minimum() {
+        assert_eq!(affordable_order(10_000_000_000_000_000_000, 1000, 1000, 0).unwrap(),
+            9_970_000_000_000_000_000);
+        assert!(affordable_order(10_000_000_000_000_000, 1000, 1000, 0).is_err());
+        assert!(affordable_order(100_000_000_000_000_000, 1_000_001, 0, 0).is_err());
     }
 }
