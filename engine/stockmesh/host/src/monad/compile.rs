@@ -86,7 +86,7 @@ pub fn compile_atomic_candidate(
     if order.phase != Phase::Prepared || order.tx_hash.is_some() || order.tx_nonce.is_some() {
         return Err("Monad order is no longer unsigned and prepared".into());
     }
-    if now_ms >= order.intent.quote_expires_at_ms
+    if order.market_binding.is_some() || now_ms >= order.intent.quote_expires_at_ms
         || !address(&limits.receiver)
         || !same_hex(&limits.receiver, &order.intent.owner)
         || limits.wallet_input_atoms == 0 || limits.min_output_atoms == 0
