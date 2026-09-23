@@ -299,6 +299,13 @@ impl Catalog {
                 return Err("invalid or duplicate Monad token observation".into());
             }
         }
+        for candidate in &self.candidates {
+            if !self.token_observations.iter().any(|token| {
+                token.instrument_id == candidate.instrument_id && token.issuer == candidate.issuer
+            }) {
+                return Err("Monad market candidate lacks issuer token observation".into());
+            }
+        }
         for venue in &self.venue_observations {
             label(&venue.venue_id)?;
             label(&venue.role)?;
@@ -563,6 +570,9 @@ mod tests {
         assert!(wrong.validate().is_err());
         let mut wrong = catalog.clone();
         wrong.token_observations[0].token_decimals = 19;
+        assert!(wrong.validate().is_err());
+        let mut wrong = catalog.clone();
+        wrong.candidates[0].instrument_id = "FAKE".into();
         assert!(wrong.validate().is_err());
     }
 
