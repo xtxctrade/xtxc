@@ -37,8 +37,10 @@ def main() -> None:
     catalog_dir = Path(sys.argv[2])
     catalog_path = catalog_dir / "registry.v1.json"
     catalog = json.loads(catalog_path.read_text())
-    if catalog["products"] or catalog["admittedVenues"]:
-        raise SystemExit("market discovery refuses a catalog with live admissions")
+    manifest_path = catalog_dir / "deployment-manifest.v1.json"
+    manifest = json.loads(manifest_path.read_text())
+    if catalog["products"] or catalog["admittedVenues"] or manifest["state"] != "DISABLED":
+        raise SystemExit("market discovery refuses an admitted or enabled deployment")
     issuer_tokens = {token["issuerProductId"]: token for token in catalog["tokenObservations"]}
     candidates = []
     for published in symbols:
@@ -58,10 +60,6 @@ def main() -> None:
     catalog["candidates"] = candidates
     encoded = (json.dumps(catalog, indent=2) + "\n").encode()
     catalog_path.write_bytes(encoded)
-    manifest_path = catalog_dir / "deployment-manifest.v1.json"
-    manifest = json.loads(manifest_path.read_text())
-    if manifest["state"] != "DISABLED":
-        raise SystemExit("market discovery refuses an enabled deployment")
     manifest["catalogSha256"] = hashlib.sha256(encoded).hexdigest()
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
     print(f"venue-published candidates={len(candidates)} issuer tokens={len(issuer_tokens)}; no execution admission")

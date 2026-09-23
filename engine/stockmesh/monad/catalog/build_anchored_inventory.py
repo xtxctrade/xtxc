@@ -29,6 +29,10 @@ def main() -> None:
     catalog_dir = Path(sys.argv[2])
     catalog_path = catalog_dir / "registry.v1.json"
     catalog = json.loads(catalog_path.read_text())
+    manifest_path = catalog_dir / "deployment-manifest.v1.json"
+    manifest = json.loads(manifest_path.read_text())
+    if catalog["products"] or catalog["admittedVenues"] or manifest["state"] != "DISABLED":
+        raise SystemExit("inventory generator refuses an admitted or enabled deployment")
     catalog["tokenObservations"] = [
         {
             "instrumentId": symbol[1:],
@@ -42,14 +46,8 @@ def main() -> None:
         }
         for symbol, address in rows
     ]
-    if catalog["products"] or catalog["admittedVenues"]:
-        raise SystemExit("inventory generator refuses a catalog with live admissions")
     encoded = (json.dumps(catalog, indent=2) + "\n").encode()
     catalog_path.write_bytes(encoded)
-    manifest_path = catalog_dir / "deployment-manifest.v1.json"
-    manifest = json.loads(manifest_path.read_text())
-    if manifest["state"] != "DISABLED":
-        raise SystemExit("inventory generator refuses an enabled deployment")
     manifest["catalogSha256"] = hashlib.sha256(encoded).hexdigest()
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
     print(f"stock tokens={len(rows)} official_source_sha256={hashlib.sha256(snapshot.encode()).hexdigest()}")
