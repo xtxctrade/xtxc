@@ -2,6 +2,37 @@
 
 Status: **IN PROGRESS**. No mainnet wallet signature, transaction submission, customer fill, or ETF mint was performed here. `/prepare` remains closed for the 112 observed products.
 
+## Metropolis testnet lane (separate from real stocks)
+
+The hackathon path no longer waits on a mainnet funded USDC→stock→USDC round trip.
+Official Monad Testnet is chain ID 10143, with public RPC and a faucet. The
+isolated Cherry host received `0x279f` from `eth_chainId` and a current
+`eth_blockNumber` from `https://testnet-rpc.monad.xyz` on 2026-09-24 KST.
+The alternative `rpc.testnet.monad.xyz` shown in an older developer-portal
+snapshot did not resolve from Cherry; use the verified testnet endpoint.
+
+The executor now pins either Monad mainnet 143 or Testnet 10143 at deployment.
+`MetropolisDemoAssets.sol` is restricted to Testnet 10143 and contains
+explicitly non-equity demo cash/stock plus a constant-product demo venue. The
+private Next.js route `/exchange/monad/testnet` keeps testnet token addresses
+and wallet calls separate from Monday's 112 mainnet stock identities. It reads
+two demo venue quotes, presents the better one, performs an exact allowance,
+simulates the executor call, and asks the user's wallet to sign. A receipt
+check refreshes token balances without treating a submitted hash as a fill.
+
+Cherry isolated contract tests passed: existing atomic executor, Monday Spot,
+and new Ganache-10143 demo buy→wallet stock→sell→wallet cash, faucet limit,
+slippage rollback and nonce replay rejection. The private Next.js TypeScript
+check and webpack production build passed; the new route appeared in the build.
+These are **local EVM tests and a build**, not landed Monad Testnet transactions.
+
+Hackathon acceptance requires actual Testnet deployment addresses and source,
+test-wallet MON from the faucet, wallet-signed buy/sell transaction hashes,
+decoded `Executed` events, holdings and cash after each transaction, and
+refresh/recovery on the same order. The Testnet demo is not admission of a real
+stock or evidence of Monday issuer settlement. Mainnet stock acceptance and
+ETF product rights remain independent release gates.
+
 Monday's [public RWA launch notice](https://blog.monday.trade/rwas-are-live-on-monday-trade/) says a connected Web3 wallet can trade RWA markets without a Monday waitlist/KYC flow. We therefore do not use an issuer partnership as a prerequisite for implementing the public trading route. Issuer mint/redeem, market-making access, geographic eligibility, and ETF-vault transfer behavior are separate questions.
 
 ## Separate execution lanes
