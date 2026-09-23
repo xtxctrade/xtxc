@@ -55,6 +55,10 @@ pub(crate) fn address(value: &str) -> bool {
 pub(crate) fn digest(value: &str) -> bool {
     value.len() == 66 && value.starts_with("0x") && value[2..].bytes().all(|b| b.is_ascii_hexdigit())
 }
+fn sha256_hex(value: &str) -> bool {
+    let raw = value.strip_prefix("0x").unwrap_or(value);
+    raw.len() == 64 && raw.bytes().all(|b| b.is_ascii_hexdigit())
+}
 fn atoms(value: &str) -> bool {
     !value.is_empty() && value.len() <= 39 && !value.starts_with('0')
         && value.bytes().all(|b| b.is_ascii_digit()) && value.parse::<u128>().is_ok()
@@ -128,8 +132,8 @@ impl Order {
                 || binding.call.guarantees_stock_minimum
                 || binding.call.execution_class != "ISSUER_ASYNC"
                 || !digest(&binding.simulated_block_hash)
-                || !digest(&binding.router_implementation_sha256)
-                || !digest(&binding.stock_implementation_sha256)
+                || !sha256_hex(&binding.router_implementation_sha256)
+                || !sha256_hex(&binding.stock_implementation_sha256)
             { return Err("invalid direct issuer market binding".into()); }
         }
         if self.market_issuer_order_id.as_ref().is_some_and(|id| !digest(id))
