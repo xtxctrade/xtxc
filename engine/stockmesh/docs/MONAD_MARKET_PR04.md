@@ -24,6 +24,9 @@ Cherry isolated contract tests passed: existing atomic executor, Monday Spot,
 and new Ganache-10143 demo buy→wallet stock→sell→wallet cash, faucet limit,
 slippage rollback and nonce replay rejection. The private Next.js TypeScript
 check and webpack production build passed; the new route appeared in the build.
+`contracts/monad/scripts/metropolis-deploy.cjs` also compiled both contracts,
+queried the live Testnet chain ID, and exited in `READ_ONLY` mode on Cherry.
+It cannot broadcast without a separate approval marker and test-only key.
 These are **local EVM tests and a build**, not landed Monad Testnet transactions.
 
 Hackathon acceptance requires actual Testnet deployment addresses and source,
