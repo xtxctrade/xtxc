@@ -111,3 +111,20 @@ pub(crate) fn fixture_intent(id: &str, key: &str) -> Intent {
         side: Side::Buy, quantity_atoms: "100".into(), max_input_atoms: "1000000".into(),
         quote_digest: format!("0x{}", "a".repeat(64)), quote_expires_at_ms: 2_000_000_000_000 }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::monad_contract::Catalog;
+
+    #[test]
+    fn every_observed_asset_identity_passes_order_grammar() {
+        let catalog: Catalog = serde_json::from_str(include_str!("../../../monad/catalog/registry.v1.json")).unwrap();
+        assert_eq!(catalog.token_observations.len(), 112);
+        for token in &catalog.token_observations {
+            let mut intent = fixture_intent("mon_identity", "idempotency_identity_0001");
+            intent.asset_id = format!("eip155:{}:erc20:{}:{}:{}", token.chain_id, token.token_address, token.issuer, token.issuer_product_id);
+            Order::new(intent).unwrap();
+        }
+    }
+}
