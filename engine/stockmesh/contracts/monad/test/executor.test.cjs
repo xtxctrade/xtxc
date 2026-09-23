@@ -81,6 +81,12 @@ async function rejected(promise, label) {
   await (await venue.setMode(false, false, true)).wait();
   await rejected(buy.execute({ ...base, nonce: 2n }), 'venue revert');
   await (await venue.setMode(false, false, false)).wait();
+  await (await stock.setTransferFeeBps(100n)).wait();
+  await rejected(buy.execute({ ...base, nonce: 2n, minOutput: 900_000n }), 'fee-on-transfer stock output');
+  await (await stock.setTransferFeeBps(0n)).wait();
+  await (await usdc.setTransferFeeBps(100n)).wait();
+  await rejected(buy.execute({ ...base, nonce: 2n }), 'fee-on-transfer USDC input');
+  await (await usdc.setTransferFeeBps(0n)).wait();
   assert.equal(await executor.nonceUsed(await user.getAddress(), 2n), false);
 
   await (await stock.connect(user).approve(await executor.getAddress(), 200_000n)).wait();

@@ -12,13 +12,15 @@ contract MockToken {
     uint8 public constant decimals = 6;
     mapping(address => uint256) public balanceOf;
     mapping(address => mapping(address => uint256)) public allowance;
+    uint256 public transferFeeBps;
 
     constructor(string memory name_, string memory symbol_) { name = name_; symbol = symbol_; }
     function mint(address to, uint256 value) external { balanceOf[to] += value; }
+    function setTransferFeeBps(uint256 bps) external { require(bps <= 1000); transferFeeBps = bps; }
     function transfer(address to, uint256 value) external returns (bool) {
         require(balanceOf[msg.sender] >= value, "balance");
         balanceOf[msg.sender] -= value;
-        balanceOf[to] += value;
+        balanceOf[to] += value - value * transferFeeBps / 10_000;
         return true;
     }
     function approve(address spender, uint256 value) external returns (bool) {
@@ -29,7 +31,7 @@ contract MockToken {
         require(balanceOf[from] >= value && allowance[from][msg.sender] >= value, "allowance");
         allowance[from][msg.sender] -= value;
         balanceOf[from] -= value;
-        balanceOf[to] += value;
+        balanceOf[to] += value - value * transferFeeBps / 10_000;
         return true;
     }
 }
