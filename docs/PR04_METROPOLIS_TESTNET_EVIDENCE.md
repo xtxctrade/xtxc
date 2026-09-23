@@ -26,6 +26,19 @@ The contracts were configured and both venues seeded with test liquidity. The is
 
 The smoke runner compared quotes from both deployed venues for each side and selected Venue A for buy and Venue B for sell. Its receipt/event assertions checked exact buyer token balance deltas, 0.5 bps buy fee, used nonce, duplicate-order rejection, failed-order rollback, and sell-side cash return. The post-run buyer balances were 959,485,850 dUSD and 497,979 dNVDA base units. The on-chain buy/sell receipts—not unit tests or fixture output—are the testnet execution evidence.
 
+## Browser wallet-interface end-to-end
+
+A separate headless Chromium run used an isolated EIP-1193 test signer backed by the funded test-only buyer wallet. It exercised the deployed Next.js trading page—not only the contract script—against Monad Testnet:
+
+1. Connect wallet, load dUSD/dNVDA balances, compare both venue quotes, review, simulate, and sign a [10 dUSD buy](https://testnet.monadscan.com/tx/0x14a704a0ec61c7926f68d4a926a51235e9027faf2fdb2d1da3db8ea8e17ebe1d).
+2. Reload before checking the receipt, reconnect, recover the pending hash from local storage, confirm the executor event, and update holdings. Cash changed from 949,485,850 to 939,485,850 base units; stock from 597,465 to 696,931.
+3. Review and sign a [0.1 dNVDA sell](https://testnet.monadscan.com/tx/0xf14087aca79ee5e515090d73fc35b6511d891e68ae390cc95169d022b6c6f9bc).
+4. Reload before receipt confirmation again; reconnect and recover the pending sell. Cash rose to 951,424,194 base units and stock fell to 596,931.
+
+The isolated buyer was replenished with [0.5 testnet MON](https://testnet.monadscan.com/tx/0x06d01ad33974c3bf7ae9abdd033c9ee1685ecf38ac414a8a2c9540912814f4ff) before this run. The screenshot and full JSON evidence are retained on the isolated Cherry host at `/srv/skew/stockmesh-direct-node-20260920/runtime/pr04-ui-e2e/`.
+
+A [Vercel preview](https://skew-deals-eug3a6nrn-woon20020501-pixels-projects.vercel.app/exchange/monad/testnet) is deployed and READY; same-project authenticated `vercel curl` returned HTTP 200 and the exact testnet contract addresses. The preview is protected by Vercel login. The browser automation ran the same build from an isolated Cherry server, not the protected Vercel URL. A personally unlocked MetaMask extension was **not** used; the EIP-1193 test signer is explicitly a test harness.
+
 ## Scope boundary
 
-This proves the isolated two-venue **demo asset** execution path on Monad Testnet. It does **not** establish a mainnet issuer-authorized stock route, 112 executable equities, equity ownership/redemption rights, production customer settlement, or a publicly deployed browser UI. The private testnet browser page has wallet connect, quoting, approval, trade and receipt recovery code, but public UI deployment and browser-wallet end-to-end verification remain separate acceptance work. Mainnet stock admission remains closed.
+The `HACKATHON_TESTNET_ACCEPTED` **demo execution and recovery** gate is met by real chain receipts, two venues, and the browser wallet-interface test. This does **not** establish a mainnet issuer-authorized stock route, 112 executable equities, equity ownership/redemption rights, production customer settlement, or a public production release. Mainnet stock admission remains closed.
