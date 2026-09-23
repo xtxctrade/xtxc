@@ -7,6 +7,22 @@ use crate::{monad_contract::{Catalog, MAINNET_CHAIN_ID}, Result};
 use serde::{Deserialize, Serialize};
 use sha3::{Digest, Keccak256};
 
+/// JSON and WAL must not turn 18-decimal token atoms into browser floats.
+pub(crate) mod atoms_string {
+    use serde::{de::Error, Deserialize, Deserializer, Serializer};
+    pub fn serialize<S: Serializer>(value: &u128, serializer: S) -> Result<S::Ok, S::Error> {
+        serializer.serialize_str(&value.to_string())
+    }
+    pub fn deserialize<'de, D: Deserializer<'de>>(deserializer: D) -> Result<u128, D::Error> {
+        let value = String::deserialize(deserializer)?;
+        if value.is_empty() || value.len() > 39 || value.starts_with('0')
+            || !value.bytes().all(|byte| byte.is_ascii_digit()) {
+            return Err(D::Error::custom("invalid decimal atoms"));
+        }
+        value.parse().map_err(D::Error::custom)
+    }
+}
+
 const BUY: &str = "depositAndMarketBuy(address,uint96,address,int96,uint32)";
 const SELL: &str = "depositStockAndMarketSell(address,uint256,int96,uint32)";
 const MAX_U96: u128 = (1u128 << 96) - 1;
@@ -27,9 +43,11 @@ pub struct MarketRequest {
     pub asset_id: String,
     pub side: MarketSide,
     /// BUY: wallet USDC 6-decimal atoms. SELL: wallet stock 18-decimal atoms.
+    #[serde(with = "atoms_string")]
     pub wallet_debit_atoms: u128,
     /// BUY: positive mUSD 18-decimal accounting atoms, after venue fees.
     /// SELL: stock 18-decimal atoms. Never copy USDC atoms into this field.
+    #[serde(with = "atoms_string")]
     pub order_amount_atoms: u128,
     pub deadline_secs: u64,
 }
@@ -45,6 +63,7 @@ pub struct UnsimulatedMondayCall {
     pub input_token: String,
     pub stock_token: String,
     pub allowance_spender: String,
+    #[serde(with = "atoms_string")]
     pub allowance_atoms: u128,
     pub deadline_secs: u64,
     pub execution_class: String,
