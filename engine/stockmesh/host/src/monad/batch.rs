@@ -11,6 +11,7 @@ use crate::{
     Result,
 };
 use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
 
 const MAX_COHORT: usize = 256;
 
@@ -35,6 +36,8 @@ pub struct Row {
     pub instrument_id: String,
     pub token_address: String,
     pub venue_id: String,
+    pub implementation_hash: Option<String>,
+    pub typed_abi_hash: Option<String>,
     pub stage: Stage,
     pub error: Option<String>,
     pub buy_quote_digest: Option<String>,
@@ -44,6 +47,7 @@ pub struct Row {
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Report {
+    pub catalog_sha256: String,
     pub block: BlockRef,
     pub venue_id: String,
     pub rows: Vec<Row>,
@@ -119,6 +123,8 @@ fn inspect(
         instrument_id: token.instrument_id.clone(),
         token_address: token.token_address.clone(),
         venue_id: adapter.venue_id().to_owned(),
+        implementation_hash: None,
+        typed_abi_hash: None,
         stage: Stage::Discovery,
         error: None,
         buy_quote_digest: None,
@@ -137,6 +143,8 @@ fn inspect(
         {
             return Err("venue state is not pinned to requested block and version".into());
         }
+        row.implementation_hash = Some(state.implementation_hash.clone());
+        row.typed_abi_hash = Some(state.typed_abi_hash.clone());
         for (operation, input_atoms, quote_stage, build_stage, simulation_stage) in [
             (
                 Operation::Buy,
@@ -228,6 +236,10 @@ pub fn preflight_all(
         .filter(|row| row.stage == Stage::PreflightPassed)
         .count();
     Ok(Report {
+        catalog_sha256: format!(
+            "{:x}",
+            Sha256::digest(serde_json::to_vec(catalog).map_err(|_| "catalog encode failed")?)
+        ),
         block: block.clone(),
         venue_id: adapter.venue_id().to_owned(),
         rows,
