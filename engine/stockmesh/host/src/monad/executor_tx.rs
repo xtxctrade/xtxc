@@ -76,7 +76,7 @@ pub fn encode_executor_call(
     now_ms: u64,
 ) -> Result<UnsimulatedExecutorCall> {
     catalog.validate()?;
-    if order.phase != Phase::Prepared || now_ms >= candidate.expires_at_ms
+    if order.market_binding.is_some() || order.phase != Phase::Prepared || now_ms >= candidate.expires_at_ms
         || candidate.expires_at_ms > order.intent.quote_expires_at_ms
         || !address(executor) || executor.eq_ignore_ascii_case("0x0000000000000000000000000000000000000000")
         || !digest(&candidate.state_block_hash)
