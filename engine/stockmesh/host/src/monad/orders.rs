@@ -36,7 +36,10 @@ impl Intent {
             || self.chain_id != MAINNET_CHAIN_ID || !address(&self.owner)
             || !self.asset_id.starts_with("eip155:143:erc20:")
             || self.asset_id.len() > 256
-            || !self.asset_id.bytes().all(|b| b.is_ascii_alphanumeric() || b == b':' || b == b'-' || b == b'_')
+            // Product::asset_id uses catalog labels verbatim. An issuer such
+            // as "Anchored Finance" is valid, so the order grammar must not
+            // reject the whole observed cohort before catalog matching.
+            || !self.asset_id.bytes().all(|b| b.is_ascii_alphanumeric() || matches!(b, b':' | b'-' | b'_' | b'.' | b' '))
             || !atoms(&self.quantity_atoms) || !atoms(&self.max_input_atoms)
             || !digest(&self.quote_digest) || self.quote_expires_at_ms == 0
         { return Err("invalid Monad intent".into()); }

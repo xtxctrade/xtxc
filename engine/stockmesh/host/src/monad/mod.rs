@@ -2,6 +2,7 @@
 //! sender journal and has no signing, calldata, or transaction-send authority.
 pub mod adapters;
 pub mod batch;
+pub mod compile;
 pub mod feed;
 pub mod journal;
 pub mod monday;
