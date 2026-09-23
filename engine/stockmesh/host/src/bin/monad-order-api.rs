@@ -1,9 +1,12 @@
 //! Isolated loopback control plane for PR02. No RPC sender, signer or private
 //! key. A reported transaction hash is not proof of inclusion or delivery.
 use serde_json::{json, Value};
-use skew_execution_host::{monad::{feed::BoundedRpc, journal::MonadJournal,
-    monday_public::{MarketRequest, MarketSide}, preflight_market::{preflight_market_call,
+use skew_execution_host::{monad::{feed::{chain_guard, BoundedRpc, Rpc}, journal::MonadJournal,
+    market_observer::refresh_submission,
+    monday_public::{MarketRequest, MarketSide}, orders::{Intent, MarketBinding, Order, Side},
+    preflight_market::{preflight_market_call,
         preflight_market_budget, MarketBudgetRequest, MarketPreflight}}, monad_contract::Catalog};
+use sha3::{Digest, Keccak256};
 use std::{env, io::{Read, Write}, net::{TcpListener, TcpStream}, path::Path,
     time::{Duration, SystemTime, UNIX_EPOCH}};
 
@@ -42,10 +45,66 @@ struct MarketBudgetInput {
     deadline_secs: u64,
 }
 
+#[derive(serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct MarketPrepareInput {
+    owner: String,
+    asset_id: String,
+    side: MarketSide,
+    wallet_debit_atoms: String,
+    deadline_secs: u64,
+    idempotency_key: String,
+}
+
 fn decimal_atoms(value: &str) -> Option<u128> {
     if value.is_empty() || value.len() > 39 || value.starts_with('0')
         || !value.bytes().all(|byte| byte.is_ascii_digit()) { return None; }
     value.parse().ok()
+}
+
+fn provider() -> Result<BoundedRpc, (u16, Value)> {
+    let endpoint = match env::var("MONAD_RPC_URL_FILE") {
+        Ok(path) => std::fs::read_to_string(path)
+            .map_err(|_| error(503, "MONAD_PROVIDER_UNAVAILABLE"))?.trim().to_owned(),
+        Err(_) => "https://rpc.monad.xyz".into(),
+    };
+    BoundedRpc::new(endpoint, 32).map_err(|_| error(503, "MONAD_PROVIDER_UNAVAILABLE"))
+}
+
+fn report_market_submission(body: &[u8], id: &str, owner: &str,
+                            journal: &mut MonadJournal) -> (u16, Value) {
+    #[derive(serde::Deserialize)]
+    #[serde(rename_all = "camelCase", deny_unknown_fields)]
+    struct Report { tx_hash: String }
+    let report: Report = match serde_json::from_slice(body) {
+        Ok(value) => value, Err(_) => return error(422, "REPORT_SCHEMA"),
+    };
+    if report.tx_hash.len() != 66 || !report.tx_hash.starts_with("0x")
+        || !report.tx_hash[2..].bytes().all(|b| b.is_ascii_hexdigit()) {
+        return error(422, "REPORT_SCHEMA");
+    }
+    let Some(order) = journal.get(id, owner) else { return error(404, "ORDER_NOT_FOUND"); };
+    let Some(binding) = &order.market_binding else { return error(422, "MARKET_BINDING_REQUIRED"); };
+    let call = &binding.call;
+    let Ok(mut rpc) = provider() else { return error(503, "MONAD_PROVIDER_UNAVAILABLE"); };
+    if chain_guard(&mut rpc).is_err() { return error(503, "MONAD_PROVIDER_UNAVAILABLE"); }
+    let transaction = match rpc.call("eth_getTransactionByHash", json!([report.tx_hash])) {
+        Ok(value) if value.is_object() => value, _ => return error(503, "MARKET_TX_NOT_OBSERVED"),
+    };
+    let field = |key| transaction.get(key).and_then(Value::as_str).unwrap_or("");
+    let value = u128::from_str_radix(field("value").strip_prefix("0x").unwrap_or(""), 16);
+    let nonce = u64::from_str_radix(field("nonce").strip_prefix("0x").unwrap_or(""), 16);
+    if !field("hash").eq_ignore_ascii_case(&report.tx_hash)
+        || !field("from").eq_ignore_ascii_case(&call.from)
+        || !field("to").eq_ignore_ascii_case(&call.to)
+        || !field("input").eq_ignore_ascii_case(&call.data)
+        || value != Ok(0) || nonce.is_err()
+        || (transaction.get("chainId").is_some() && field("chainId") != "0x8f") {
+        return error(409, "MARKET_TX_BINDING_MISMATCH");
+    }
+    match journal.report_submission(id, owner, &report.tx_hash, nonce.unwrap()) {
+        Ok(order) => (200, json!(order)), Err(_) => error(409, "ORDER_BINDING_CONFLICT"),
+    }
 }
 
 fn market_preflight_response(result: MarketPreflight, order_amount_atoms: u128) -> (u16, Value) {
@@ -133,6 +192,66 @@ fn market_budget_preflight(body: &[u8], owner: &str, catalog: &Catalog) -> (u16,
     }
 }
 
+fn market_prepare(body: &[u8], owner: &str, catalog: &Catalog,
+                  journal: &mut MonadJournal) -> (u16, Value) {
+    let input: MarketPrepareInput = match serde_json::from_slice(body) {
+        Ok(value) => value, Err(_) => return error(422, "MARKET_PREPARE_INVALID"),
+    };
+    if !input.owner.eq_ignore_ascii_case(owner) { return error(403, "OWNER_MISMATCH"); }
+    if input.idempotency_key.len() < 16 || input.idempotency_key.len() > 128
+        || !input.idempotency_key.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'-' || b == b'_') {
+        return error(422, "MARKET_IDEMPOTENCY_INVALID");
+    }
+    let Some(wallet_debit_atoms) = decimal_atoms(&input.wallet_debit_atoms) else {
+        return error(422, "MARKET_AMOUNT_INVALID");
+    };
+    let budget = MarketBudgetRequest { owner: input.owner.clone(), asset_id: input.asset_id.clone(),
+        side: input.side, wallet_debit_atoms, deadline_secs: input.deadline_secs };
+    let endpoint = match env::var("MONAD_RPC_URL_FILE") {
+        Ok(path) => match std::fs::read_to_string(path) {
+            Ok(value) => value.trim().to_owned(), Err(_) => return error(503, "MONAD_PROVIDER_UNAVAILABLE"),
+        },
+        Err(_) => "https://rpc.monad.xyz".into(),
+    };
+    let Ok(mut rpc) = BoundedRpc::new(endpoint, 32) else {
+        return error(503, "MONAD_PROVIDER_UNAVAILABLE");
+    };
+    let Ok(now) = SystemTime::now().duration_since(UNIX_EPOCH) else {
+        return error(503, "CLOCK_UNAVAILABLE");
+    };
+    let (request, result) = match preflight_market_budget(&mut rpc, catalog, &budget, now.as_secs()) {
+        Ok(value) => value,
+        Err(message) if message.contains("wallet input balance insufficient") =>
+            return error(422, "WALLET_INPUT_INSUFFICIENT"),
+        Err(message) if message.contains("budget below minimum") =>
+            return error(422, "MARKET_BUDGET_TOO_SMALL"),
+        Err(_) => return error(503, "MARKET_PREFLIGHT_FAILED"),
+    };
+    if result.approval_required { return error(409, "MARKET_APPROVAL_REQUIRED"); }
+    if !result.simulated { return error(503, "MARKET_SIMULATION_REQUIRED"); }
+    let id_hash = Keccak256::digest(format!("xtxc.monad.market/v1:{}:{}",
+        owner.to_ascii_lowercase(), input.idempotency_key).as_bytes());
+    let order_id = format!("mon_{:x}", id_hash);
+    let binding = MarketBinding { request: request.clone(), call: result.call.clone(),
+        simulated_block_hash: result.block_hash,
+        router_implementation_sha256: result.router_implementation_sha256,
+        stock_implementation_sha256: result.stock_implementation_sha256 };
+    let intent = Intent { order_id, idempotency_key: input.idempotency_key,
+        owner: request.owner.clone(), chain_id: result.call.chain_id,
+        asset_id: request.asset_id.clone(),
+        side: match request.side { MarketSide::Buy => Side::Buy, MarketSide::Sell => Side::Sell },
+        quantity_atoms: request.order_amount_atoms.to_string(),
+        max_input_atoms: request.wallet_debit_atoms.to_string(),
+        quote_digest: String::new(), quote_expires_at_ms: 0 };
+    let order = match Order::new_market(intent, binding) {
+        Ok(value) => value, Err(_) => return error(422, "MARKET_PREPARE_INVALID"),
+    };
+    match journal.prepare(order) {
+        Ok(stored) => (201, json!({"schema":"xtxc.monad.market-order/v1","order":stored})),
+        Err(_) => error(409, "MARKET_ORDER_CONFLICT"),
+    }
+}
+
 struct Request { method: String, path: String, owner: String, body: Vec<u8> }
 fn read_request(stream: &mut TcpStream, secret: &str) -> Result<Request, (u16, Value)> {
     stream.set_read_timeout(Some(Duration::from_secs(2))).map_err(|_| error(400, "TRANSPORT"))?;
@@ -188,6 +307,19 @@ fn dispatch(req: Request, catalog: &Catalog, journal: &mut MonadJournal) -> (u16
         return (200, json!({"orders":journal.list(&req.owner)}));
     }
     if req.method == "GET" && req.path.starts_with("/v1/orders/") {
+        if let Some(id) = req.path.strip_prefix("/v1/orders/").and_then(|rest| rest.strip_suffix("/refresh")) {
+            if id.is_empty() || id.len() > 80 { return error(404, "ORDER_NOT_FOUND"); }
+            let Some(existing) = journal.get(id, &req.owner) else { return error(404, "ORDER_NOT_FOUND"); };
+            if existing.market_binding.is_none() { return error(422, "MARKET_BINDING_REQUIRED"); }
+            let Ok(mut rpc) = provider() else { return error(503, "MONAD_PROVIDER_UNAVAILABLE"); };
+            return match refresh_submission(&mut rpc, catalog, journal, id, &req.owner) {
+                Ok(order) => (200, json!({"order":order,"observationPending":false})),
+                Err(message) if message.contains("not yet included") || message.contains("not finalized")
+                    || message.contains("has no submitted transaction") =>
+                    (200, json!({"order":journal.get(id, &req.owner),"observationPending":true})),
+                Err(_) => error(503, "MARKET_OBSERVATION_FAILED"),
+            };
+        }
         let id = &req.path[11..];
         return match journal.get(id, &req.owner) { Some(order) => (200, json!(order)), None => error(404, "ORDER_NOT_FOUND") };
     }
@@ -197,6 +329,9 @@ fn dispatch(req: Request, catalog: &Catalog, journal: &mut MonadJournal) -> (u16
     if req.method == "POST" && req.path == "/v1/market-budget-preflight" {
         return market_budget_preflight(&req.body, &req.owner, catalog);
     }
+    if req.method == "POST" && req.path == "/v1/market-prepare" {
+        return market_prepare(&req.body, &req.owner, catalog, journal);
+    }
     if req.method == "POST" && req.path == "/v1/prepare" {
         // A catalog entry does not attest a quote. PR03 must bind an actual
         // provider quote to owner, input, deadline and an admitted adapter.
@@ -205,6 +340,9 @@ fn dispatch(req: Request, catalog: &Catalog, journal: &mut MonadJournal) -> (u16
     }
     if req.method == "POST" && req.path.starts_with("/v1/orders/") && req.path.ends_with("/report-submission") {
         let id = &req.path[11..req.path.len()-18];
+        if journal.get(id, &req.owner).is_some_and(|order| order.market_binding.is_some()) {
+            return report_market_submission(&req.body, id, &req.owner, journal);
+        }
         let body: Value = match serde_json::from_slice(&req.body) { Ok(value) => value, Err(_) => return error(422, "REPORT_SCHEMA") };
         if body.as_object().map(|o| o.len()) != Some(2) { return error(422, "REPORT_SCHEMA"); }
         let (Some(hash), Some(nonce)) = (body.get("txHash").and_then(Value::as_str), body.get("txNonce").and_then(Value::as_u64)) else { return error(422, "REPORT_SCHEMA"); };
@@ -279,5 +417,24 @@ mod tests {
             "assetId":"unused","side":"BUY","walletDebitAtoms":"1000000","deadlineSecs":1});
         assert_eq!(market_budget_preflight(budget.to_string().as_bytes(),
             "0x1111111111111111111111111111111111111111", &catalog).0, 403);
+    }
+    #[test]
+    fn direct_market_prepare_rejects_invalid_owner_and_idempotency_before_rpc() {
+        let catalog: Catalog = serde_json::from_str(include_str!("../../../monad/catalog/registry.v1.json")).unwrap();
+        let path = std::env::temp_dir().join(format!("xtxc-monad-market-api-{}", std::process::id()));
+        let mut journal = MonadJournal::open(&path).unwrap();
+        let owner = "0x1111111111111111111111111111111111111111";
+        let body = json!({"owner":"0x2222222222222222222222222222222222222222",
+            "assetId":"unused","side":"BUY","walletDebitAtoms":"10000000",
+            "deadlineSecs":1_800_000_000,"idempotencyKey":"market_prepare_0001"}).to_string();
+        assert_eq!(market_prepare(body.as_bytes(), owner, &catalog, &mut journal).0, 403);
+        let body = json!({"owner":owner,"assetId":"unused","side":"BUY",
+            "walletDebitAtoms":"10000000","deadlineSecs":1_800_000_000,
+            "idempotencyKey":"short"}).to_string();
+        assert_eq!(market_prepare(body.as_bytes(), owner, &catalog, &mut journal).0, 422);
+        assert!(journal.list(owner).is_empty());
+        drop(journal);
+        std::fs::remove_file(&path).unwrap();
+        std::fs::remove_file(format!("{}.lock", path.display())).unwrap();
     }
 }
