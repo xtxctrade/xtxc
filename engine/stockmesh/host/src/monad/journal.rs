@@ -2,6 +2,7 @@
 //! a complete corrupt frame fails closed. A successful method return implies
 //! the event has been synced to disk.
 use super::{orders::Order, receipt::{self, Observation}};
+use super::monday_receipts::SubmittedOrder;
 use crate::{journal::open_private_regular, Result};
 use fs2::FileExt;
 use serde::{Deserialize, Serialize};
@@ -53,7 +54,7 @@ impl MonadJournal {
             if crc32fast::hash(body) != crc { return Err("Monad journal checksum corruption".into()); }
             let frame: Frame = serde_json::from_slice(body).map_err(|e| e.to_string())?;
             if frame.seq != seq + 1 { return Err("Monad journal sequence corruption".into()); }
-            frame.order.intent.validate()?;
+            frame.order.validate()?;
             let order = &frame.order;
             if let Some(existing) = idempotency.insert(order.intent.idempotency_key.clone(), order.intent.order_id.clone()) {
                 if existing != order.intent.order_id { return Err("Monad journal idempotency collision".into()); }
@@ -86,7 +87,7 @@ impl MonadJournal {
         self.orders.values().filter(|order| order.intent.owner.eq_ignore_ascii_case(owner)).collect()
     }
     pub fn prepare(&mut self, order: Order) -> Result<&Order> {
-        order.intent.validate()?;
+        order.validate()?;
         if let Some(id) = self.idempotency.get(&order.intent.idempotency_key) {
             let existing = self.orders.get(id).ok_or("Monad journal index corruption")?;
             if existing.intent != order.intent { return Err("idempotency key reused with different intent".into()); }
@@ -127,6 +128,32 @@ impl MonadJournal {
         if self.orders.get(id) != Some(&next) { self.append(&next)?; self.orders.insert(id.into(), next); }
         Ok(self.orders.get(id).unwrap())
     }
+    /// Only a canonical chain observer may call this; a browser cannot
+    /// invent the issuer order ID or turn submission into stock delivery.
+    pub(crate) fn observe_market_submission(&mut self, id: &str,
+        submitted: &SubmittedOrder) -> Result<&Order> {
+        let mut next = self.orders.get(id).ok_or("Monad order not found")?.clone();
+        let binding = next.market_binding.as_ref().ok_or("not a direct market order")?;
+        if next.tx_hash.as_deref() != Some(submitted.submission_tx.as_str())
+            || !next.intent.owner.eq_ignore_ascii_case(&submitted.owner)
+            || !binding.call.stock_token.eq_ignore_ascii_case(&submitted.stock_token) {
+            return Err("issuer submission does not bind prepared order".into());
+        }
+        if next.market_issuer_order_id.as_deref() == Some(submitted.order_id.as_str())
+            && next.phase == super::orders::Phase::Finalized {
+            return Ok(self.orders.get(id).unwrap());
+        }
+        if next.market_issuer_order_id.is_some() { return Err("issuer order ID changed".into()); }
+        receipt::apply(&mut next, &Observation::Included {
+            tx_hash: submitted.submission_tx.clone(), block_hash: submitted.submission_block_hash.clone(), success: true })?;
+        receipt::apply(&mut next, &Observation::Finalized {
+            tx_hash: submitted.submission_tx.clone(), block_hash: submitted.submission_block_hash.clone(), success: true })?;
+        next.market_issuer_order_id = Some(submitted.order_id.clone());
+        next.validate()?;
+        self.append(&next)?;
+        self.orders.insert(id.into(), next);
+        Ok(self.orders.get(id).unwrap())
+    }
     pub fn cancel_unsigned(&mut self, id: &str, owner: &str) -> Result<&Order> {
         let mut next = self.get(id, owner).ok_or("Monad order not found")?.clone();
         next.cancel_unsigned()?;
@@ -161,7 +188,9 @@ impl MonadJournal {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::monad::orders::{fixture_intent, Phase};
+    use crate::monad::{monday_public::{encode_market_call, MarketRequest, MarketSide},
+        orders::{fixture_intent, MarketBinding, Phase}};
+    use crate::monad_contract::Catalog;
     fn path() -> PathBuf {
         std::env::temp_dir().join(format!("xtxc-monad-journal-{}-{}", std::process::id(),
             std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos()))
@@ -213,6 +242,36 @@ mod tests {
         assert!(j.report_submission("mon_two", &two.owner, &tx, 3).is_err());
         assert_eq!(j.get("mon_two", &two.owner).unwrap().phase, Phase::Prepared);
         drop(j);
+        std::fs::remove_file(&path).unwrap();
+        std::fs::remove_file(format!("{}.lock", path.display())).unwrap();
+    }
+    #[test]
+    fn direct_market_binding_survives_restart_without_float_atoms() {
+        let path = path();
+        let catalog: Catalog = serde_json::from_str(include_str!("../../../monad/catalog/registry.v1.json")).unwrap();
+        let token = &catalog.token_observations[0];
+        let request = MarketRequest {
+            owner: "0x1111111111111111111111111111111111111111".into(),
+            asset_id: format!("eip155:143:erc20:{}:{}:{}", token.token_address,
+                token.issuer, token.issuer_product_id), side: MarketSide::Buy,
+            wallet_debit_atoms: 10_000_000, order_amount_atoms: 9_970_000_000_000_000_000,
+            deadline_secs: 1_800_000_100,
+        };
+        let binding = MarketBinding { call: encode_market_call(&catalog, &request, 1_800_000_000).unwrap(),
+            request: request.clone(), simulated_block_hash: format!("0x{}", "a".repeat(64)),
+            router_implementation_sha256: format!("0x{}", "b".repeat(64)),
+            stock_implementation_sha256: format!("0x{}", "c".repeat(64)) };
+        let mut intent = fixture_intent("mon_market", "idempotency_market_0001");
+        intent.asset_id = request.asset_id.clone();
+        intent.quantity_atoms = request.order_amount_atoms.to_string();
+        intent.max_input_atoms = request.wallet_debit_atoms.to_string();
+        let order = Order::new_market(intent, binding).unwrap();
+        let json = serde_json::to_string(&order).unwrap();
+        assert!(json.contains("\"orderAmountAtoms\":\"9970000000000000000\""));
+        { let mut journal = MonadJournal::open(&path).unwrap();
+          journal.prepare(order.clone()).unwrap(); }
+        { let journal = MonadJournal::open(&path).unwrap();
+          assert_eq!(journal.get("mon_market", &request.owner), Some(&order)); }
         std::fs::remove_file(&path).unwrap();
         std::fs::remove_file(format!("{}.lock", path.display())).unwrap();
     }
