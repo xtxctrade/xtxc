@@ -37,7 +37,7 @@ A separate headless Chromium run used an isolated EIP-1193 test signer backed by
 
 The isolated buyer was replenished with [0.5 testnet MON](https://testnet.monadscan.com/tx/0x06d01ad33974c3bf7ae9abdd033c9ee1685ecf38ac414a8a2c9540912814f4ff) before this run. The screenshot and full JSON evidence are retained on the isolated Cherry host at `/srv/skew/stockmesh-direct-node-20260920/runtime/pr04-ui-e2e/`.
 
-A [Vercel preview](https://skew-deals-eug3a6nrn-woon20020501-pixels-projects.vercel.app/exchange/monad/testnet) is deployed and READY; same-project authenticated `vercel curl` returned HTTP 200 and the exact testnet contract addresses. The preview is protected by Vercel login. The browser automation ran the same build from an isolated Cherry server, not the protected Vercel URL. A personally unlocked MetaMask extension was **not** used; the EIP-1193 test signer is explicitly a test harness.
+A [Vercel preview](https://skew-deals-96eilscwr-woon20020501-pixels-projects.vercel.app/exchange/monad/testnet) is deployed and READY; same-project authenticated `vercel curl` returned HTTP 200 and the exact testnet contract addresses. The preview is protected by Vercel login; latest deployment is `dpl_CyryFLo9aaXnFw81qBho9WujRoMy` and returned HTTP 200 on the trade route. The browser automation ran the same build from an isolated Cherry server, not the protected Vercel URL. A personally unlocked MetaMask extension was **not** used; the EIP-1193 test signer is explicitly a test harness.
 
 ## Scope boundary
 
