@@ -49,6 +49,8 @@ pub struct AtomicCandidate {
     pub expected_output_atoms: u128,
     pub venue_fee_atoms: u128,
     pub platform_fee_atoms: u128,
+    pub platform_fee_cap_atoms: u128,
+    pub expires_at_ms: u64,
     pub gas_used: u64,
     pub call: BuiltCall,
 }
@@ -61,7 +63,7 @@ fn same_hex(a: &str, b: &str) -> bool {
     a.eq_ignore_ascii_case(b)
 }
 
-fn executor_product_id(asset_id: &str) -> String {
+pub(crate) fn executor_product_id(asset_id: &str) -> String {
     let hash = Keccak256::digest(asset_id.as_bytes());
     let mut encoded = String::with_capacity(66);
     encoded.push_str("0x");
@@ -186,6 +188,8 @@ pub fn compile_atomic_candidate(
         min_output_atoms: limits.min_output_atoms,
         expected_output_atoms: simulation.estimated_output_atoms,
         venue_fee_atoms: quote.fee_atoms, platform_fee_atoms: simulated_platform_fee,
+        platform_fee_cap_atoms: limits.platform_fee_cap_atoms,
+        expires_at_ms: quote.expires_at_ms,
         gas_used: simulation.gas_used, call,
     })
 }
