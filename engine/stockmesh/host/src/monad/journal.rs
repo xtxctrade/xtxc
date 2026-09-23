@@ -268,8 +268,8 @@ mod tests {
         };
         let binding = MarketBinding { call: encode_market_call(&catalog, &request, 1_800_000_000).unwrap(),
             request: request.clone(), simulated_block_hash: format!("0x{}", "a".repeat(64)),
-            router_implementation_sha256: format!("0x{}", "b".repeat(64)),
-            stock_implementation_sha256: format!("0x{}", "c".repeat(64)) };
+            router_implementation_sha256: "b".repeat(64),
+            stock_implementation_sha256: "c".repeat(64) };
         let mut intent = fixture_intent("mon_market", "idempotency_market_0001");
         intent.asset_id = request.asset_id.clone();
         intent.quantity_atoms = request.order_amount_atoms.to_string();
