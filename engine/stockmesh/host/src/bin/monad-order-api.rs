@@ -94,12 +94,14 @@ fn report_market_submission(body: &[u8], id: &str, owner: &str,
     let field = |key| transaction.get(key).and_then(Value::as_str).unwrap_or("");
     let value = u128::from_str_radix(field("value").strip_prefix("0x").unwrap_or(""), 16);
     let nonce = u64::from_str_radix(field("nonce").strip_prefix("0x").unwrap_or(""), 16);
+    let tx_chain = transaction.get("chainId").and_then(Value::as_str)
+        .map(|raw| u64::from_str_radix(raw.strip_prefix("0x").unwrap_or(""), 16));
     if !field("hash").eq_ignore_ascii_case(&report.tx_hash)
         || !field("from").eq_ignore_ascii_case(&call.from)
         || !field("to").eq_ignore_ascii_case(&call.to)
         || !field("input").eq_ignore_ascii_case(&call.data)
         || value != Ok(0) || nonce.is_err()
-        || (transaction.get("chainId").is_some() && field("chainId") != "0x8f") {
+        || tx_chain.is_some_and(|chain| chain != Ok(143)) {
         return error(409, "MARKET_TX_BINDING_MISMATCH");
     }
     match journal.report_submission(id, owner, &report.tx_hash, nonce.unwrap()) {
