@@ -11,6 +11,7 @@ use crate::{
     Result,
 };
 use serde::{Deserialize, Serialize};
+use sha3::{Digest, Keccak256};
 
 const MAX_CALLDATA_HEX: usize = 16_386;
 
@@ -33,6 +34,9 @@ pub struct ExecutionLimits {
 pub struct AtomicCandidate {
     pub order_id: String,
     pub asset_id: String,
+    /// keccak256 of the exact catalog asset ID bytes; this is the executor's
+    /// bytes32 productId, never a ticker or a frontend-generated alias.
+    pub product_id: String,
     pub operation: Operation,
     pub owner: String,
     pub receiver: String,
@@ -55,6 +59,14 @@ fn amount(value: &str) -> Result<u128> {
 
 fn same_hex(a: &str, b: &str) -> bool {
     a.eq_ignore_ascii_case(b)
+}
+
+fn executor_product_id(asset_id: &str) -> String {
+    let hash = Keccak256::digest(asset_id.as_bytes());
+    let mut encoded = String::with_capacity(66);
+    encoded.push_str("0x");
+    for byte in hash { encoded.push_str(&format!("{byte:02x}")); }
+    encoded
 }
 
 /// Build and simulate the *whole* adapter call at one pinned block. The
@@ -165,7 +177,8 @@ pub fn compile_atomic_candidate(
         return Err("full-call simulation failed at pinned state or limits".into());
     }
     Ok(AtomicCandidate {
-        order_id: order.intent.order_id.clone(), asset_id: request.asset_id,
+        order_id: order.intent.order_id.clone(), product_id: executor_product_id(&request.asset_id),
+        asset_id: request.asset_id,
         operation, owner: request.owner, receiver: limits.receiver.clone(),
         venue_id: venue.venue_id.clone(), quote_digest: quote.quote_digest,
         state_block_hash: block.hash.clone(), wallet_input_atoms: limits.wallet_input_atoms,
@@ -231,6 +244,7 @@ mod tests {
             let candidate = compile_atomic_candidate(&c, &order(&c, side), &Fixture::default(), &block(), &limits, 1).unwrap();
             assert_eq!(candidate.venue_input_atoms, if side == Side::Buy { 999_950 } else { 100 });
             assert_eq!(candidate.state_block_hash, block().hash);
+            assert_eq!(candidate.product_id, executor_product_id(&candidate.asset_id));
         }
     }
     #[test]
