@@ -1,5 +1,7 @@
 use crate::{monad_contract::MAINNET_CHAIN_ID, Result};
+use super::monday_public::{MarketRequest, MarketSide, UnsimulatedMondayCall};
 use serde::{Deserialize, Serialize};
+use sha3::{Digest, Keccak256};
 
 #[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
@@ -36,7 +38,10 @@ impl Intent {
             || self.chain_id != MAINNET_CHAIN_ID || !address(&self.owner)
             || !self.asset_id.starts_with("eip155:143:erc20:")
             || self.asset_id.len() > 256
-            || !self.asset_id.bytes().all(|b| b.is_ascii_alphanumeric() || b == b':' || b == b'-' || b == b'_')
+            // Product::asset_id uses catalog labels verbatim. An issuer such
+            // as "Anchored Finance" is valid, so the order grammar must not
+            // reject the whole observed cohort before catalog matching.
+            || !self.asset_id.bytes().all(|b| b.is_ascii_alphanumeric() || matches!(b, b':' | b'-' | b'_' | b'.' | b' '))
             || !atoms(&self.quantity_atoms) || !atoms(&self.max_input_atoms)
             || !digest(&self.quote_digest) || self.quote_expires_at_ms == 0
         { return Err("invalid Monad intent".into()); }
@@ -50,6 +55,10 @@ pub(crate) fn address(value: &str) -> bool {
 pub(crate) fn digest(value: &str) -> bool {
     value.len() == 66 && value.starts_with("0x") && value[2..].bytes().all(|b| b.is_ascii_hexdigit())
 }
+fn sha256_hex(value: &str) -> bool {
+    let raw = value.strip_prefix("0x").unwrap_or(value);
+    raw.len() == 64 && raw.bytes().all(|b| b.is_ascii_hexdigit())
+}
 fn atoms(value: &str) -> bool {
     !value.is_empty() && value.len() <= 39 && !value.starts_with('0')
         && value.bytes().all(|b| b.is_ascii_digit()) && value.parse::<u128>().is_ok()
@@ -59,6 +68,13 @@ fn atoms(value: &str) -> bool {
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Order {
     pub intent: Intent,
+    /// Direct issuer orders are pending after the wallet transaction lands.
+    /// This binding is not an executable stock-output quote.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub market_binding: Option<MarketBinding>,
+    /// Issuer order ID appears in the finalized Router submission event.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub market_issuer_order_id: Option<String>,
     pub phase: Phase,
     pub tx_hash: Option<String>,
     pub tx_nonce: Option<u64>,
@@ -67,11 +83,64 @@ pub struct Order {
     pub failure_code: Option<String>,
 }
 
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct MarketBinding {
+    pub request: MarketRequest,
+    pub call: UnsimulatedMondayCall,
+    pub simulated_block_hash: String,
+    pub router_implementation_sha256: String,
+    pub stock_implementation_sha256: String,
+}
+
+impl MarketBinding {
+    pub fn digest(&self) -> Result<String> {
+        let bytes = serde_json::to_vec(self).map_err(|e| e.to_string())?;
+        Ok(format!("0x{:x}", Keccak256::digest(&bytes)))
+    }
+}
+
 impl Order {
     pub fn new(intent: Intent) -> Result<Self> {
         intent.validate()?;
-        Ok(Self { intent, phase: Phase::Prepared, tx_hash: None, tx_nonce: None,
+        Ok(Self { intent, market_binding: None, market_issuer_order_id: None,
+            phase: Phase::Prepared, tx_hash: None, tx_nonce: None,
             included_block_hash: None, finalized_block_hash: None, failure_code: None })
+    }
+    pub fn new_market(mut intent: Intent, binding: MarketBinding) -> Result<Self> {
+        intent.quote_digest = binding.digest()?;
+        intent.quote_expires_at_ms = binding.request.deadline_secs.checked_mul(1000)
+            .ok_or("Monad market deadline overflow")?;
+        let mut order = Self::new(intent)?;
+        order.market_binding = Some(binding);
+        order.validate()?;
+        Ok(order)
+    }
+    pub fn validate(&self) -> Result<()> {
+        self.intent.validate()?;
+        if let Some(binding) = &self.market_binding {
+            let side = match binding.request.side { MarketSide::Buy => Side::Buy, MarketSide::Sell => Side::Sell };
+            if self.intent.side != side || !self.intent.owner.eq_ignore_ascii_case(&binding.request.owner)
+                || self.intent.asset_id != binding.request.asset_id
+                || self.intent.quantity_atoms != binding.request.order_amount_atoms.to_string()
+                || self.intent.max_input_atoms != binding.request.wallet_debit_atoms.to_string()
+                || self.intent.quote_expires_at_ms != binding.request.deadline_secs.saturating_mul(1000)
+                || self.intent.quote_digest != binding.digest()?
+                || !self.intent.owner.eq_ignore_ascii_case(&binding.call.from)
+                || binding.call.chain_id != MAINNET_CHAIN_ID || binding.call.value_atoms != 0
+                || binding.call.deadline_secs != binding.request.deadline_secs
+                || binding.call.guarantees_stock_minimum
+                || binding.call.execution_class != "ISSUER_ASYNC"
+                || !digest(&binding.simulated_block_hash)
+                || !sha256_hex(&binding.router_implementation_sha256)
+                || !sha256_hex(&binding.stock_implementation_sha256)
+            { return Err("invalid direct issuer market binding".into()); }
+        }
+        if self.market_issuer_order_id.as_ref().is_some_and(|id| !digest(id))
+            || (self.market_issuer_order_id.is_some() && self.market_binding.is_none()) {
+            return Err("invalid issuer order ID".into());
+        }
+        Ok(())
     }
     pub fn report_submission(&mut self, tx_hash: &str, tx_nonce: u64) -> Result<()> {
         if !digest(tx_hash) { return Err("invalid Monad transaction hash".into()); }
@@ -107,4 +176,21 @@ pub(crate) fn fixture_intent(id: &str, key: &str) -> Intent {
         asset_id: "eip155:143:erc20:0x2222222222222222222222222222222222222222:Issuer:NVDA".into(),
         side: Side::Buy, quantity_atoms: "100".into(), max_input_atoms: "1000000".into(),
         quote_digest: format!("0x{}", "a".repeat(64)), quote_expires_at_ms: 2_000_000_000_000 }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::monad_contract::Catalog;
+
+    #[test]
+    fn every_observed_asset_identity_passes_order_grammar() {
+        let catalog: Catalog = serde_json::from_str(include_str!("../../../monad/catalog/registry.v1.json")).unwrap();
+        assert_eq!(catalog.token_observations.len(), 112);
+        for token in &catalog.token_observations {
+            let mut intent = fixture_intent("mon_identity", "idempotency_identity_0001");
+            intent.asset_id = format!("eip155:{}:erc20:{}:{}:{}", token.chain_id, token.token_address, token.issuer, token.issuer_product_id);
+            Order::new(intent).unwrap();
+        }
+    }
 }

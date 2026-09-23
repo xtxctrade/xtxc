@@ -3,8 +3,9 @@
 use super::{
     feed::{chain_guard, read_block, Rpc},
     monday::{ROUTER, STOCK},
+    monday_public::{encode_market_call, MarketRequest, MarketSide, UnsimulatedMondayCall},
 };
-use crate::Result;
+use crate::{monad_contract::Catalog, Result};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use sha3::{Digest, Keccak256};
@@ -15,6 +16,10 @@ const MAX_LOGS: usize = 256;
 #[serde(rename_all = "camelCase")]
 pub struct CanonicalReceipt {
     pub transaction_hash: String,
+    pub transaction_from: String,
+    pub transaction_to: String,
+    pub transaction_input: String,
+    pub transaction_value_atoms: u128,
     pub block_hash: String,
     pub block_number: u64,
     pub logs: Vec<ChainLog>,
@@ -169,6 +174,18 @@ pub fn read_finalized_receipt(rpc: &mut impl Rpc, tx_hash: &str) -> Result<Canon
     }
     let block_hash = hex(receipt_field(&raw, "blockHash")?, 32)?;
     let block_number = hex_u64(receipt_field(&raw, "blockNumber")?)?;
+    let transaction = rpc.call("eth_getTransactionByHash", json!([tx_hash]))?;
+    let transaction_from = hex(receipt_field(&transaction, "from")?, 20)?;
+    let transaction_to = hex(receipt_field(&transaction, "to")?, 20)?;
+    let transaction_input = receipt_field(&transaction, "input")?.to_ascii_lowercase();
+    if hex(receipt_field(&transaction, "hash")?, 32)? != tx_hash
+        || hex(receipt_field(&transaction, "blockHash")?, 32)? != block_hash
+        || hex_u64(receipt_field(&transaction, "blockNumber")?)? != block_number
+        || bytes(&transaction_input)?.len() > 8192
+    { return Err("Monday transaction body does not match receipt".into()); }
+    let transaction_value_atoms = u128::from_str_radix(
+        receipt_field(&transaction, "value")?.strip_prefix("0x").ok_or("invalid Monad transaction value")?, 16)
+        .map_err(|_| "Monad transaction value exceeds u128")?;
     let finalized = rpc.call("eth_getBlockByNumber", json!(["finalized", false]))?;
     let finalized_number = hex_u64(receipt_field(&finalized, "number")?)?;
     if block_number > finalized_number {
@@ -213,6 +230,10 @@ pub fn read_finalized_receipt(rpc: &mut impl Rpc, tx_hash: &str) -> Result<Canon
     }
     Ok(CanonicalReceipt {
         transaction_hash: tx_hash,
+        transaction_from,
+        transaction_to,
+        transaction_input,
+        transaction_value_atoms,
         block_hash,
         block_number,
         logs,
@@ -294,6 +315,35 @@ pub fn decode_submission(
     found.ok_or_else(|| "Monday order submission event absent".into())
 }
 
+/// Bind a canonical submission to the exact wallet calldata previously shown
+/// to the owner. A smaller/larger order with the same owner and stock is not
+/// the same intent; neither submission nor its order ID implies a fill.
+pub fn decode_submission_exact(
+    catalog: &Catalog,
+    receipt: &CanonicalReceipt,
+    request: &MarketRequest,
+    call: &UnsimulatedMondayCall,
+) -> Result<SubmittedOrder> {
+    let expected = encode_market_call(catalog, request, request.deadline_secs.saturating_sub(1))?;
+    if *call != expected
+        || receipt.transaction_from != call.from
+        || receipt.transaction_to != call.to
+        || receipt.transaction_input != call.data
+        || receipt.transaction_value_atoms != 0
+    { return Err("Monday wallet transaction differs from proposal".into()); }
+    let side = match request.side { MarketSide::Buy => Side::Buy, MarketSide::Sell => Side::Sell };
+    let submitted = decode_submission(receipt, &request.owner, &call.stock_token,
+        &call.input_token, side)?;
+    let expected_amount = match side {
+        Side::Buy => i128::try_from(request.order_amount_atoms).map_err(|_| "Monday buy amount overflow")?,
+        Side::Sell => -i128::try_from(request.order_amount_atoms).map_err(|_| "Monday sell amount overflow")?,
+    };
+    if submitted.input_atoms != request.wallet_debit_atoms
+        || submitted.requested_amount != expected_amount
+    { return Err("Monday onchain amount differs from wallet proposal".into()); }
+    Ok(submitted)
+}
+
 pub fn decode_settlement(
     submitted: &SubmittedOrder,
     receipt: &CanonicalReceipt,
@@ -353,6 +403,7 @@ pub fn decode_settlement(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::monad::monday_public::{MarketRequest, MarketSide};
     use std::collections::VecDeque;
 
     struct MockRpc {
@@ -393,6 +444,10 @@ mod tests {
     fn receipt(logs: Vec<ChainLog>, hash: u8, number: u64) -> CanonicalReceipt {
         CanonicalReceipt {
             transaction_hash: h(hash),
+            transaction_from: address(3),
+            transaction_to: ROUTER.into(),
+            transaction_input: "0x".into(),
+            transaction_value_atoms: 0,
             block_hash: h(hash + 1),
             block_number: number,
             logs,
@@ -416,6 +471,16 @@ mod tests {
                 aword(stock),
                 iword(100_000_000)
             ),
+        }
+    }
+    fn sell_log(owner: u8, stock: u8) -> ChainLog {
+        ChainLog {
+            address: ROUTER.into(),
+            topics: vec![
+                event_topic("DepositStockAndMarketSell(bytes32,address,address,uint256,int96)"),
+                h(2), format!("0x{}", aword(owner)), format!("0x{}", aword(stock)),
+            ],
+            data: format!("0x{}{}", uword(100_000_000), iword(-100_000_000)),
         }
     }
     fn settled_log(owner: u8, stock: u8, delta: i128) -> ChainLog {
@@ -447,6 +512,51 @@ mod tests {
         assert_eq!(settled.stock_delta_atoms, 10);
         assert_eq!(settled.mint_fee_atoms, 2);
         assert_eq!(settled.protocol_fee_atoms, 3);
+    }
+    #[test]
+    fn exact_amount_and_direction_bind_to_wallet_proposal() {
+        let mut catalog: Catalog = serde_json::from_str(include_str!("../../../monad/catalog/registry.v1.json")).unwrap();
+        catalog.token_observations[0].token_address = address(4);
+        catalog.chain.usdc = address(5);
+        // A valid, different catalog asset identity is deliberately not
+        // fabricated here: use the canonical 112-entry fixture for encoding,
+        // then prove an amount mismatch cannot be attached to its receipt.
+        let token = &catalog.token_observations[0];
+        let request = MarketRequest {
+            owner: address(3),
+            asset_id: format!("eip155:143:erc20:{}:{}:{}", token.token_address, token.issuer, token.issuer_product_id),
+            side: MarketSide::Buy, wallet_debit_atoms: 100_000_000,
+            order_amount_atoms: 99_000_000_000_000_000_000, deadline_secs: 1_800_000_100,
+        };
+        let proposal = encode_market_call(&catalog, &request, 1_800_000_000).unwrap();
+        let mut buy_receipt = receipt(vec![buy_log(3, 4, 5)], 10, 100);
+        buy_receipt.logs[0].data = format!("0x{}{}{}{}", aword(5),
+            uword(request.wallet_debit_atoms), aword(4), iword(request.order_amount_atoms as i128));
+        buy_receipt.transaction_input = proposal.data.clone();
+        let submitted = decode_submission_exact(&catalog, &buy_receipt,
+            &request, &proposal).unwrap();
+        assert_eq!(submitted.requested_amount, 99_000_000_000_000_000_000);
+        let mut wrong = request.clone();
+        wrong.wallet_debit_atoms = 101_000_000;
+        wrong.order_amount_atoms = 100_000_000_000_000_000_000;
+        let wrong_proposal = encode_market_call(&catalog, &wrong, 1_800_000_000).unwrap();
+        assert!(decode_submission_exact(&catalog, &buy_receipt,
+            &wrong, &wrong_proposal).is_err());
+        let mut sell = request;
+        sell.side = MarketSide::Sell;
+        sell.wallet_debit_atoms = 1_000_000_000_000_000_000;
+        sell.order_amount_atoms = 1_000_000_000_000_000_000;
+        let sell_proposal = encode_market_call(&catalog, &sell, 1_800_000_000).unwrap();
+        let mut sell_receipt = receipt(vec![sell_log(3, 4)], 10, 100);
+        sell_receipt.logs[0].data = format!("0x{}{}", uword(sell.wallet_debit_atoms),
+            iword(-(sell.order_amount_atoms as i128)));
+        sell_receipt.transaction_input = sell_proposal.data.clone();
+        assert!(decode_submission_exact(&catalog, &sell_receipt,
+            &sell, &sell_proposal).is_ok());
+        assert!(decode_submission_exact(&catalog, &buy_receipt,
+            &sell, &sell_proposal).is_err());
+        sell_receipt.transaction_from = address(8);
+        assert!(decode_submission_exact(&catalog, &sell_receipt, &sell, &sell_proposal).is_err());
     }
     #[test]
     fn submission_is_not_fill_and_wrong_owner_or_direction_fails() {
@@ -517,6 +627,8 @@ mod tests {
                         "transactionHash":h(10),"blockHash":h(11),"removed":removed
                     }]
                 }),
+                json!({"hash":h(10),"from":address(3),"to":ROUTER,"input":"0x",
+                    "value":"0x0","blockHash":h(11),"blockNumber":"0x64"}),
                 json!({"number":format!("0x{finalized_number:x}")}),
                 json!({
                     "number":"0x64", "hash":canonical_hash, "parentHash":h(12),
@@ -532,7 +644,7 @@ mod tests {
         let output = read_finalized_receipt(&mut accepted, &h(10)).unwrap();
         assert_eq!(output.block_number, 100);
         assert_eq!(output.logs.len(), 1);
-        assert_eq!(accepted.used(), 4);
+        assert_eq!(accepted.used(), 5);
         assert!(read_finalized_receipt(&mut receipt_rpc(99, h(11), false), &h(10)).is_err());
         assert!(read_finalized_receipt(&mut receipt_rpc(101, h(13), false), &h(10)).is_err());
         assert!(read_finalized_receipt(&mut receipt_rpc(101, h(11), true), &h(10)).is_err());

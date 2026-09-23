@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "name": "xtxc-monad-contract-tests",
+  "version": "0.0.0",
+  "scripts": {
+    "test": "node test/executor.test.cjs && node test/monday-spot-venue.test.cjs && node test/metropolis-demo.test.cjs"
+  },
+  "devDependencies": {
+    "ethers": "6.15.0",
+    "ganache": "7.9.2",
+    "solc": "0.8.30"
+  }
+}
