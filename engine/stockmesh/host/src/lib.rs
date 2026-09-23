@@ -17,6 +17,7 @@ pub mod lookup_registry;
 pub mod market;
 pub mod mesh;
 pub mod monad_contract;
+pub mod monad;
 pub mod model_store;
 pub mod native_wire;
 pub mod native_payout;
