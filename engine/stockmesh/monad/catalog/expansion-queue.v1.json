@@ -1,0 +1,2353 @@
+{
+  "schema": "xtxc.monad.expansion-queue/v1",
+  "sourcePresentationSha256": "e3d9bc8f63a9f3b642ab8d1a300cfccf2f802f44fc3744cd11d87ca81bdfe01d",
+  "displayInstruments": 1074,
+  "observedInstrumentMatches": 83,
+  "observedTokensMatched": 83,
+  "unmatchedMonadInstrumentCount": 29,
+  "unmatchedMonadTokens": [
+    {
+      "instrumentId": "ALLW",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aALLW",
+          "tokenAddress": "0x057a4712d82d83909b149f6e4390e5298ffdeb3c",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "ARKQ",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aARKQ",
+          "tokenAddress": "0x4ebaf539fb82f35d09f24c709b4c7b9a56777c03",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "BULL",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aBULL",
+          "tokenAddress": "0xff7fb9f9044523dfcab1f65f204ac79e6327a1cc",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "CD",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aCD",
+          "tokenAddress": "0xa69b48373f8a34a6a53dbe188db3a664a4e6a7fc",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "CONI",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aCONI",
+          "tokenAddress": "0x2c82e424f8b36352bae1bcd585c82938b8b78ec8",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "EBAY",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aEBAY",
+          "tokenAddress": "0x33f74ac6aa7a73aca8ab09c52d9158061f634ff3",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "FLKR",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aFLKR",
+          "tokenAddress": "0x4f9b7d336b1972dd4c93ca250121aacaa6b083aa",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "FLWS",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aFLWS",
+          "tokenAddress": "0x3a013978cbd3ed7b270c92009e6a6d1be8e6ac25",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "GRPN",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aGRPN",
+          "tokenAddress": "0x8eee4aab4acbe84182c0f2cdbc906e39c6b076e8",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "IBRX",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aIBRX",
+          "tokenAddress": "0xe8bc8f7ce09d0b3b9f2cc017bbbf0ef0535ca573",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "LCID",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aLCID",
+          "tokenAddress": "0x490c6311948ae3e3a6a96d3842e333302034d4d3",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "MEME",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aMEME",
+          "tokenAddress": "0x6f75b1b886bd1b1295325c9619f9f6b9fb760588",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "MRNX",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aMRNX",
+          "tokenAddress": "0x69825e4cf138fe7441a75af72da1ae8f9e720434",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "NEGG",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aNEGG",
+          "tokenAddress": "0x6031e48580fd0d8ed23d6a9ad89b69758adcf7b2",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "NVD",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aNVD",
+          "tokenAddress": "0x9b4d9b20eac87c4da9912cdbdc111d991eef0681",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "ORKA",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aORKA",
+          "tokenAddress": "0x344fca3683cd01aa5833e67179f826080bda98fc",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "PUMP",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aPUMP",
+          "tokenAddress": "0xab7d864bc08f4322de2f94fabaf14d71a687d7c5",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "RXT",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aRXT",
+          "tokenAddress": "0xb2eaa18aaab01d049edf2b845c9ea0480f72c18a",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "SDS",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aSDS",
+          "tokenAddress": "0x9b5803e173b3118d70a17c3be0babdd912a4000e",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "SERV",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aSERV",
+          "tokenAddress": "0x1076356059c5fe9fad3a053c4c84a32efd116274",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "SKDD",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aSKDD",
+          "tokenAddress": "0x215cce3e783fc7fafbed758d55ef5b654fd69a34",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "SPCG",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aSPCG",
+          "tokenAddress": "0xa67f4594e3c8441a58d1df95f1ab7d3d65367afd",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "TBT",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aTBT",
+          "tokenAddress": "0xc614d4ad49ec4f4854d70cb4fd788ddb5c3fe41e",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "TSLZ",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aTSLZ",
+          "tokenAddress": "0x3f670133caa4d10cf726028a68602114c1a3f15c",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "WDH",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aWDH",
+          "tokenAddress": "0x6458d4844ccaad06dbf566d1df93d8815f89d9b0",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "WOOF",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aWOOF",
+          "tokenAddress": "0x2f5d2eace3890e5e53dd4e5462ba252c3746feef",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "WTF",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aWTF",
+          "tokenAddress": "0xe1e495fa46eed2b6da96fcedc051de23166fa892",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "XLK",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aXLK",
+          "tokenAddress": "0xf63ad58f1d4d1276ea0de2490689942303d2d446",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    },
+    {
+      "instrumentId": "XPOF",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aXPOF",
+          "tokenAddress": "0x5d04786d76a9ea0c91c6a2f25fd4922846527c4c",
+          "chainId": 143
+        }
+      ],
+      "status": "IDENTITY_MAPPING_REVIEW"
+    }
+  ],
+  "executableBuy": 0,
+  "executableSell": 0,
+  "walletDelivery": 0,
+  "etfEligible": 0,
+  "instrumentIds": [
+    "A",
+    "AA",
+    "AAL",
+    "AAOI",
+    "AAON",
+    "AAPL",
+    "ABBV",
+    "ABNB",
+    "ABT",
+    "ACHR",
+    "ACLS",
+    "ACMR",
+    "ACN",
+    "ADBE",
+    "ADI",
+    "ADM",
+    "ADP",
+    "ADSK",
+    "AEE",
+    "AEHR",
+    "AEIS",
+    "AEP",
+    "AFG",
+    "AFL",
+    "AFRM",
+    "AG",
+    "AGG",
+    "AGNC",
+    "AHR",
+    "AI",
+    "AIAGR",
+    "AIG",
+    "AIP",
+    "AIQ",
+    "AIT",
+    "AIZ",
+    "AJG",
+    "AKAM",
+    "ALAB",
+    "ALB",
+    "ALGN",
+    "ALL",
+    "ALLY",
+    "ALNY",
+    "ALOY",
+    "ALSN",
+    "AM",
+    "AMAT",
+    "AMBR",
+    "AMC",
+    "AMD",
+    "AME",
+    "AMGN",
+    "AMH",
+    "AMKR",
+    "AMP",
+    "AMT",
+    "AMZN",
+    "ANET",
+    "ANTAS",
+    "AOSL",
+    "APA",
+    "APD",
+    "APG",
+    "APH",
+    "APLD",
+    "APO",
+    "APP",
+    "AR",
+    "ARES",
+    "ARGT",
+    "ARM",
+    "ARMK",
+    "ARQQ",
+    "ARW",
+    "ARWR",
+    "AS",
+    "ASML",
+    "ASMPT",
+    "ASTS",
+    "ATI",
+    "ATKR",
+    "ATO",
+    "AUR",
+    "AVGO",
+    "AVY",
+    "AWK",
+    "AXON",
+    "AXP",
+    "AXSM",
+    "AXTI",
+    "AZN",
+    "AZO",
+    "BA",
+    "BABA",
+    "BAC",
+    "BAI",
+    "BALL",
+    "BAM",
+    "BANKC",
+    "BAX",
+    "BBAI",
+    "BBIO",
+    "BBY",
+    "BDWAP",
+    "BDX",
+    "BE",
+    "BEN",
+    "BETR",
+    "BIDU",
+    "BIIB",
+    "BIL",
+    "BILI",
+    "BINC",
+    "BIRD",
+    "BITX",
+    "BJ",
+    "BKCH",
+    "BKR",
+    "BLCR",
+    "BLK",
+    "BLKDIG",
+    "BLKGRW",
+    "BLKHI",
+    "BLSH",
+    "BMNR",
+    "BMRN",
+    "BMY",
+    "BNO",
+    "BNY",
+    "BOCHK",
+    "BOCOM",
+    "BOT",
+    "BOTZ",
+    "BPOP",
+    "BR",
+    "BRAIN",
+    "BRHY",
+    "BRK.B",
+    "BRLN",
+    "BRO",
+    "BRTR",
+    "BSP",
+    "BSX",
+    "BSY",
+    "BTBT",
+    "BTDR",
+    "BTG",
+    "BTGO",
+    "BURL",
+    "BWA",
+    "BWET",
+    "BWXT",
+    "BX",
+    "BXP",
+    "BYDCO",
+    "BZ",
+    "C",
+    "CACI",
+    "CAH",
+    "CAMT",
+    "CAPR",
+    "CARR",
+    "CASY",
+    "CAT",
+    "CBRE",
+    "CBRS",
+    "CCI",
+    "CCJ",
+    "CCK",
+    "CCONB",
+    "CDE",
+    "CDNS",
+    "CDW",
+    "CEG",
+    "CEVA",
+    "CF",
+    "CFG",
+    "CG",
+    "CHD",
+    "CHONG",
+    "CHRW",
+    "CHTR",
+    "CI",
+    "CIBR",
+    "CIEN",
+    "CIFR",
+    "CINF",
+    "CITIC",
+    "CKAH",
+    "CKHUT",
+    "CKINF",
+    "CL",
+    "CLF",
+    "CLH",
+    "CLINS",
+    "CLOA",
+    "CLOI",
+    "CLONP",
+    "CLPHD",
+    "CLS",
+    "CLSK",
+    "CLX",
+    "CMCSA",
+    "CME",
+    "CMEND",
+    "CMERP",
+    "CMG",
+    "CMI",
+    "CMS",
+    "CNA",
+    "CNC",
+    "CNP",
+    "COF",
+    "COHR",
+    "COHU",
+    "COIN",
+    "COO",
+    "COP",
+    "COPX",
+    "COR",
+    "CORO",
+    "CORT",
+    "CORZ",
+    "COSC",
+    "COST",
+    "COVEL",
+    "CPAY",
+    "CPER",
+    "CPETC",
+    "CPNG",
+    "CPRT",
+    "CPT",
+    "CR",
+    "CRAUT",
+    "CRBG",
+    "CRCL",
+    "CRDO",
+    "CRESB",
+    "CRESL",
+    "CRESM",
+    "CRESP",
+    "CRM",
+    "CRS",
+    "CRWD",
+    "CRWV",
+    "CSCO",
+    "CSGP",
+    "CSHEE",
+    "CSL",
+    "CSPC",
+    "CSX",
+    "CTAS",
+    "CTFJW",
+    "CTINS",
+    "CTPCA",
+    "CTSH",
+    "CTVA",
+    "CVNA",
+    "CVS",
+    "CVX",
+    "CW",
+    "D",
+    "DAL",
+    "DASH",
+    "DAX",
+    "DBC",
+    "DCI",
+    "DDOG",
+    "DE",
+    "DECK",
+    "DELL",
+    "DFDV",
+    "DG",
+    "DGRW",
+    "DGX",
+    "DGXX",
+    "DHI",
+    "DHR",
+    "DINO",
+    "DIS",
+    "DJT",
+    "DKNG",
+    "DKS",
+    "DLR",
+    "DLTR",
+    "DNN",
+    "DOC",
+    "DOCN",
+    "DOCU",
+    "DOV",
+    "DOW",
+    "DPZ",
+    "DRAM",
+    "DRI",
+    "DRS",
+    "DT",
+    "DTCR",
+    "DTE",
+    "DUK",
+    "DVA",
+    "DVN",
+    "DXCM",
+    "DY",
+    "DYNF",
+    "ECH",
+    "ECL",
+    "ECO",
+    "ED",
+    "EEM",
+    "EFA",
+    "EFV",
+    "EFX",
+    "EG",
+    "EGP",
+    "EHC",
+    "EIX",
+    "EL",
+    "ELAN",
+    "ELS",
+    "ELV",
+    "EME",
+    "EMR",
+    "ENB",
+    "ENHA",
+    "ENLV",
+    "ENNHL",
+    "ENPH",
+    "ENTG",
+    "EOG",
+    "EQH",
+    "EQIX",
+    "EQT",
+    "ES",
+    "ESS",
+    "ETHA",
+    "ETN",
+    "ETR",
+    "EUHY",
+    "EVR",
+    "EVRG",
+    "EW",
+    "EWBC",
+    "EWG",
+    "EWJ",
+    "EWQ",
+    "EWU",
+    "EWY",
+    "EWZ",
+    "EXC",
+    "EXE",
+    "EXEL",
+    "EXOD",
+    "EXPD",
+    "EXR",
+    "EXTR",
+    "F",
+    "FAAA",
+    "FANG",
+    "FAST",
+    "FCEL",
+    "FCNCA",
+    "FCX",
+    "FDS",
+    "FDX",
+    "FDXF",
+    "FE",
+    "FERG",
+    "FEZ",
+    "FFIV",
+    "FFOG",
+    "FGDL",
+    "FHN",
+    "FICO",
+    "FIG",
+    "FIGR",
+    "FIS",
+    "FISV",
+    "FITB",
+    "FIVE",
+    "FIX",
+    "FLBL",
+    "FLEX",
+    "FLHY",
+    "FLNC",
+    "FLQL",
+    "FLQM",
+    "FN",
+    "FNF",
+    "FORM",
+    "FPS",
+    "FRHC",
+    "FSLR",
+    "FSML",
+    "FSOL",
+    "FTAI",
+    "FTGC",
+    "FTNT",
+    "FTV",
+    "FUTU",
+    "FWONK",
+    "FXI",
+    "GD",
+    "GDDY",
+    "GDX",
+    "GE",
+    "GEEL",
+    "GEHC",
+    "GEMI",
+    "GEN",
+    "GENTE",
+    "GEV",
+    "GFL",
+    "GFS",
+    "GGG",
+    "GGOV",
+    "GH",
+    "GILD",
+    "GIS",
+    "GL",
+    "GLD",
+    "GLPI",
+    "GLTR",
+    "GLW",
+    "GLXY",
+    "GM",
+    "GME",
+    "GMED",
+    "GNRC",
+    "GOOG",
+    "GOOGL",
+    "GPC",
+    "GPN",
+    "GRAB",
+    "GRND",
+    "GS",
+    "GSAT",
+    "GWRE",
+    "GWW",
+    "H",
+    "HAIDL",
+    "HAIER",
+    "HAL",
+    "HALO",
+    "HAS",
+    "HBAN",
+    "HCA",
+    "HD",
+    "HEI",
+    "HIG",
+    "HII",
+    "HIMS",
+    "HIMX",
+    "HIVE",
+    "HKCGA",
+    "HKEXC",
+    "HL",
+    "HLIT",
+    "HLT",
+    "HNDLD",
+    "HON",
+    "HOOD",
+    "HPE",
+    "HPQ",
+    "HRL",
+    "HRZRB",
+    "HSAI",
+    "HST",
+    "HSY",
+    "HTZ",
+    "HUBB",
+    "HUBS",
+    "HUM",
+    "HUT",
+    "HWM",
+    "HYBD",
+    "HYDB",
+    "HYG",
+    "HYGW",
+    "HYS",
+    "IALT",
+    "IAU",
+    "IBIT",
+    "IBKR",
+    "IBM",
+    "ICBC",
+    "ICE",
+    "ICHR",
+    "IDEF",
+    "IDXX",
+    "IEF",
+    "IEFA",
+    "IEI",
+    "IEMG",
+    "IESC",
+    "IEX",
+    "IFF",
+    "IGEB",
+    "IGV",
+    "IJH",
+    "IJR",
+    "IJS",
+    "ILMN",
+    "INCE",
+    "INCY",
+    "INDA",
+    "INDI",
+    "INOD",
+    "INRO",
+    "INSM",
+    "INSW",
+    "INTC",
+    "INTU",
+    "INTW",
+    "INVH",
+    "IONQ",
+    "IOT",
+    "IP",
+    "IQM",
+    "IQV",
+    "IR",
+    "IRDM",
+    "IREN",
+    "IRM",
+    "ISRG",
+    "IT",
+    "ITA",
+    "ITOT",
+    "ITT",
+    "ITW",
+    "IVV",
+    "IVZ",
+    "IWF",
+    "IWM",
+    "IWN",
+    "IYW",
+    "J",
+    "JAAA",
+    "JBHT",
+    "JBL",
+    "JD",
+    "JDHLT",
+    "JDLOG",
+    "JEF",
+    "JKHY",
+    "JLL",
+    "JMKE",
+    "JNJ",
+    "JPM",
+    "JPST",
+    "JTGEX",
+    "KDP",
+    "KEEL",
+    "KEY",
+    "KEYS",
+    "KHC",
+    "KIM",
+    "KKR",
+    "KLAC",
+    "KMB",
+    "KMI",
+    "KNX",
+    "KO",
+    "KOPN",
+    "KORU",
+    "KR",
+    "KRAQ",
+    "KTOS",
+    "KUAI",
+    "KUNL",
+    "KVUE",
+    "KWEB",
+    "L",
+    "LAMR",
+    "LAOPG",
+    "LASR",
+    "LDOS",
+    "LECO",
+    "LEMB",
+    "LEN",
+    "LHX",
+    "LI",
+    "LII",
+    "LIN",
+    "LIT",
+    "LITE",
+    "LLY",
+    "LMT",
+    "LNG",
+    "LNT",
+    "LOW",
+    "LPLA",
+    "LPTH",
+    "LRCX",
+    "LSCC",
+    "LULU",
+    "LUNR",
+    "LUV",
+    "LVS",
+    "LWLG",
+    "LYV",
+    "MA",
+    "MAA",
+    "MAG7X",
+    "MANH",
+    "MAR",
+    "MARA",
+    "MAS",
+    "MBLY",
+    "MCD",
+    "MCHP",
+    "MCK",
+    "MCO",
+    "MDB",
+    "MDGL",
+    "MDLN",
+    "MDLZ",
+    "MDT",
+    "MEDP",
+    "MEI",
+    "MEIT",
+    "MELI",
+    "MET",
+    "META",
+    "METC",
+    "MGM",
+    "MIXU",
+    "MKC",
+    "MKL",
+    "MKSI",
+    "MLI",
+    "MLM",
+    "MMG",
+    "MMM",
+    "MO",
+    "MOO",
+    "MP",
+    "MPC",
+    "MPWR",
+    "MRK",
+    "MRNA",
+    "MRSH",
+    "MRVL",
+    "MS",
+    "MSCI",
+    "MSFT",
+    "MSI",
+    "MSTR",
+    "MTB",
+    "MTD",
+    "MTRCP",
+    "MTSI",
+    "MTZ",
+    "MU",
+    "MUU",
+    "MVLL",
+    "MXL",
+    "MYRG",
+    "NAT",
+    "NBIS",
+    "NBIX",
+    "NDAQ",
+    "NDSN",
+    "NEAR",
+    "NEE",
+    "NEM",
+    "NET",
+    "NFLX",
+    "NI",
+    "NIKL",
+    "NIO",
+    "NKE",
+    "NLR",
+    "NLY",
+    "NNE",
+    "NOC",
+    "NOK",
+    "NONG",
+    "NOW",
+    "NRG",
+    "NSC",
+    "NTAP",
+    "NTES",
+    "NTNX",
+    "NTRA",
+    "NTRS",
+    "NUE",
+    "NVDA",
+    "NVMI",
+    "NVO",
+    "NVR",
+    "NVT",
+    "NVTS",
+    "NWG",
+    "NWS",
+    "NWSA",
+    "NYT",
+    "O",
+    "OC",
+    "ODFL",
+    "OHI",
+    "OIH",
+    "OII",
+    "OKE",
+    "OKLO",
+    "OKTA",
+    "OMC",
+    "ON",
+    "ONDS",
+    "ONTO",
+    "OPEN",
+    "OPRA",
+    "ORBX",
+    "ORCL",
+    "ORLY",
+    "OSCR",
+    "OTIS",
+    "OUST",
+    "OVV",
+    "OWL",
+    "OXY",
+    "P",
+    "PAG",
+    "PALL",
+    "PANW",
+    "PAVE",
+    "PAYX",
+    "PBR",
+    "PCAR",
+    "PCG",
+    "PCT",
+    "PDBC",
+    "PDD",
+    "PEG",
+    "PEN",
+    "PENG",
+    "PEP",
+    "PFE",
+    "PFG",
+    "PFGC",
+    "PG",
+    "PGR",
+    "PH",
+    "PICC",
+    "PICO",
+    "PINS",
+    "PKG",
+    "PL",
+    "PLD",
+    "PLTR",
+    "PLUG",
+    "PM",
+    "PNC",
+    "PNFP",
+    "PNW",
+    "POPMT",
+    "POWI",
+    "POWL",
+    "PPG",
+    "PPL",
+    "PPLT",
+    "PR",
+    "PRAD",
+    "PRIM",
+    "PRU",
+    "PSA",
+    "PSBOC",
+    "PSQ",
+    "PSX",
+    "PTC",
+    "PURR",
+    "PWAHL",
+    "PWR",
+    "PYPL",
+    "Q",
+    "QBTS",
+    "QCOM",
+    "QLTA",
+    "QQQ",
+    "QSR",
+    "QTUM",
+    "QUBT",
+    "QURE",
+    "QYLD",
+    "RBA",
+    "RBLX",
+    "RBRK",
+    "RCAT",
+    "RDDT",
+    "RDW",
+    "REG",
+    "REGN",
+    "REMX",
+    "RF",
+    "RGA",
+    "RGLD",
+    "RGTI",
+    "RIOT",
+    "RIVN",
+    "RJF",
+    "RKLB",
+    "RL",
+    "RMBS",
+    "RMD",
+    "RNR",
+    "ROIV",
+    "ROK",
+    "ROKU",
+    "ROL",
+    "ROP",
+    "ROST",
+    "RPM",
+    "RRX",
+    "RS",
+    "RSG",
+    "RTX",
+    "RVMD",
+    "RVTY",
+    "RXRX",
+    "RYAN",
+    "SAIA",
+    "SAIL",
+    "SAP",
+    "SATA",
+    "SBAC",
+    "SBET",
+    "SBUX",
+    "SCCO",
+    "SCHF",
+    "SCHW",
+    "SCI",
+    "SECU",
+    "SEDG",
+    "SEIC",
+    "SF",
+    "SGI",
+    "SGOV",
+    "SHAZ",
+    "SHEIN",
+    "SHEL",
+    "SHLD",
+    "SHOP",
+    "SHW",
+    "SHY",
+    "SIL",
+    "SINO",
+    "SINOT",
+    "SITC",
+    "SJM",
+    "SKHY",
+    "SLB",
+    "SLMT",
+    "SLV",
+    "SMCI",
+    "SMH",
+    "SMOIH",
+    "SMR",
+    "SMTC",
+    "SNA",
+    "SNAP",
+    "SNBIO",
+    "SNDK",
+    "SNDSC",
+    "SNOW",
+    "SNPS",
+    "SNX",
+    "SNXX",
+    "SO",
+    "SOFI",
+    "SOLS",
+    "SOUN",
+    "SOXL",
+    "SOXQ",
+    "SOXS",
+    "SOXX",
+    "SPCE",
+    "SPCX",
+    "SPG",
+    "SPGI",
+    "SPOT",
+    "SPY",
+    "SQQQ",
+    "SRE",
+    "SSNC",
+    "STLD",
+    "STM",
+    "STNG",
+    "STRC",
+    "STRK",
+    "STRL",
+    "STT",
+    "STX",
+    "STZ",
+    "SUI",
+    "SUOPT",
+    "SWK",
+    "SWKS",
+    "SWPRP",
+    "SYF",
+    "SYK",
+    "SYM",
+    "SYSB",
+    "SYY",
+    "SZIGH",
+    "T",
+    "TASK",
+    "TBLL",
+    "TCENT",
+    "TCOM",
+    "TDG",
+    "TDY",
+    "TE",
+    "TEAM",
+    "TEF",
+    "TEL",
+    "TEN",
+    "TER",
+    "TFC",
+    "THC",
+    "TIP",
+    "TJX",
+    "TLN",
+    "TLT",
+    "TM",
+    "TMO",
+    "TMUS",
+    "TNGYI",
+    "TNK",
+    "TOL",
+    "TONX",
+    "TOST",
+    "TPL",
+    "TPR",
+    "TQQQ",
+    "TRGP",
+    "TRMB",
+    "TROW",
+    "TRU",
+    "TRV",
+    "TSCO",
+    "TSEM",
+    "TSLA",
+    "TSM",
+    "TSN",
+    "TT",
+    "TTMI",
+    "TTWO",
+    "TW",
+    "TWLO",
+    "TWST",
+    "TXN",
+    "TXRH",
+    "TXT",
+    "TYL",
+    "U",
+    "UAL",
+    "UAMY",
+    "UBER",
+    "UCTT",
+    "UDR",
+    "UEC",
+    "UHAL",
+    "UI",
+    "ULS",
+    "ULTA",
+    "UMC",
+    "UNG",
+    "UNH",
+    "UNM",
+    "UNP",
+    "UPS",
+    "URA",
+    "URI",
+    "URNM",
+    "USAR",
+    "USB",
+    "USFD",
+    "USFR",
+    "USHY",
+    "USO",
+    "USPX",
+    "UTHR",
+    "UUUU",
+    "V",
+    "VCX",
+    "VDE",
+    "VEEV",
+    "VFS",
+    "VGK",
+    "VICI",
+    "VICR",
+    "VIDA",
+    "VIK",
+    "VLO",
+    "VLTO",
+    "VMC",
+    "VNOM",
+    "VNQ",
+    "VOD",
+    "VOO",
+    "VOW3",
+    "VPG",
+    "VRSK",
+    "VRSN",
+    "VRT",
+    "VRTX",
+    "VSH",
+    "VST",
+    "VT",
+    "VTI",
+    "VTR",
+    "VTRS",
+    "VTV",
+    "VUG",
+    "VXUS",
+    "VZ",
+    "W",
+    "WAB",
+    "WAT",
+    "WBD",
+    "WCC",
+    "WDAY",
+    "WDC",
+    "WEC",
+    "WELL",
+    "WEN",
+    "WFC",
+    "WGS",
+    "WHGRO",
+    "WHRFR",
+    "WLK",
+    "WM",
+    "WMB",
+    "WMS",
+    "WMT",
+    "WOLF",
+    "WPC",
+    "WRB",
+    "WRFHD",
+    "WRLD",
+    "WS",
+    "WSM",
+    "WSO",
+    "WST",
+    "WTRG",
+    "WTS",
+    "WULF",
+    "WUXIB",
+    "WWD",
+    "WXXDC",
+    "WY",
+    "WYFI",
+    "XEL",
+    "XIAO",
+    "XLE",
+    "XOM",
+    "XOP",
+    "XPO",
+    "XRX",
+    "XYL",
+    "XYLD",
+    "XYZ",
+    "YEAR",
+    "YLD5",
+    "YLD8",
+    "YLDE",
+    "YUM",
+    "ZBH",
+    "ZBRA",
+    "ZHAOM",
+    "ZJGLD",
+    "ZM",
+    "ZS",
+    "ZTS"
+  ],
+  "monadMatches": [
+    {
+      "instrumentId": "AAPL",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aAAPL",
+          "tokenAddress": "0x17683e492d0c8910f7c0157d04af31cb7a23ad71",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "AI",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aAI",
+          "tokenAddress": "0x59a036fc042b5b15cb36a4e1fe1bccfcf18f8d63",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "AIQ",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aAIQ",
+          "tokenAddress": "0x1d236e2ef49bf8b425a5d81332230fdfdaa20aee",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "AMD",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aAMD",
+          "tokenAddress": "0xbdf82c0dafcf73834d10639c0f0bf14b84808c43",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "AMZN",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aAMZN",
+          "tokenAddress": "0x06f272082339a90e81e1dcb8ab892fd1a8c5e4c0",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "ANET",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aANET",
+          "tokenAddress": "0xb8e03ad48dddc2e415715f6dbefb51839e756c25",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "ARM",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aARM",
+          "tokenAddress": "0x37bb22af99a6c2b23cfc2ea0ccb7151752a0fd5a",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "ASML",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aASML",
+          "tokenAddress": "0xfae6ba6d36a6388c5a944a9366e55b6597e4f8af",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "AVGO",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aAVGO",
+          "tokenAddress": "0x4dfbcd033662bc41de8996886e751613c2b8e8e5",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "BETR",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aBETR",
+          "tokenAddress": "0xd70b950fd70e96933ebd991005fe6f37aef1354f",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "BIL",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aBIL",
+          "tokenAddress": "0x4fc5b9f8933597d3ecf84d0611687e1dc8dd576f",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "BNO",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aBNO",
+          "tokenAddress": "0xc924b71a10c356c15e3d7cb76ac8efe8f5522347",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "BOT",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aBOT",
+          "tokenAddress": "0x5f3b897deea4ea0cb6aefe50bd2ae556cf6f4b63",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "BOTZ",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aBOTZ",
+          "tokenAddress": "0xfd8ae3a6e660efdfce2ae9bdcdcb81c9a959a846",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "CCJ",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aCCJ",
+          "tokenAddress": "0xdaba319970c3502e152088e45e5a803e78cf51d8",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "CIEN",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aCIEN",
+          "tokenAddress": "0xd90007e68aa0557e3e9fbf17140d00611dc793ec",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "COIN",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aCOIN",
+          "tokenAddress": "0xd8c1dae1c55b2fa349f78ce34553e075aad6b8a2",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "CRCL",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aCRCL",
+          "tokenAddress": "0x72e4f625b68f8d7a08dfb5a88065d6bb90052098",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "CRM",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aCRM",
+          "tokenAddress": "0x8339d77b003589cf90f17729595afe05ad951ac5",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "CSCO",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aCSCO",
+          "tokenAddress": "0x991c1f370adbab08e1f7978b01cb1dc022b902bb",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "DELL",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aDELL",
+          "tokenAddress": "0x87db2ceac8b2321443d0bfef67340096867c91ba",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "DRAM",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aDRAM",
+          "tokenAddress": "0xf90bf694935638374b238de65222139010592c8f",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "ETN",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aETN",
+          "tokenAddress": "0x678ed8ccc3f3d8ff2873d6beab5748e4321c1670",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "EWY",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aEWY",
+          "tokenAddress": "0xa01a050440b8d77fc868ff33d290a2dab5b79366",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "FLNC",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aFLNC",
+          "tokenAddress": "0xfa63f789664f761e38e39f83a3617dbc1c8e0226",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "FORM",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aFORM",
+          "tokenAddress": "0xbe10e0c583e46ff8d9a5a6ab578a89b7e49ad005",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "GDX",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aGDX",
+          "tokenAddress": "0x7b17054c9621930f3cdd38177217c2b73956856a",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "GEV",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aGEV",
+          "tokenAddress": "0xdbd41398c970a1649c7eec1d72c9d50e0aa3b095",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "GLD",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aGLD",
+          "tokenAddress": "0x3e4a2f26fc4f92d92d7cd1e49ddade32869d00a4",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "GME",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aGME",
+          "tokenAddress": "0x8e18ac2b7ebdd781e7a15c333f3b80eed8de4a27",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "GOOGL",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aGOOGL",
+          "tokenAddress": "0xbde676cdf5564ef64ccd8555aa9b56867d8d1ad5",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "HOOD",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aHOOD",
+          "tokenAddress": "0x5a4860addcc094fce026384caeecb1e634dd9af4",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "HTZ",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aHTZ",
+          "tokenAddress": "0x9b76297343f272481f23dd0bbd4f20a9a227b392",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "INDI",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aINDI",
+          "tokenAddress": "0x7fe49b79e7acf9fbd840c8f11035c618425c36ca",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "INTC",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aINTC",
+          "tokenAddress": "0x126250964e05b9e34d025e9d3b309349cf92402a",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "IONQ",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aIONQ",
+          "tokenAddress": "0xc8c3bbd0af3f10293d75dd468c51f3f81fc22fee",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "META",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aMETA",
+          "tokenAddress": "0xa1847139cbd660abc2f7b889d7cbcf18c56407fb",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "METC",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aMETC",
+          "tokenAddress": "0x297df276f30a22c1f94eab7daf1e280e54bc439a",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "MRNA",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aMRNA",
+          "tokenAddress": "0xda230a7ec7aff66e62ff3e225c3d9c42093c23ae",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "MRVL",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aMRVL",
+          "tokenAddress": "0x870e3495f5d7f0872ad7c0fbdd163016ae9122b5",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "MSFT",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aMSFT",
+          "tokenAddress": "0x73e9eb2c7a4b4e8c68232b31ea0f1246963d0375",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "MSTR",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aMSTR",
+          "tokenAddress": "0x294f40996134d067b56dcbacbf6a36396bbbea7a",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "MU",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aMU",
+          "tokenAddress": "0xc54ce75193a68602bc01ffd2b112da3948eb14a7",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "NBIS",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aNBIS",
+          "tokenAddress": "0x822594e4bc4c8237e77e5620744d3f383e77d4fe",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "NOW",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aNOW",
+          "tokenAddress": "0x6b97a52c6877faf6f3836377b37e4a0a27edde01",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "NVDA",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aNVDA",
+          "tokenAddress": "0x701193374879131f923532987c7ef363a91a80eb",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "ONDS",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aONDS",
+          "tokenAddress": "0x049cbb2180dcced2b69fcad0a98f6d046cce1c6e",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "PANW",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aPANW",
+          "tokenAddress": "0xb66340a2bc5f95b127534ba5f24827802b9bc7ee",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "PCT",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aPCT",
+          "tokenAddress": "0x13077a525ae6ca771e04fc91871b2f8f55ecfe3a",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "PLTR",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aPLTR",
+          "tokenAddress": "0xb95956daace89226185fb696c2cc3f0d9bbfd4e3",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "QBTS",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aQBTS",
+          "tokenAddress": "0xdfa678fa8d208ed3125e84a184fb39f2a22817a4",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "QQQ",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aQQQ",
+          "tokenAddress": "0x1446501e886c7f830db9b494a1890cbccc072f57",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "QTUM",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aQTUM",
+          "tokenAddress": "0x472a83495b50ce62b124cabfef7a7c0db067c1e7",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "QUBT",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aQUBT",
+          "tokenAddress": "0x11917c87b177e134116d1a538acc9f832b76d0f2",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "RDDT",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aRDDT",
+          "tokenAddress": "0x167ef0d9ae3d001146865ec8aa4a7a78b048b615",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "RGTI",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aRGTI",
+          "tokenAddress": "0xc3b236fb3cd15e3d996f3b49c0ee034bc18accf9",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "RKLB",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aRKLB",
+          "tokenAddress": "0x8bce7712ca1efc613ce73f9471ad2388dac09413",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "RXRX",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aRXRX",
+          "tokenAddress": "0xa886aaac8752548cbd9ffd7940b99b9b46eab219",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "SKHY",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aSKHY",
+          "tokenAddress": "0x6e8568ba7b43138d9210959a9523155e274550c9",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "SLV",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aSLV",
+          "tokenAddress": "0xa6d6d48d778539103d379a66697acc22dd7b1d3c",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "SMCI",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aSMCI",
+          "tokenAddress": "0xfd38813a547b30155914383919cebe83a98435fa",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "SMH",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aSMH",
+          "tokenAddress": "0x74110fb3858d91418227007851362672514925ef",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "SNDK",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aSNDK",
+          "tokenAddress": "0x57e2613fa6193c11913299cbdc1c8cb4916c15e8",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "SOUN",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aSOUN",
+          "tokenAddress": "0x3197fb576b8daa0a5a9c1c5923e91a4d41d25d71",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "SOXL",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aSOXL",
+          "tokenAddress": "0x6910acdc21a86dad4fde233764fdac4f4ce187e8",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "SPCX",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aSPCX",
+          "tokenAddress": "0x12473790e09d415abac7441401f7abec64fa959c",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "SPY",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aSPY",
+          "tokenAddress": "0x4716cfb68c73bff797eea4f94ffad8d198aefc4b",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "SQQQ",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aSQQQ",
+          "tokenAddress": "0x3d054231ed348b1c52684e2477f935fe06dafd85",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "STX",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aSTX",
+          "tokenAddress": "0xc060d393df9ca0e96fb5434ff3223c085c4b2e2a",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "TLT",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aTLT",
+          "tokenAddress": "0x5da938ad48c46bd22ca362a91517ce2c16367d09",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "TQQQ",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aTQQQ",
+          "tokenAddress": "0xb57b6c37526cecdddbf92da1783b7f4b4b53d45f",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "TSLA",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aTSLA",
+          "tokenAddress": "0x10fad4a60adb421f8f5ca6f9f2eaf2dbc110e146",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "URA",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aURA",
+          "tokenAddress": "0x7e952b8c28d855804c7fe8d64ecac30ace16c4da",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "USO",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aUSO",
+          "tokenAddress": "0x7388ed3371407471d48637b4ad8445b8d4fc3f8f",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "VRT",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aVRT",
+          "tokenAddress": "0x0b45e5afea928030988704ef60995d8925b91cd6",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "VST",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aVST",
+          "tokenAddress": "0x49cccd75b2b0fb9ccd8c1d2a5d313e050c52fa89",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "WDC",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aWDC",
+          "tokenAddress": "0x49e30f2d4a1b9a1766f0675adaf04f70681fbb63",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "WEN",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aWEN",
+          "tokenAddress": "0x4644fd1eab16a21969b4c16be8a2d5c986033f2a",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "WGS",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aWGS",
+          "tokenAddress": "0xd13163b837a3736c0ac4da9239b108fe0e04dbae",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "WMT",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aWMT",
+          "tokenAddress": "0xbdcd7e902861094164d4b4048ac62d3897a32721",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "WRLD",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aWRLD",
+          "tokenAddress": "0x72584a4d919b7969ce030fb58f7f56e2137af9b0",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "WYFI",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aWYFI",
+          "tokenAddress": "0xa359b67304f183d3308577d856eed0d98dfb715d",
+          "chainId": 143
+        }
+      ]
+    },
+    {
+      "instrumentId": "XRX",
+      "observations": [
+        {
+          "issuer": "Anchored Finance",
+          "issuerProductId": "aXRX",
+          "tokenAddress": "0x5c55e3da9d7bbfad6c5fdb4b6b4dac85c9d6e5c7",
+          "chainId": 143
+        }
+      ]
+    }
+  ]
+}
