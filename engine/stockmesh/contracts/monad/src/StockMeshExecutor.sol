@@ -30,7 +30,9 @@ contract StockMeshExecutor {
     error Reentered();
     error OnlyGovernor();
 
-    uint256 public constant CHAIN_ID = 143;
+    // Bound at deployment: production Monad and the separately labeled
+    // Metropolis testnet can use the same execution semantics and test vectors.
+    uint256 public immutable CHAIN_ID;
     uint256 public constant FEE_DENOMINATOR = 20_000; // 0.5 bps
     address public immutable usdc;
     address public immutable governor;
@@ -76,8 +78,10 @@ contract StockMeshExecutor {
     );
 
     constructor(address usdc_, address feeRecipient_) {
-        if (block.chainid != CHAIN_ID || usdc_ == address(0) || usdc_.code.length == 0
+        if ((block.chainid != 143 && block.chainid != 10143)
+            || usdc_ == address(0) || usdc_.code.length == 0
             || feeRecipient_ == address(0)) revert InvalidOrder();
+        CHAIN_ID = block.chainid;
         usdc = usdc_;
         feeRecipient = feeRecipient_;
         governor = msg.sender;
