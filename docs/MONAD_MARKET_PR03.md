@@ -16,6 +16,13 @@ Status: **IN PROGRESS / NOT APPROVED FOR TRADING**. PR02 `/prepare` stays closed
 - Focused isolated Cherry tests after the changes: `cargo +1.94.0 test --manifest-path host/Cargo.toml --lib monad::` — **18/18 passed**. These tests use fixtures for order events; they are not live order or fill evidence. Live production service, WAL, signer and funds were untouched.
 - A bounded read of five major stock tokens against official Uniswap v3 Monad factory fees 100/500/3000/10000 found no pools for those pairs at the checked block. This excludes only those exact pairs/fees in that venue, not every possible route.
 
+## One-pass 112-product cohort
+
+- The 112 observed Anchored Finance token identities are now an input cohort, **not** 112 handwritten adapters or a five-ticker launch cap. `host/src/monad/batch.rs` applies one typed adapter to every row in one invocation, keeping each product's result independent.
+- The shared preflight checks discovery, version-pinned state, BUY and SELL quotes, typed call construction and pinned simulations. Its output contains all 112 product identities and the exact failed stage. Passing preflight does **not** increment the live-trading or wallet-delivery count.
+- Fixture tests cover a complete 112-row run, a single SELL failure that does not stop the other 111 rows, fail-closed behavior for the current observed-only adapter, and wrong-block rejection. Real quotes, transactions and settlement are not simulated by those fixtures.
+- Once an authorized executable adapter and approved transaction authority exist, the same cohort manifest is the input to bounded BUY→settlement→wallet receipt→SELL→USDC return round trips. A batch result is not promoted from fixture or preflight evidence; each successful row requires its own canonical on-chain receipts and balance changes.
+
 ## Required before approval
 
 1. Reviewed, current route-specific contract ABI/API, authorization and issuer/partner rights, with proxy-upgrade acceptance policy.

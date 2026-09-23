@@ -1,6 +1,7 @@
 //! Monad order control plane. This is deliberately separate from the Solana
 //! sender journal and has no signing, calldata, or transaction-send authority.
 pub mod adapters;
+pub mod batch;
 pub mod feed;
 pub mod journal;
 pub mod monday;
