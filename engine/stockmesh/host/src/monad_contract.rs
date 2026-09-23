@@ -33,13 +33,36 @@ pub struct Candidate {
     pub source_url: String,
 }
 
+/// Issuer-published token identity. This is inventory, not a live route.
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct TokenObservation {
+    pub instrument_id: String,
+    pub issuer: String,
+    pub issuer_product_id: String,
+    pub chain_id: u64,
+    pub token_address: String,
+    pub token_decimals: u8,
+    pub source_url: String,
+    pub rights_source_url: String,
+}
+
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct VenueObservation {
     pub venue_id: String,
     pub contract: String,
     pub role: String,
+    pub execution_class: ObservedExecutionClass,
     pub source_url: String,
+}
+
+#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum ObservedExecutionClass {
+    Unknown,
+    MonadAtomic,
+    IssuerAsync,
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
@@ -48,7 +71,15 @@ pub struct VenueAdmission {
     pub venue_id: String,
     pub contract: String,
     pub typed_abi_hash: String,
+    pub execution_class: AdmittedExecutionClass,
     pub evidence: Evidence,
+}
+
+#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum AdmittedExecutionClass {
+    MonadAtomic,
+    IssuerAsync,
 }
 
 #[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord)]
@@ -56,8 +87,8 @@ pub struct VenueAdmission {
 pub enum Operation {
     Buy,
     Sell,
-    Deliver,
-    Return,
+    StockWalletWithdraw,
+    StockWalletDeposit,
     VaultDeposit,
     VaultWithdraw,
 }
@@ -104,6 +135,7 @@ pub struct Catalog {
     pub schema: String,
     pub chain: ChainPin,
     pub candidates: Vec<Candidate>,
+    pub token_observations: Vec<TokenObservation>,
     pub venue_observations: Vec<VenueObservation>,
     pub admitted_venues: Vec<VenueAdmission>,
     pub products: Vec<Product>,
@@ -245,6 +277,28 @@ impl Catalog {
             }
         }
         let mut observations = BTreeSet::new();
+        let mut observed_tokens = BTreeSet::new();
+        let mut observed_products = BTreeSet::new();
+        for token in &self.token_observations {
+            instrument(&token.instrument_id)?;
+            label(&token.issuer)?;
+            label(&token.issuer_product_id)?;
+            address(&token.token_address)?;
+            source(&token.source_url)?;
+            source(&token.rights_source_url)?;
+            if token.chain_id != self.chain.chain_id
+                || token.token_decimals > 18
+                || token.token_address == self.chain.usdc
+                || !observed_tokens.insert(&token.token_address)
+                || !observed_products.insert((
+                    &token.instrument_id,
+                    &token.issuer,
+                    &token.issuer_product_id,
+                ))
+            {
+                return Err("invalid or duplicate Monad token observation".into());
+            }
+        }
         for venue in &self.venue_observations {
             label(&venue.venue_id)?;
             label(&venue.role)?;
@@ -269,7 +323,18 @@ impl Catalog {
                 .iter()
                 .find(|item| item.venue_id == venue.venue_id)
             {
-                if observed.contract != venue.contract {
+                if observed.contract != venue.contract
+                    || (observed.execution_class != ObservedExecutionClass::Unknown
+                        && observed.execution_class
+                            != match venue.execution_class {
+                                AdmittedExecutionClass::MonadAtomic => {
+                                    ObservedExecutionClass::MonadAtomic
+                                }
+                                AdmittedExecutionClass::IssuerAsync => {
+                                    ObservedExecutionClass::IssuerAsync
+                                }
+                            })
+                {
                     return Err("admitted Monad venue differs from observation".into());
                 }
             }
@@ -287,14 +352,28 @@ impl Catalog {
             hash(&product.rights_hash)?;
             evidence(&product.token_evidence)?;
             let id = product.asset_id()?;
+            if !self.token_observations.iter().any(|token| {
+                token.instrument_id == product.instrument_id
+                    && token.issuer == product.issuer
+                    && token.issuer_product_id == product.issuer_product_id
+                    && token.chain_id == product.chain_id
+                    && token.token_address == product.token_address
+                    && token.token_decimals == product.token_decimals
+            }) {
+                return Err("Monad product lacks matching issuer token observation".into());
+            }
             if !ids.insert(id) || !tokens.insert(&product.token_address) {
                 return Err("duplicate Monad product identity or token".into());
             }
+            let mut operation_bindings = BTreeSet::new();
             let mut operations = BTreeSet::new();
             for op in &product.operations {
-                if !admitted.contains(&op.venue_id) || !operations.insert(op.operation) {
+                if !admitted.contains(&op.venue_id)
+                    || !operation_bindings.insert((op.operation, &op.venue_id))
+                {
                     return Err("unadmitted venue or duplicate Monad operation".into());
                 }
+                operations.insert(op.operation);
                 evidence(&op.evidence)?;
                 if admitted_code.get(&op.venue_id).map(|hash| hash.as_str())
                     != Some(op.evidence.runtime_code_hash.as_str())
@@ -302,12 +381,10 @@ impl Catalog {
                     return Err("Monad operation venue code hash mismatch".into());
                 }
             }
-            // An observed ticker or a one-way buy path is not a tradable product.
+            // Buy and sell prove an order path only. Wallet movement is a
+            // separate optional flow; neither promises immediate settlement.
             if !operations.is_empty()
-                && !(operations.contains(&Operation::Buy)
-                    && operations.contains(&Operation::Sell)
-                    && operations.contains(&Operation::Deliver)
-                    && operations.contains(&Operation::Return))
+                && !(operations.contains(&Operation::Buy) && operations.contains(&Operation::Sell))
             {
                 return Err("incomplete Monad stock lifecycle".into());
             }
@@ -325,14 +402,9 @@ impl Catalog {
     pub fn declares_tradeable(&self, product: &Product) -> bool {
         self.validate().is_ok() && self.products.contains(product) && {
             let ops: BTreeSet<_> = product.operations.iter().map(|o| o.operation).collect();
-            [
-                Operation::Buy,
-                Operation::Sell,
-                Operation::Deliver,
-                Operation::Return,
-            ]
-            .iter()
-            .all(|op| ops.contains(op))
+            [Operation::Buy, Operation::Sell]
+                .iter()
+                .all(|op| ops.contains(op))
         }
     }
 
@@ -435,6 +507,12 @@ mod tests {
         let catalog = observed_catalog();
         catalog.validate().unwrap();
         assert!(!catalog.candidates.is_empty());
+        assert_eq!(catalog.token_observations.len(), 80);
+        assert!(catalog
+            .token_observations
+            .iter()
+            .any(|token| token.issuer_product_id == "aNVDA"
+                && token.token_address == "0x701193374879131f923532987c7ef363a91a80eb"));
         assert!(catalog.products.is_empty());
         assert!(catalog.admitted_venues.is_empty());
         assert_eq!(
@@ -478,6 +556,12 @@ mod tests {
         assert!(wrong.validate().is_err());
         let mut wrong = catalog.clone();
         wrong.venue_observations[0].contract = "0xINVALID".into();
+        assert!(wrong.validate().is_err());
+        let mut wrong = catalog.clone();
+        wrong.token_observations[0].chain_id = TESTNET_CHAIN_ID;
+        assert!(wrong.validate().is_err());
+        let mut wrong = catalog.clone();
+        wrong.token_observations[0].token_decimals = 19;
         assert!(wrong.validate().is_err());
     }
 
@@ -523,6 +607,16 @@ mod tests {
             .operations
             .retain(|op| op.operation != Operation::Sell);
         assert!(missing_sell.validate().is_err());
+        let mut order_only = catalog.clone();
+        order_only.products[0].operations.retain(|op| {
+            !matches!(
+                op.operation,
+                Operation::StockWalletWithdraw | Operation::StockWalletDeposit
+            )
+        });
+        order_only.validate().unwrap();
+        assert!(order_only.declares_tradeable(&order_only.products[0]));
+        assert!(order_only.declares_etf_eligible(&order_only.products[0]));
         let mut wrong_decimals = catalog.clone();
         wrong_decimals.products[0].token_decimals = 19;
         assert!(wrong_decimals.validate().is_err());
@@ -538,6 +632,17 @@ mod tests {
             .evidence
             .runtime_code_hash = format!("0x{}", "a".repeat(64));
         assert!(wrong_code.validate().is_err());
+        let mut two_venues = catalog.clone();
+        let mut second = two_venues.admitted_venues[0].clone();
+        second.venue_id = "fixture-second-venue".into();
+        second.contract = "0x4444444444444444444444444444444444444444".into();
+        two_venues.admitted_venues.push(second.clone());
+        let mut second_buy = two_venues.products[0].operations[0].clone();
+        second_buy.venue_id = second.venue_id;
+        two_venues.products[0].operations.push(second_buy.clone());
+        two_venues.validate().unwrap();
+        two_venues.products[0].operations.push(second_buy);
+        assert!(two_venues.validate().is_err());
         let fee = FeeTerms {
             release_id: "fixture-release".into(),
             policy_hash: format!("0x{}", "a".repeat(64)),

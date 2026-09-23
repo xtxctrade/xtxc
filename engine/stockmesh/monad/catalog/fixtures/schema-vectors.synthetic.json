@@ -6,12 +6,17 @@
     "usdcDecimals": 6
   },
   "candidates": [],
+  "tokenObservations": [
+    { "instrumentId": "NVDA", "issuer": "FixtureIssuerA", "issuerProductId": "NVDA-A", "chainId": 143, "tokenAddress": "0x1111111111111111111111111111111111111111", "tokenDecimals": 18, "sourceUrl": "https://example.invalid/fixture", "rightsSourceUrl": "https://example.invalid/fixture" },
+    { "instrumentId": "NVDA", "issuer": "FixtureIssuerB", "issuerProductId": "NVDA-B", "chainId": 143, "tokenAddress": "0x2222222222222222222222222222222222222222", "tokenDecimals": 18, "sourceUrl": "https://example.invalid/fixture", "rightsSourceUrl": "https://example.invalid/fixture" }
+  ],
   "venueObservations": [],
   "admittedVenues": [
     {
       "venueId": "fixture-venue",
       "contract": "0x3333333333333333333333333333333333333333",
       "typedAbiHash": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "executionClass": "ISSUER_ASYNC",
       "evidence": {
         "sourceUrl": "https://example.invalid/fixture",
         "observedAt": "2026-09-23T00:00:00Z",
@@ -36,8 +41,8 @@
       "operations": [
         { "operation": "BUY", "venueId": "fixture-venue", "evidence": { "sourceUrl": "https://example.invalid/fixture", "observedAt": "2026-09-23T00:00:00Z", "runtimeCodeHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" } },
         { "operation": "SELL", "venueId": "fixture-venue", "evidence": { "sourceUrl": "https://example.invalid/fixture", "observedAt": "2026-09-23T00:00:00Z", "runtimeCodeHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" } },
-        { "operation": "DELIVER", "venueId": "fixture-venue", "evidence": { "sourceUrl": "https://example.invalid/fixture", "observedAt": "2026-09-23T00:00:00Z", "runtimeCodeHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" } },
-        { "operation": "RETURN", "venueId": "fixture-venue", "evidence": { "sourceUrl": "https://example.invalid/fixture", "observedAt": "2026-09-23T00:00:00Z", "runtimeCodeHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" } },
+        { "operation": "STOCK_WALLET_WITHDRAW", "venueId": "fixture-venue", "evidence": { "sourceUrl": "https://example.invalid/fixture", "observedAt": "2026-09-23T00:00:00Z", "runtimeCodeHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" } },
+        { "operation": "STOCK_WALLET_DEPOSIT", "venueId": "fixture-venue", "evidence": { "sourceUrl": "https://example.invalid/fixture", "observedAt": "2026-09-23T00:00:00Z", "runtimeCodeHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" } },
         { "operation": "VAULT_DEPOSIT", "venueId": "fixture-venue", "evidence": { "sourceUrl": "https://example.invalid/fixture", "observedAt": "2026-09-23T00:00:00Z", "runtimeCodeHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" } },
         { "operation": "VAULT_WITHDRAW", "venueId": "fixture-venue", "evidence": { "sourceUrl": "https://example.invalid/fixture", "observedAt": "2026-09-23T00:00:00Z", "runtimeCodeHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" } }
       ]
