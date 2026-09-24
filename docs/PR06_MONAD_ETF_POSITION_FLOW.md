@@ -43,7 +43,7 @@ and cash exit, external ETF transfer, fee/refund, stale price, insufficient
 cash, wrong receiver, allowance, nonce replay, venue revocation, asset
 admission revocation with existing redemption still available, and full
 rollback on a later-leg failure. The two-component local gas samples were
-about 596k/522k for cash/partial invest and 200k/437k for in-kind/cash exit.
+about 598k/524k for cash/partial invest and 200k/437k for in-kind/cash exit.
 The focused Rust ETF suite passed seven tests, including the share-budget
 search and staged exit accounting. These are **local EVM tests**, not evidence
 of a deployed product or live stock trading.

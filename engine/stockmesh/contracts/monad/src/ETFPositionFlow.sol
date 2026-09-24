@@ -201,6 +201,8 @@ contract ETFPositionFlow {
         for (uint256 i; i < count; ++i) {
             (address asset,,) = _asset(v, i, true);
             _approve(asset, o.vault, 0);
+            if (IETFPositionToken(asset).allowance(address(this), o.vault) != 0)
+                revert BalanceMismatch();
             // Return only this order's surplus, never a prior donation.
             uint256 residue = IETFPositionToken(asset).balanceOf(address(this)) - assetBefore[i];
             if (residue != 0) _send(asset, o.owner, residue);
