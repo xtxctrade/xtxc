@@ -26,7 +26,7 @@ function keyFrom(file) {
 }
 
 async function main() {
-  const provider = new ethers.JsonRpcProvider(RPC);
+  const provider = new ethers.JsonRpcProvider(RPC, undefined, { batchMaxCount: 1 });
   assert.equal((await provider.getNetwork()).chainId, CHAIN_ID);
   if (!process.argv.includes('--broadcast')) {
     console.log(JSON.stringify({ mode: 'READ_ONLY', chainId: Number(CHAIN_ID),
@@ -52,7 +52,7 @@ async function main() {
   const buyer = new ethers.Wallet(keyFrom(process.env.XTXC_TESTNET_BUYER_KEY_FILE), provider);
   assert.equal(deployer.address.toLowerCase(), pr04.deployer.toLowerCase());
   assert.equal(buyer.address.toLowerCase(), pr05.creator.toLowerCase());
-  if ((await provider.getBalance(deployer.address)) < ethers.parseEther('0.09')
+  if ((await provider.getBalance(deployer.address)) < ethers.parseEther('1.5')
     || (await provider.getBalance(buyer.address)) < ethers.parseEther('0.04'))
     throw Error('Insufficient demo testnet MON; no transaction sent');
   for (const address of [pr04.cash, pr04.stock, pr04.venueA,
@@ -126,6 +126,9 @@ async function main() {
   await sent('admitFirstVenue', flow.configureVenue(pr05.etfVault, pr04.stock, pr04.venueA, true));
   await sent('admitSecondVenue', flow.configureVenue(pr05.etfVault,
     pr05.demoSecondStock, await venueB.getAddress(), true));
+  await sent('fundDemoBuyerGas', deployer.sendTransaction({
+    to: buyer.address, value: ethers.parseEther('0.4'), gasLimit: 21_000n,
+  }));
   await sent('mintDemoBuyerCash', usdc.mint(buyer.address, 40_000_000n));
   await sent('approveBuyerCash', usdc.connect(buyer).approve(flowAddress, 40_000_000n));
 
@@ -139,7 +142,7 @@ async function main() {
       { fromWallet: 0n, cashIn: 3_000_000n, minBought: 100_000n, venue: await venueB.getAddress() },
     ] };
   const beforeCash = await usdc.balanceOf(buyer.address);
-  await sent('cashOnlyInvest', buyerFlow.invest(first));
+  await sent('cashOnlyInvest', buyerFlow.invest(first, { gasLimit: 1_200_000n }));
   assert.equal(await vault.balanceOf(buyer.address), scale);
   assert.equal(beforeCash - await usdc.balanceOf(buyer.address), 15_000_750n);
   assert.equal(await flow.nonceUsed(buyer.address, 6001n), true);
@@ -159,7 +162,7 @@ async function main() {
       { fromWallet: 50_000n, cashIn: 2_000_000n, minBought: 50_000n,
         venue: await venueB.getAddress() },
     ] };
-  await sent('partialHoldingsInvest', buyerFlow.invest(partial));
+  await sent('partialHoldingsInvest', buyerFlow.invest(partial, { gasLimit: 1_100_000n }));
   assert.equal(await vault.balanceOf(buyer.address), 3n * scale / 2n);
   await sent('transferSharesToOtherWallet', vault.transfer(deployer.address, scale / 2n));
   await sent('approveRecipientShares', vault.connect(deployer).approve(flowAddress, scale / 2n));
@@ -172,10 +175,11 @@ async function main() {
     ] });
   const recipientBefore = await usdc.balanceOf(deployer.address);
   await sent('transferredHolderCashExit', flow.connect(deployer).redeemToUsdc(
-    exits(deployer.address, scale / 2n, 6004n)));
+    exits(deployer.address, scale / 2n, 6004n), { gasLimit: 900_000n }));
   assert.ok(await usdc.balanceOf(deployer.address) > recipientBefore);
   assert.equal(await vault.balanceOf(deployer.address), 0n);
-  await sent('remainingCashExit', buyerFlow.redeemToUsdc(exits(buyer.address, scale, 6005n)));
+  await sent('remainingCashExit', buyerFlow.redeemToUsdc(
+    exits(buyer.address, scale, 6005n), { gasLimit: 900_000n }));
   await sent('pauseIssuanceAfterDemo', factory.pauseIssuance(pr05.etfVault));
   assert.equal(await vault.totalSupply(), 0n);
   assert.equal(await vault.issuancePaused(), true);

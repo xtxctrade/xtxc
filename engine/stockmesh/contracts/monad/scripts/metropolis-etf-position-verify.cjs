@@ -27,7 +27,7 @@ async function main() {
   assert.equal(evidence.chainId, 10143);
   assert.equal(evidence.assetClass, 'DEMO_NO_EQUITY_RIGHTS');
   assert.equal(evidence.accepted, true);
-  const provider = new ethers.JsonRpcProvider(RPC);
+  const provider = new ethers.JsonRpcProvider(RPC, undefined, { batchMaxCount: 1 });
   assert.equal((await provider.getNetwork()).chainId, 10143n);
   for (const address of [evidence.etfPositionFlow, evidence.demoSecondVenue,
     evidence.vault, evidence.factory, evidence.usdc, ...evidence.assets]) {
@@ -40,13 +40,23 @@ async function main() {
   assert.equal((await flow.usdc()).toLowerCase(), evidence.usdc.toLowerCase());
   const expected = {
     cashOnlyInvest: 'ETFInvested', partialHoldingsInvest: 'ETFInvested',
+    partialHoldingsInvestRetry: 'ETFInvested',
     partialInKindExit: 'ETFRedeemed', transferredHolderCashExit: 'ETFRedeemed',
+    transferredHolderCashExitRetry: 'ETFRedeemed',
     remainingCashExit: 'ETFRedeemed',
   };
   let observed = 0;
   for (const row of evidence.transactions) {
     const receipt = await provider.getTransactionReceipt(row.hash);
     assert.ok(receipt, `missing ${row.label}`);
+    if (row.status === 'REVERTED') {
+      assert.ok(row.label === 'partialHoldingsInvest'
+        || row.label === 'transferredHolderCashExit');
+      assert.equal(receipt.status, 0, 'gas-limit failure not preserved');
+      const expectedGas = row.label === 'partialHoldingsInvest' ? 650_000n : 600_000n;
+      assert.equal(receipt.gasUsed, expectedGas, 'unexpected failed attempt');
+      continue;
+    }
     assert.equal(receipt.status, 1, `reverted ${row.label}`);
     if (expected[row.label]) {
       const event = receipt.logs.filter(log =>
@@ -55,8 +65,32 @@ async function main() {
         .find(log => log?.name === expected[row.label]);
       assert.ok(event, `missing ${expected[row.label]} in ${row.label}`);
       assert.equal(event.args.vault.toLowerCase(), evidence.vault.toLowerCase());
-      if (event.name === 'ETFInvested') assert.ok(event.args.usdcSpent > 0n);
-      if (event.name === 'ETFRedeemed') assert.ok(event.args.shares > 0n);
+      if (event.name === 'ETFInvested') {
+        assert.equal(event.args.owner.toLowerCase(), evidence.buyer.toLowerCase());
+        assert.equal(event.args.shares, 10n ** 18n);
+        const spent = row.label === 'cashOnlyInvest' ? 15_000_000n : 8_000_000n;
+        const debit = row.label === 'cashOnlyInvest' ? 16_000_000n : 9_000_000n;
+        assert.equal(event.args.usdcSpent, spent);
+        assert.equal(event.args.fee, spent / 20_000n);
+        assert.equal(event.args.usdcReturned, debit - spent - event.args.fee);
+      }
+      if (event.name === 'ETFRedeemed') {
+        const cashExit = row.label !== 'partialInKindExit';
+        assert.equal(event.args.cashExit, cashExit);
+        assert.equal(event.args.shares,
+          row.label === 'remainingCashExit' ? 10n ** 18n : 5n * 10n ** 17n);
+        assert.equal(event.args.owner.toLowerCase(),
+          row.label.startsWith('transferredHolderCashExit')
+            ? evidence.deployer.toLowerCase() : evidence.buyer.toLowerCase());
+        if (cashExit) {
+          assert.ok(event.args.usdcReceived > 0n);
+          assert.equal(event.args.fee,
+            (event.args.usdcReceived + event.args.fee) / 20_000n);
+        } else {
+          assert.equal(event.args.usdcReceived, 0n);
+          assert.equal(event.args.fee, 0n);
+        }
+      }
       observed++;
     }
   }
