@@ -4,6 +4,7 @@ pub mod adapters;
 pub mod batch;
 pub mod compile;
 pub mod executor_tx;
+pub mod etf;
 pub mod feed;
 pub mod journal;
 pub mod monday;
