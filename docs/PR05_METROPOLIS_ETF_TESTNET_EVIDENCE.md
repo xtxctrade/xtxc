@@ -37,6 +37,11 @@ remaining redeem `173,348`. The isolated chain journal and exact balance
 assertions are retained on Cherry at
 `/srv/skew/stockmesh-direct-node-20260920/runtime/pr05-etf/monad-testnet-etf-20260924.json`.
 The test-only private keys are not part of this repository.
+The read-only `scripts/metropolis-etf-verify.cjs` independently re-read all
+13 transaction receipts, required factory/issue/redeem events, the registered
+definition, current share supply and both reserves from Monad Testnet; it
+returned `PR05_CHAIN_READ_VERIFIED`. It needs only the isolated evidence JSON,
+not a signer or deployment authority.
 
 ## Focused failure and recovery checks
 
