@@ -3,7 +3,7 @@
   "name": "xtxc-monad-contract-tests",
   "version": "0.0.0",
   "scripts": {
-    "test": "node test/executor.test.cjs && node test/monday-spot-venue.test.cjs && node test/metropolis-demo.test.cjs && node test/etf-vault.test.cjs"
+    "test": "node test/executor.test.cjs && node test/monday-spot-venue.test.cjs && node test/metropolis-demo.test.cjs && node test/etf-vault.test.cjs && node test/etf-position-flow.test.cjs"
   },
   "devDependencies": {
     "ethers": "6.15.0",
