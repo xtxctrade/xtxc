@@ -14,6 +14,18 @@ pub enum Phase {
     Reverted, Replaced, Cancelled,
 }
 
+#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum AttemptKind { Execution, Cancellation }
+
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct TxAttempt {
+    pub hash: String,
+    pub nonce: u64,
+    pub kind: AttemptKind,
+}
+
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Intent {
@@ -78,6 +90,12 @@ pub struct Order {
     pub phase: Phase,
     pub tx_hash: Option<String>,
     pub tx_nonce: Option<u64>,
+    /// All wallet transactions competing for the same EVM nonce. An absent
+    /// list denotes a PR02 journal frame written before this field existed.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub tx_attempts: Vec<TxAttempt>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub included_tx_hash: Option<String>,
     pub included_block_hash: Option<String>,
     pub finalized_block_hash: Option<String>,
     pub failure_code: Option<String>,
@@ -105,6 +123,8 @@ impl Order {
         intent.validate()?;
         Ok(Self { intent, market_binding: None, market_issuer_order_id: None,
             phase: Phase::Prepared, tx_hash: None, tx_nonce: None,
+            tx_attempts: Vec::new(),
+            included_tx_hash: None,
             included_block_hash: None, finalized_block_hash: None, failure_code: None })
     }
     pub fn new_market(mut intent: Intent, binding: MarketBinding) -> Result<Self> {
@@ -140,6 +160,21 @@ impl Order {
             || (self.market_issuer_order_id.is_some() && self.market_binding.is_none()) {
             return Err("invalid issuer order ID".into());
         }
+        if self.tx_hash.is_some() != self.tx_nonce.is_some()
+            || self.tx_attempts.len() > 8
+            || self.tx_attempts.iter().any(|attempt| !digest(&attempt.hash)
+                || Some(attempt.nonce) != self.tx_nonce)
+            || self.tx_attempts.iter().enumerate().any(|(i, attempt)|
+                self.tx_attempts[..i].iter().any(|prior| prior.hash.eq_ignore_ascii_case(&attempt.hash)))
+            || self.tx_attempts.first().is_some_and(|attempt|
+                self.tx_hash.as_deref() != Some(attempt.hash.as_str())
+                    || attempt.kind != AttemptKind::Execution)
+        { return Err("invalid Monad transaction attempts".into()); }
+        if self.included_tx_hash.as_ref().is_some_and(|hash|
+            !self.attempts().iter().any(|attempt| attempt.hash == *hash))
+            || (self.included_tx_hash.is_some() && self.included_block_hash.is_none())
+            || (self.finalized_block_hash.is_some() && self.included_block_hash.is_none())
+        { return Err("invalid Monad canonical attempt".into()); }
         Ok(())
     }
     pub fn report_submission(&mut self, tx_hash: &str, tx_nonce: u64) -> Result<()> {
@@ -152,8 +187,48 @@ impl Order {
         if self.phase != Phase::Prepared { return Err("order is not prepared".into()); }
         self.tx_hash = Some(tx_hash.to_ascii_lowercase());
         self.tx_nonce = Some(tx_nonce);
+        self.tx_attempts.push(TxAttempt { hash: tx_hash.to_ascii_lowercase(),
+            nonce: tx_nonce, kind: AttemptKind::Execution });
         self.phase = Phase::Submitted;
         Ok(())
+    }
+    pub fn report_replacement(&mut self, tx_hash: &str, nonce: u64,
+        kind: AttemptKind) -> Result<()> {
+        if !digest(tx_hash) || self.tx_nonce != Some(nonce) {
+            return Err("replacement requires matching nonce".into());
+        }
+        if self.tx_hash.as_ref().is_some_and(|hash| hash.eq_ignore_ascii_case(tx_hash)) {
+            return if kind == AttemptKind::Execution { Ok(()) }
+                else { Err("original transaction cannot be a cancellation".into()) };
+        }
+        if let Some(existing) = self.tx_attempts.iter().find(|attempt|
+            attempt.hash.eq_ignore_ascii_case(tx_hash)) {
+            return if existing.kind == kind { Ok(()) }
+                else { Err("replacement classification changed".into()) };
+        }
+        if !matches!(self.phase, Phase::Submitted | Phase::Unknown | Phase::Included)
+            || self.finalized_block_hash.is_some() {
+            return Err("replacement requires unresolved order".into());
+        }
+        if self.tx_attempts.is_empty() {
+            self.tx_attempts.push(TxAttempt { hash: self.tx_hash.clone()
+                .ok_or("replacement requires original transaction")?, nonce,
+                kind: AttemptKind::Execution });
+        }
+        if self.tx_attempts.len() >= 8 { return Err("replacement attempt bound exceeded".into()); }
+        self.tx_attempts.push(TxAttempt { hash: tx_hash.to_ascii_lowercase(), nonce, kind });
+        // Inclusion can be reorged. Neither a reported replacement nor an
+        // increased wallet nonce proves which same-nonce transaction won.
+        self.included_block_hash = None;
+        self.included_tx_hash = None;
+        self.phase = Phase::Unknown;
+        Ok(())
+    }
+    pub fn attempts(&self) -> Vec<TxAttempt> {
+        if !self.tx_attempts.is_empty() { return self.tx_attempts.clone(); }
+        self.tx_hash.as_ref().zip(self.tx_nonce).map(|(hash, nonce)|
+            vec![TxAttempt { hash: hash.clone(), nonce,
+                kind: AttemptKind::Execution }]).unwrap_or_default()
     }
     pub fn mark_unknown(&mut self) -> Result<()> {
         if !matches!(self.phase, Phase::Submitted | Phase::Unknown) || self.tx_hash.is_none() {

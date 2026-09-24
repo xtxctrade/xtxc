@@ -3,7 +3,8 @@
 use serde_json::{json, Value};
 use skew_execution_host::{monad::{feed::{chain_guard, BoundedRpc, Rpc}, journal::MonadJournal,
     market_observer::refresh_submission,
-    monday_public::{MarketRequest, MarketSide}, orders::{Intent, MarketBinding, Order, Side},
+    monday_public::{MarketRequest, MarketSide},
+    orders::{AttemptKind, Intent, MarketBinding, Order, Phase, Side},
     preflight_market::{preflight_market_call,
         preflight_market_budget, MarketBudgetRequest, MarketPreflight}}, monad_contract::Catalog};
 use sha3::{Digest, Keccak256};
@@ -105,6 +106,61 @@ fn report_market_submission(body: &[u8], id: &str, owner: &str,
         return error(409, "MARKET_TX_BINDING_MISMATCH");
     }
     match journal.report_submission(id, owner, &report.tx_hash, nonce.unwrap()) {
+        Ok(order) => (200, json!(order)), Err(_) => error(409, "ORDER_BINDING_CONFLICT"),
+    }
+}
+
+fn classify_market_replacement(order: &Order, owner: &str,
+                               hash: &str, tx: &Value) -> Result<(u64, AttemptKind), &'static str> {
+    let binding = order.market_binding.as_ref().ok_or("MARKET_BINDING_REQUIRED")?;
+    let original_nonce = order.tx_nonce.ok_or("SUBMISSION_REQUIRED")?;
+    let call = &binding.call;
+    let field = |key| tx.get(key).and_then(Value::as_str).unwrap_or("");
+    let nonce = u64::from_str_radix(field("nonce").strip_prefix("0x").unwrap_or(""), 16);
+    let value = u128::from_str_radix(field("value").strip_prefix("0x").unwrap_or(""), 16);
+    let chain = tx.get("chainId").and_then(Value::as_str)
+        .map(|raw| u64::from_str_radix(raw.strip_prefix("0x").unwrap_or(""), 16));
+    if !field("hash").eq_ignore_ascii_case(hash)
+        || !field("from").eq_ignore_ascii_case(owner)
+        || nonce != Ok(original_nonce) || value != Ok(0)
+        || chain.is_some_and(|id| id != Ok(143)) {
+        return Err("REPLACEMENT_NONCE_OR_WALLET_MISMATCH");
+    }
+    let kind = if field("to").eq_ignore_ascii_case(&call.to)
+        && field("input").eq_ignore_ascii_case(&call.data) {
+        AttemptKind::Execution
+    } else if field("to").eq_ignore_ascii_case(owner) && field("input") == "0x" {
+        AttemptKind::Cancellation
+    } else { return Err("REPLACEMENT_CALL_MISMATCH"); };
+    Ok((original_nonce, kind))
+}
+
+fn report_market_replacement(body: &[u8], id: &str, owner: &str,
+                             journal: &mut MonadJournal) -> (u16, Value) {
+    #[derive(serde::Deserialize)]
+    #[serde(rename_all = "camelCase", deny_unknown_fields)]
+    struct Report { tx_hash: String }
+    let report: Report = match serde_json::from_slice(body) {
+        Ok(value) => value, Err(_) => return error(422, "REPLACEMENT_SCHEMA"),
+    };
+    let Some(order) = journal.get(id, owner) else { return error(404, "ORDER_NOT_FOUND"); };
+    if order.market_binding.is_none() { return error(422, "MARKET_BINDING_REQUIRED"); }
+    if order.tx_nonce.is_none() { return error(409, "SUBMISSION_REQUIRED"); }
+    if report.tx_hash.len() != 66 || !report.tx_hash.starts_with("0x")
+        || !report.tx_hash[2..].bytes().all(|b| b.is_ascii_hexdigit()) {
+        return error(422, "REPLACEMENT_SCHEMA");
+    }
+    let Ok(mut rpc) = provider() else { return error(503, "MONAD_PROVIDER_UNAVAILABLE"); };
+    if chain_guard(&mut rpc).is_err() { return error(503, "MONAD_PROVIDER_UNAVAILABLE"); }
+    let tx = match rpc.call("eth_getTransactionByHash", json!([report.tx_hash])) {
+        Ok(value) if value.is_object() => value,
+        _ => return error(503, "REPLACEMENT_TX_NOT_OBSERVED"),
+    };
+    let (original_nonce, kind) = match classify_market_replacement(order, owner,
+        &report.tx_hash, &tx) {
+        Ok(value) => value, Err(code) => return error(409, code),
+    };
+    match journal.report_replacement(id, owner, &report.tx_hash, original_nonce, kind) {
         Ok(order) => (200, json!(order)), Err(_) => error(409, "ORDER_BINDING_CONFLICT"),
     }
 }
@@ -309,6 +365,20 @@ fn dispatch(req: Request, catalog: &Catalog, journal: &mut MonadJournal) -> (u16
         return (200, json!({"orders":journal.list(&req.owner)}));
     }
     if req.method == "GET" && req.path.starts_with("/v1/orders/") {
+        if let Some(id) = req.path.strip_prefix("/v1/orders/")
+            .and_then(|rest| rest.strip_suffix("/resume")) {
+            let Some(order) = journal.get(id, &req.owner) else { return error(404, "ORDER_NOT_FOUND"); };
+            let action = match order.phase {
+                Phase::Prepared => "CHECK_WALLET_HISTORY",
+                Phase::Submitted | Phase::Unknown | Phase::Included => "WAIT_FOR_CANONICAL_RESULT",
+                Phase::Finalized if order.market_binding.is_some() => "ISSUER_SETTLEMENT_PENDING",
+                Phase::Reconciled => "COMPLETE",
+                Phase::Finalized => "VERIFY_DELIVERY",
+                Phase::Reverted | Phase::Replaced | Phase::Cancelled => "TERMINAL",
+            };
+            return (200, json!({"schema":"xtxc.monad.order-resume/v1",
+                "order":order,"action":action,"canAutoResubmit":false}));
+        }
         if let Some(id) = req.path.strip_prefix("/v1/orders/").and_then(|rest| rest.strip_suffix("/refresh")) {
             if id.is_empty() || id.len() > 80 { return error(404, "ORDER_NOT_FOUND"); }
             let Some(existing) = journal.get(id, &req.owner) else { return error(404, "ORDER_NOT_FOUND"); };
@@ -319,6 +389,9 @@ fn dispatch(req: Request, catalog: &Catalog, journal: &mut MonadJournal) -> (u16
                 Err(message) if message.contains("not yet included") || message.contains("not finalized")
                     || message.contains("has no submitted transaction") =>
                     (200, json!({"order":journal.get(id, &req.owner),"observationPending":true})),
+                Err(message) if message.contains("unregistered transaction") =>
+                    (200, json!({"order":journal.get(id, &req.owner),
+                        "observationPending":true,"actionRequired":"WALLET_HISTORY_REVIEW"})),
                 Err(_) => error(503, "MARKET_OBSERVATION_FAILED"),
             };
         }
@@ -350,6 +423,13 @@ fn dispatch(req: Request, catalog: &Catalog, journal: &mut MonadJournal) -> (u16
         let (Some(hash), Some(nonce)) = (body.get("txHash").and_then(Value::as_str), body.get("txNonce").and_then(Value::as_u64)) else { return error(422, "REPORT_SCHEMA"); };
         return match journal.report_submission(id, &req.owner, hash, nonce) {
             Ok(order) => (200, json!(order)), Err(_) => error(409, "ORDER_BINDING_CONFLICT") };
+    }
+    if req.method == "POST" && req.path.starts_with("/v1/orders/") && req.path.ends_with("/report-replacement") {
+        let Some(id) = req.path.strip_prefix("/v1/orders/")
+            .and_then(|rest| rest.strip_suffix("/report-replacement")) else {
+            return error(404, "ORDER_NOT_FOUND");
+        };
+        return report_market_replacement(&req.body, id, &req.owner, journal);
     }
     if req.method == "POST" && req.path.starts_with("/v1/orders/") && req.path.ends_with("/unknown") {
         let id = &req.path[11..req.path.len()-8];
@@ -392,6 +472,7 @@ fn main() { if let Err(error) = run() { eprintln!("monad-order-api: {error}"); s
 #[cfg(test)]
 mod tests {
     use super::*;
+    use skew_execution_host::monad::monday_public::encode_market_call;
     #[test]
     fn malformed_and_unadmitted_requests_fail_closed() {
         let catalog: Catalog = serde_json::from_str(include_str!("../../../monad/catalog/registry.v1.json")).unwrap();
@@ -436,6 +517,78 @@ mod tests {
         assert_eq!(market_prepare(body.as_bytes(), owner, &catalog, &mut journal).0, 422);
         assert!(journal.list(owner).is_empty());
         drop(journal);
+        std::fs::remove_file(&path).unwrap();
+        std::fs::remove_file(format!("{}.lock", path.display())).unwrap();
+    }
+    #[test]
+    fn gas_reprice_must_keep_call_and_cancel_must_be_self_send() {
+        let catalog: Catalog = serde_json::from_str(
+            include_str!("../../../monad/catalog/registry.v1.json")).unwrap();
+        let token = &catalog.token_observations[0];
+        let owner = "0x1111111111111111111111111111111111111111";
+        let request = MarketRequest { owner: owner.into(),
+            asset_id: format!("eip155:143:erc20:{}:{}:{}", token.token_address,
+                token.issuer, token.issuer_product_id), side: MarketSide::Buy,
+            wallet_debit_atoms: 10_000_000, order_amount_atoms: 9_000_000_000_000_000_000,
+            deadline_secs: 1_800_000_100 };
+        let call = encode_market_call(&catalog, &request, 1_800_000_000).unwrap();
+        let binding = MarketBinding { request: request.clone(), call: call.clone(),
+            simulated_block_hash: format!("0x{}", "a".repeat(64)),
+            router_implementation_sha256: "b".repeat(64),
+            stock_implementation_sha256: "c".repeat(64) };
+        let intent = Intent { order_id:"mon_api_replacement".into(),
+            idempotency_key:"replacement_api_0001".into(), owner:owner.into(),
+            chain_id:143, asset_id:request.asset_id,
+            side:Side::Buy, quantity_atoms:request.order_amount_atoms.to_string(),
+            max_input_atoms:request.wallet_debit_atoms.to_string(),
+            quote_digest:String::new(), quote_expires_at_ms:0 };
+        let mut order = Order::new_market(intent, binding).unwrap();
+        order.report_submission(&format!("0x{}", "d".repeat(64)), 7).unwrap();
+        let hash = format!("0x{}", "e".repeat(64));
+        let mut tx = json!({"hash":hash,"from":owner,"to":call.to,
+            "input":call.data,"value":"0x0","nonce":"0x7","chainId":"0x8f"});
+        assert_eq!(classify_market_replacement(&order, owner, &hash, &tx).unwrap(),
+            (7, AttemptKind::Execution));
+        tx["input"] = json!("0xdeadbeef");
+        assert!(classify_market_replacement(&order, owner, &hash, &tx).is_err());
+        tx["to"] = json!(owner); tx["input"] = json!("0x");
+        assert_eq!(classify_market_replacement(&order, owner, &hash, &tx).unwrap(),
+            (7, AttemptKind::Cancellation));
+        tx["nonce"] = json!("0x8");
+        assert!(classify_market_replacement(&order, owner, &hash, &tx).is_err());
+    }
+    #[test]
+    fn resume_contract_survives_api_restart_without_auto_resubmission() {
+        let catalog: Catalog = serde_json::from_str(
+            include_str!("../../../monad/catalog/registry.v1.json")).unwrap();
+        let path = std::env::temp_dir().join(format!("xtxc-resume-api-{}",
+            std::process::id()));
+        let owner = "0x1111111111111111111111111111111111111111";
+        let intent = Intent { order_id:"mon_resume".into(),
+            idempotency_key:"resume_idempotency_0001".into(), owner:owner.into(),
+            chain_id:143,
+            asset_id:"eip155:143:erc20:0x2222222222222222222222222222222222222222:Issuer:NVDA".into(),
+            side:Side::Buy, quantity_atoms:"100".into(), max_input_atoms:"1000000".into(),
+            quote_digest:format!("0x{}", "a".repeat(64)),
+            quote_expires_at_ms:2_000_000_000_000 };
+        { let mut journal = MonadJournal::open(&path).unwrap();
+          journal.prepare(Order::new(intent).unwrap()).unwrap();
+          let request = || Request { method:"GET".into(),
+              path:"/v1/orders/mon_resume/resume".into(), owner:owner.into(), body:vec![] };
+          let (_, first) = dispatch(request(), &catalog, &mut journal);
+          assert_eq!(first["action"], "CHECK_WALLET_HISTORY");
+          assert_eq!(first["canAutoResubmit"], false);
+          journal.report_submission("mon_resume", owner,
+              &format!("0x{}", "b".repeat(64)), 12).unwrap();
+        }
+        { let mut journal = MonadJournal::open(&path).unwrap();
+          let (_, resumed) = dispatch(Request { method:"GET".into(),
+              path:"/v1/orders/mon_resume/resume".into(), owner:owner.into(), body:vec![] },
+              &catalog, &mut journal);
+          assert_eq!(resumed["action"], "WAIT_FOR_CANONICAL_RESULT");
+          assert_eq!(resumed["canAutoResubmit"], false);
+          assert_eq!(resumed["order"]["txNonce"], 12);
+        }
         std::fs::remove_file(&path).unwrap();
         std::fs::remove_file(format!("{}.lock", path.display())).unwrap();
     }
