@@ -132,14 +132,14 @@ async function main() {
   const buyerFlow = flow.connect(buyer);
   const first = { vault: pr05.etfVault, owner: buyer.address, receiver: buyer.address,
     shares: scale, nonce: 6001n, quoteDigest: ethers.id('xtxc-pr06-cash-only'),
-    deadline, maxUsdcDebit: 10_000_000n, feeCap: 500n, legs: [
-      { fromWallet: 0n, cashIn: 3_000_000n, minBought: 100_000n, venue: pr04.venueA },
+    deadline, maxUsdcDebit: 16_000_000n, feeCap: 800n, legs: [
+      { fromWallet: 0n, cashIn: 12_000_000n, minBought: 100_000n, venue: pr04.venueA },
       { fromWallet: 0n, cashIn: 3_000_000n, minBought: 100_000n, venue: await venueB.getAddress() },
     ] };
   const beforeCash = await usdc.balanceOf(buyer.address);
   await sent('cashOnlyInvest', buyerFlow.invest(first));
   assert.equal(await vault.balanceOf(buyer.address), scale);
-  assert.equal(beforeCash - await usdc.balanceOf(buyer.address), 6_000_300n);
+  assert.equal(beforeCash - await usdc.balanceOf(buyer.address), 15_000_750n);
   assert.equal(await flow.nonceUsed(buyer.address, 6001n), true);
   await sent('approveBuyerShares', vault.approve(flowAddress, 2n * scale));
 
@@ -152,8 +152,8 @@ async function main() {
   await sent('approveBuyerFirstStock', stock.connect(buyer).approve(flowAddress, 50_000n));
   await sent('approveBuyerSecondStock', second.connect(buyer).approve(flowAddress, 50_000n));
   const partial = { ...first, nonce: 6003n, quoteDigest: ethers.id('xtxc-pr06-partial'),
-    maxUsdcDebit: 8_000_000n, legs: [
-      { fromWallet: 50_000n, cashIn: 2_000_000n, minBought: 50_000n, venue: pr04.venueA },
+    maxUsdcDebit: 9_000_000n, legs: [
+      { fromWallet: 50_000n, cashIn: 6_000_000n, minBought: 50_000n, venue: pr04.venueA },
       { fromWallet: 50_000n, cashIn: 2_000_000n, minBought: 50_000n,
         venue: await venueB.getAddress() },
     ] };
