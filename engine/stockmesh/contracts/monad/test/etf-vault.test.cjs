@@ -166,7 +166,37 @@ async function rejected(promise, label) {
     await alice.getAddress(), 'Direct', 'DIR', 1n, ethers.id('direct'), two, units,
     granularity), 'direct vault deployment cannot impersonate factory');
   await rejected(vault.connect(bob).setIssuancePaused(true), 'nonfactory cannot pause');
+
+  // Two distinct wallets can issue against the same immutable definition;
+  // EVM serialization must preserve full backing after both transactions.
+  const raceDigest = await factory.definitionDigest(await bob.getAddress(),
+    'Concurrent', 'RACE', 1n, ethers.id('race'), two, units, granularity);
+  const raceReceipt = await (await factory.connect(bob).createETF('Concurrent', 'RACE',
+    1n, 77n, ethers.id('race'), two, units, granularity, raceDigest)).wait();
+  const raceEvent = raceReceipt.logs.map(l => {
+    try { return factory.interface.parseLog(l); } catch { return null; }
+  }).find(l => l?.name === 'ETFCreated');
+  const raceAddress = raceEvent.args.vault;
+  const raceVault = new ethers.Contract(raceAddress,
+    compiled.contracts['ETFVaultShare.sol'].ETFVaultShare.abi, provider);
+  for (const t of tokens.slice(0, 2)) {
+    await (await t.mint(await bob.getAddress(), 2_000_000n)).wait();
+    await (await t.connect(bob).approve(raceAddress, 2_000_000n)).wait();
+    await (await t.connect(alice).approve(raceAddress, 2_000_000n)).wait();
+  }
+  const both = await Promise.all([
+    raceVault.connect(alice).mint(scale, await alice.getAddress()),
+    raceVault.connect(bob).mint(scale, await bob.getAddress()),
+  ]);
+  await Promise.all(both.map(tx => tx.wait()));
+  assert.equal(await raceVault.totalSupply(), 2n * scale);
+  for (let i = 0; i < 2; i++) {
+    assert.deepEqual(Array.from(await raceVault.reserveAt(i)),
+      [2_000_000n, 2_000_000n, 0n]);
+  }
+  const huge = ethers.MaxUint256 / granularity * granularity;
+  await assert.rejects(raceVault.previewClaim(huge), 'claim multiplication overflow');
   await chain.disconnect();
   assert.ok(maxMintGas < 12_000_000n && maxRedeemGas < 12_000_000n, '16-asset gas bound');
-  console.log(`ETF vault: 2/3/8/16 assets, transfer/redeem, donation, pause, replay, failure rollback, reentry, gas mint=${maxMintGas} redeem=${maxRedeemGas} PASS`);
+  console.log(`ETF vault: 2/3/8/16 assets, transfer/redeem, donation, pause, replay, concurrent mint, failure rollback, reentry, overflow, gas mint=${maxMintGas} redeem=${maxRedeemGas} PASS`);
 })().catch(e => { console.error(e); process.exitCode = 1; });
