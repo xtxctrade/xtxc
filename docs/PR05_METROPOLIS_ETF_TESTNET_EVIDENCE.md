@@ -43,7 +43,8 @@ The test-only private keys are not part of this repository.
 On the isolated Cherry host, the existing Monad contract suite passed and the
 new vault test covered 2, 3, 8 and 16 assets; exact issue/transfer/partial and
 full redemption; unsupported share granularity; donated-asset surplus;
-duplicate creator nonce and definition; issue pause with redemption remaining
+duplicate creator nonce and definition; simultaneous issuance by two wallets;
+claim multiplication overflow; issue pause with redemption remaining
 open; fee-on-transfer rejection; a later constituent transfer failure rolling
 back prior legs and share burn; reentrancy rejection; and refusal to issue or
 redeem from an insolvent reserve. The 16-asset local gas maximum was `960,544`
