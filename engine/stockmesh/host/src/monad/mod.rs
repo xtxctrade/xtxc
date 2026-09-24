@@ -15,3 +15,4 @@ pub mod orders;
 pub mod prepare;
 pub mod preflight_market;
 pub mod receipt;
+pub mod recovery;
