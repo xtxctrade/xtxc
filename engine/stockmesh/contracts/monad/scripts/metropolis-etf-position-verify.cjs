@@ -14,6 +14,7 @@ const FLOW_ABI = [
 ];
 const VAULT_ABI = [
   'function totalSupply() view returns (uint256)',
+  'function issuancePaused() view returns (bool)',
   'function balanceOf(address) view returns (uint256)',
   'function reserveAt(uint256) view returns (uint256,uint256,uint256)',
 ];
@@ -61,6 +62,7 @@ async function main() {
   }
   assert.equal(observed, 5);
   assert.equal(await vault.totalSupply(), 0n);
+  assert.equal(await vault.issuancePaused(), true);
   assert.equal(await vault.balanceOf(evidence.buyer), 0n);
   assert.equal(await vault.balanceOf(evidence.deployer), 0n);
   for (let i = 0; i < 2; i++) {

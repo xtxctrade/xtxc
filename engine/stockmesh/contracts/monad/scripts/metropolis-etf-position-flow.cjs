@@ -73,6 +73,8 @@ async function main() {
   assert.equal(await vault.definitionHash(), pr05.definitionHash);
   assert.equal(await vault.totalSupply(), 0n);
   assert.equal(await vault.issuancePaused(), true);
+  if ((await venueA.quoteExactIn(pr04.cash, 12_000_000n)) < 100_000n)
+    throw Error('Observed first-stock venue depth is below the demo mint floor');
 
   const record = { chainId: Number(CHAIN_ID), assetClass: 'DEMO_NO_EQUITY_RIGHTS',
     label: 'XTXC PR06 wallet-owned ETF position flow', deployer: deployer.address,
@@ -174,7 +176,9 @@ async function main() {
   assert.ok(await usdc.balanceOf(deployer.address) > recipientBefore);
   assert.equal(await vault.balanceOf(deployer.address), 0n);
   await sent('remainingCashExit', buyerFlow.redeemToUsdc(exits(buyer.address, scale, 6005n)));
+  await sent('pauseIssuanceAfterDemo', factory.pauseIssuance(pr05.etfVault));
   assert.equal(await vault.totalSupply(), 0n);
+  assert.equal(await vault.issuancePaused(), true);
   assert.equal(await vault.balanceOf(buyer.address), 0n);
   for (let i = 0; i < 2; i++) {
     const [held, owed] = await vault.reserveAt(i);
