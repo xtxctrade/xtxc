@@ -39,5 +39,5 @@ jobs:
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: 1.91.1
-      - run: cargo test --locked --manifest-path engine/stockmesh/host/Cargo.toml monad:: --lib
-      - run: cargo test --locked --manifest-path engine/stockmesh/host/Cargo.toml --bin monad-order-api
+      - run: "cargo test --locked --manifest-path engine/stockmesh/host/Cargo.toml monad:: --lib"
+      - run: "cargo test --locked --manifest-path engine/stockmesh/host/Cargo.toml --bin monad-order-api"
